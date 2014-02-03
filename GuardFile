@@ -1,0 +1,6 @@
+# Runs the command and prints a notification
+
+guard :shell do
+  watch %r{^ttt/.+\.go} do |m| system ("clear; ginkgo ttt_test") end
+  watch %r{^ttt_test/.+\.go} do |m| system ("clear; ginkgo ttt_test") end
+end
