@@ -1,4 +1,4 @@
-package ttt
+package main
 
 import "fmt"
 
