@@ -8,7 +8,7 @@ func (h *HumanPlayer) MakeMove(board []int) (int) {
   return 1
 }
 
-func (h *HumanPlayer) GetSymbol() (string) {
+func (h *HumanPlayer) Symbol() (string) {
   return h.symbol
 }
 
