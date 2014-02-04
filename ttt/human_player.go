@@ -4,7 +4,7 @@ type HumanPlayer struct {
   symbol string
 }
 
-func (h *HumanPlayer) MakeMove(board []int) (int) {
+func (h *HumanPlayer) MakeMove(board []string) (int) {
   return 1
 }
 

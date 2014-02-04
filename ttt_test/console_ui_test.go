@@ -22,9 +22,10 @@ var _ = Describe("Console UI", func() {
       Expect(writer.String()).To(ContainSubstring("hello world\n"))
     })
 
+    //TODO refactor with or without break?
     It("prints a board", func() {
       console.PrintBoard(board, 3)
-      Expect(writer.String()).To(ContainSubstring("0 0 0\n0 0 0\n0 0 0\n"))
+      Expect(writer.String()).To(ContainSubstring("0 0 0 \n0 0 0 \n0 0 0 \n"))
     })
 
     AfterEach(func(){

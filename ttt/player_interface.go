@@ -1,6 +1,6 @@
 package ttt
 
 type Player interface {
-    MakeMove([]int) int;
+    MakeMove([]string) int;
     Symbol() string;
 }

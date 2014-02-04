@@ -17,7 +17,6 @@ func (c *ConsoleUI) PrintBoard(boardArray []int, preferredBreak int) {
         fmt.Fprintf(c.Writer, "\n")
     }
   }
-
 }
 
 func (c *ConsoleUI) Print (input string){

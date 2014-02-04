@@ -4,18 +4,19 @@ import (
 	. "github.com/andrewzures/tictactoe/ttt"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+
 )
 
 var _ = Describe("Human Player", func() {
     var human *HumanPlayer
     var player Player
-    var board []int
+    var board []string
 
     BeforeEach(func(){
       human = new(HumanPlayer)
       human.SetSymbol("X")
       player = Player(human)
-      board = make([]int, 9, 9)
+      board = make([]string, 9, 9)
     })
 
     It("meets player interface requirements", func() {
