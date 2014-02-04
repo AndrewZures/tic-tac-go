@@ -6,16 +6,12 @@ type ComputerPlayer struct {
   symbol string;
 }
 
-func (h *ComputerPlayer) Symbol() (string) {
-  return h.symbol
+
+func (h *ComputerPlayer) MakeMove(board Board) (int) {
+  return len(board.Array())
 }
 
-func (h *ComputerPlayer) SetSymbol(newSymbol string) {
-  h.symbol = newSymbol
-}
-
-func (h *ComputerPlayer) MakeMove(board []string) (int) {
-  return 1
+func (h *ComputerPlayer) miniMax(board Board) (int) {
 }
 
 func (h *ComputerPlayer) CompareStrings (a, b string) (bool) {
@@ -24,4 +20,10 @@ func (h *ComputerPlayer) CompareStrings (a, b string) (bool) {
     return 0 == bytes.Compare(aInBytes,bInBytes)
 }
 
+func (h *ComputerPlayer) Symbol() (string) {
+  return h.symbol
+}
 
+func (h *ComputerPlayer) SetSymbol(newSymbol string) {
+  h.symbol = newSymbol
+}

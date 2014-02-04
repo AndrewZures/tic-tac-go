@@ -82,6 +82,21 @@ var _ = Describe("Basic Board", func() {
       basicBoard.NewBoard()
       Expect(basicBoard.Array()).NotTo((Equal(emptyBoardState)))
     })
+
+    It("return list of available moves single move", func() {
+        basicBoard.RecordMove(1, playerX)
+        expectedResult := []int{0,2,3,4,5,6,7,8}
+        Expect(basicBoard.OpenSpots()).To(Equal(expectedResult))
+    })
+
+    It("return list of available moves after multiple moves", func() {
+        basicBoard.RecordMove(1, playerX)
+        basicBoard.RecordMove(3, playerO)
+        basicBoard.RecordMove(8, playerX)
+        basicBoard.RecordMove(0, playerO)
+        expectedResult := []int{2,4,5,6,7}
+        Expect(basicBoard.OpenSpots()).To(Equal(expectedResult))
+    })
   })
 
 })

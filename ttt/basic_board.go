@@ -17,6 +17,18 @@ func (b *BasicBoard) Array() ([]string) {
   return b.array
 }
 
+func (b *BasicBoard) OpenSpots() ([]int) {
+  openSpots := make([]int, 0)
+
+  for i := 0; i < len(b.array); i++ {
+    if b.array[i] == "" {
+      openSpots = append(openSpots, i)
+    }
+  }
+
+  return openSpots
+}
+
 func (b *BasicBoard) RecordMove(move int, player Player) (bool) {
   if b.validateMove(move) == true {
     b.array[move] = player.Symbol()
