@@ -63,11 +63,11 @@ var _ = Describe("Computer Player", func() {
           board := generateBoard(boardContents)
 
           //TODO remove this later
-          Expect(board.RecordMove(0, computer)).To(Equal(false))
+          Expect(board.RecordMove(0, computer.Symbol())).To(Equal(false))
 
           Expect(computer.MakeMove(board)).To(Equal(7))
         })
-
+//
 //        XIt("takes index 5 when it's a winner", func() {
 //          boardContents := []string{"x","","x","o","o","","","","x"}
 //          board := generateBoard(boardContents)
@@ -93,15 +93,16 @@ var _ = Describe("Computer Player", func() {
 
 func generateBoard(contents []string) (Board) {
   newBoard := Board(new(BasicBoard))
+  newBoard.NewBoard()
   playerX, playerO := getPlayers()
 
   for i := 0; i < len(contents); i++ {
     if contents[i] == "x" || contents[i] == "X" {
-      newBoard.RecordMove(i, playerX)
+      newBoard.RecordMove(i, playerX.Symbol())
     }
 
     if contents[i] == "o" || contents[i] == "O" {
-      newBoard.RecordMove(i, playerO)
+      newBoard.RecordMove(i, playerO.Symbol())
     }
   }
 

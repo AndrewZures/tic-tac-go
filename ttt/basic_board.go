@@ -29,13 +29,17 @@ func (b *BasicBoard) OpenSpots() ([]int) {
   return openSpots
 }
 
-func (b *BasicBoard) RecordMove(move int, player Player) (bool) {
+func (b *BasicBoard) RecordMove(move int, symbol string) (bool) {
   if b.validateMove(move) == true {
-    b.array[move] = player.Symbol()
+    b.array[move] = symbol
     return true
   } else {
     return false
   }
+}
+
+func (b *BasicBoard) RemoveMove(move int) {
+  b.array[move] = ""
 }
 
 func (b *BasicBoard) validateMove(move int) (bool) {
