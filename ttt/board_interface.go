@@ -1,6 +1,7 @@
 package ttt
 
 type Board interface {
-  Slice() []int
-
+  Array() []string;
+  NewBoard() bool;
+  RecordMove(int, Player) bool;
 }
