@@ -8,10 +8,14 @@ type ConsoleUI struct {
   Writer io.Writer;
 }
 
-func (c *ConsoleUI) PrintBoard(boardArray []int) {
+func (c *ConsoleUI) PrintBoard(boardArray []int, preferredBreak int) {
 
+  //TODO Refactor, Esp for Readability
   for i := 0; i < len(boardArray); i++ {
-    fmt.Fprintf(c.Writer, "value at %v is %v\n", i, boardArray[i])
+    fmt.Fprintf(c.Writer, "%v ", boardArray[i])
+    if (i+1) % preferredBreak == 0 {
+        fmt.Fprintf(c.Writer, "\n")
+    }
   }
 
 }

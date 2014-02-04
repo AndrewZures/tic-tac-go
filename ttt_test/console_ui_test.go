@@ -23,8 +23,12 @@ var _ = Describe("Console UI", func() {
     })
 
     It("prints a board", func() {
-      console.PrintBoard(board)
-      Expect(writer.String()).To(ContainSubstring("value at 1 is 0\n"))
+      console.PrintBoard(board, 3)
+      Expect(writer.String()).To(ContainSubstring("0 0 0\n0 0 0\n0 0 0\n"))
+    })
+
+    AfterEach(func(){
+      writer.Reset()
     })
 
 })
