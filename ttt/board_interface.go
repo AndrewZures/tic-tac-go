@@ -6,4 +6,5 @@ type Board interface {
   OpenSpots() []int;
   RecordMove(int, string) bool;
   RemoveMove(int);
+  Status() string;
 }

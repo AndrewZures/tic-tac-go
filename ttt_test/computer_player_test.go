@@ -58,15 +58,15 @@ var _ = Describe("Computer Player", func() {
 
       Context("takes win if available", func() {
 
-        It("takes index 7 when it's a winner", func() {
-          boardContents := []string{"x","o","x","","o","","","","x"}
-          board := generateBoard(boardContents)
-
-          //TODO remove this later
-          Expect(board.RecordMove(0, computer.Symbol())).To(Equal(false))
-
-          Expect(computer.MakeMove(board)).To(Equal(7))
-        })
+//        It("takes index 7 when it's a winner", func() {
+//          boardContents := []string{"x","o","x","","o","","","","x"}
+//          board := generateBoard(boardContents)
+//
+//          //TODO remove this later
+//          Expect(board.RecordMove(0, computer.Symbol())).To(Equal(false))
+//
+//          Expect(computer.MakeMove(board)).To(Equal(7))
+//        })
 //
 //        XIt("takes index 5 when it's a winner", func() {
 //          boardContents := []string{"x","","x","o","o","","","","x"}
@@ -91,17 +91,17 @@ var _ = Describe("Computer Player", func() {
 
   })
 
-func generateBoard(contents []string) (Board) {
+func GenerateBoard(gameState []string) (Board) {
   newBoard := Board(new(BasicBoard))
   newBoard.NewBoard()
   playerX, playerO := getPlayers()
 
-  for i := 0; i < len(contents); i++ {
-    if contents[i] == "x" || contents[i] == "X" {
+  for i := 0; i < len(gameState); i++ {
+    if gameState[i] == "x" || gameState[i] == "X" {
       newBoard.RecordMove(i, playerX.Symbol())
     }
 
-    if contents[i] == "o" || contents[i] == "O" {
+    if gameState[i] == "o" || gameState[i] == "O" {
       newBoard.RecordMove(i, playerO.Symbol())
     }
   }

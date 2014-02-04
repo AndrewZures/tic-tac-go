@@ -53,3 +53,10 @@ func (b *BasicBoard) moveIsWithinBounds (move int) (bool) {
 func (b *BasicBoard) spotIsAvailable (move int) (bool) {
   return b.array[move] == ""
 }
+
+/////
+
+func (b *BasicBoard) Status() (string) {
+  return ""
+}
+
