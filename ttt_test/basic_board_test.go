@@ -4,7 +4,6 @@ import (
   . "github.com/andrewzures/tictactoe/ttt"
   . "github.com/onsi/ginkgo"
   . "github.com/onsi/gomega"
-
 )
 
 var _ = Describe("Basic Board", func() {
