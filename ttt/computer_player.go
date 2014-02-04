@@ -13,8 +13,10 @@ func (h *ComputerPlayer) MakeMove(board Board) (int) {
 }
 
 func (h *ComputerPlayer) miniMaxTop(board Board) (int) {
- // bestMoves := make([]int, 0)
-  bestScore := -100000000
+
+
+  bestMove := -1
+  bestScore := float32(-100000000)
 
   openMoves := board.OpenSpots()
   fmt.Println("openMoves = ", openMoves)
@@ -23,23 +25,35 @@ func (h *ComputerPlayer) miniMaxTop(board Board) (int) {
       board.RecordMove(openMoves[i], h.Symbol())
       score := -h.miniMax(board, h.opponent(), 1)
       board.RemoveMove(openMoves[i])
-      fmt.Println("score = ", score)
+      fmt.Printf("score = %f", score)
 
       if score > bestScore {
         bestScore = score
+        bestMove = openMoves[i]
       }
   }
 
-  return bestScore
+  return bestMove
 }
 
-func (h *ComputerPlayer) miniMax(board Board, symbol string, depth int) (int) {
-  bestScore := -100000000
+func (h *ComputerPlayer) miniMax(board Board, symbol string, depth int) (float32) {
+  currentBoardStatus := board.Status()
+  if currentBoardStatus == "tie"{
+    return 0
+  }
+
+  if currentBoardStatus != "" {
+    fmt.Println(depth)
+    return float32(-1.0 /depth)
+  }
+
+
+  bestScore := float32(-100000000)
   openMoves := board.OpenSpots()
 
   for i := 0; i < len(openMoves); i++ {
     board.RecordMove(openMoves[i], h.Symbol())
-    score := -h.miniMax(board, h.opponent(), 1)
+    score := -h.miniMax(board, h.opponent(), depth+1)
     board.RemoveMove(openMoves[i])
 
     if score > bestScore {

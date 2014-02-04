@@ -14,7 +14,7 @@ var _ = Describe("Computer Player", func() {
 
     BeforeEach(func(){
       computer = new(ComputerPlayer)
-      computer.SetSymbol("X")
+      computer.SetSymbol("O")
       board = Board(new(BasicBoard))
       board.NewBoard()
     })
@@ -22,12 +22,12 @@ var _ = Describe("Computer Player", func() {
     Context("Basic Player Attributes", func() {
 
       It("has a symbol", func() {
-        Expect(computer.Symbol()).To(Equal("X"))
+        Expect(computer.Symbol()).To(Equal("O"))
       })
 
       It("meets player interface requirements", func() {
         player = Player(computer)
-        Expect(player.Symbol()).To(Equal("X"))
+        Expect(player.Symbol()).To(Equal("O"))
       })
 
     })
@@ -58,33 +58,33 @@ var _ = Describe("Computer Player", func() {
 
       Context("takes win if available", func() {
 
-//        It("takes index 7 when it's a winner", func() {
-//          boardContents := []string{"x","o","x","","o","","","","x"}
-//          board := generateBoard(boardContents)
-//
-//          //TODO remove this later
-//          Expect(board.RecordMove(0, computer.Symbol())).To(Equal(false))
-//
-//          Expect(computer.MakeMove(board)).To(Equal(7))
-//        })
-//
-//        XIt("takes index 5 when it's a winner", func() {
-//          boardContents := []string{"x","","x","o","o","","","","x"}
-//          board := generateBoard(boardContents)
-//          Expect(computer.MakeMove(board)).To(Equal(5))
-//        })
-//
-//        XIt("takes index 3 when it's a winner", func() {
-//          boardContents := []string{"x","","x","","o","o","x","",""}
-//          board := generateBoard(boardContents)
-//          Expect(computer.MakeMove(board)).To(Equal(3))
-//        })
-//
-//        XIt("takes index 8 when it's a winner", func() {
-//          boardContents := []string{"o","x","x","x","o","","","",""}
-//          board := generateBoard(boardContents)
-//          Expect(player.MakeMove(board)).To(Equal(3))
-//        })
+        It("takes index 7 when it's a winner", func() {
+          boardContents := []string{"x","o","x","","o","","","","x"}
+          board := GenerateBoard(boardContents)
+
+          //TODO remove this later
+          Expect(board.RecordMove(0, computer.Symbol())).To(Equal(false))
+
+          Expect(computer.MakeMove(board)).To(Equal(7))
+        })
+
+        It("takes index 5 when it's a winner", func() {
+          boardContents := []string{"x","","x","o","o","","","","x"}
+          board := GenerateBoard(boardContents)
+          Expect(computer.MakeMove(board)).To(Equal(5))
+        })
+
+        It("takes index 3 when it's a winner", func() {
+          boardContents := []string{"x","","x","","o","o","x","",""}
+          board := GenerateBoard(boardContents)
+          Expect(computer.MakeMove(board)).To(Equal(3))
+        })
+
+        It("takes index 8 when it's a winner", func() {
+          boardContents := []string{"o","x","x","x","o","","","",""}
+          board := GenerateBoard(boardContents)
+          Expect(player.MakeMove(board)).To(Equal(8))
+        })
       })
 
     })
