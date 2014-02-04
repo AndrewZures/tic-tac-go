@@ -98,10 +98,99 @@ var _ = Describe("Basic Board", func() {
 
   Context("when scoring a game", func() {
 
-    It("finds a horizontal column winner", func() {
-      boardContents := []string{"x","x","x","","","","","",""}
-      board := GenerateBoard(boardContents)
-      Expect(board.Status()).To(Equal("X"))
+    Context("when scoring a row", func() {
+
+      It("finds a row winner", func() {
+        boardContents := []string{"x","x","x","","","","","",""}
+        board := GenerateBoard(boardContents)
+        Expect(board.RowWinner()).To(Equal("X"))
+
+        boardContents = []string{"","","","o","o","o","","",""}
+        board = GenerateBoard(boardContents)
+        Expect(board.RowWinner()).To(Equal("O"))
+
+        boardContents = []string{"","","","","","","x","x","x"}
+        board = GenerateBoard(boardContents)
+        Expect(board.RowWinner()).To(Equal("X"))
+      })
+
+      It("does not generate false positives", func() {
+
+        boardContents := []string{"","","","","","","","",""}
+        board := GenerateBoard(boardContents)
+        Expect(board.RowWinner()).To(Equal(""))
+
+        boardContents = []string{"x","","","x","","","x","",""}
+        board = GenerateBoard(boardContents)
+        Expect(board.RowWinner()).To(Equal(""))
+
+        boardContents = []string{"x","","","","x","","","","x"}
+        board = GenerateBoard(boardContents)
+        Expect(board.RowWinner()).To(Equal(""))
+      })
+
+    })
+
+    Context("when scoring a column", func() {
+
+      It("finds a column winner", func() {
+        boardContents := []string{"x","","","x","","","x","",""}
+        board := GenerateBoard(boardContents)
+        Expect(board.ColumnWinner()).To(Equal("X"))
+
+        boardContents = []string{"","o","","","o","","","o",""}
+        board = GenerateBoard(boardContents)
+        Expect(board.ColumnWinner()).To(Equal("O"))
+
+        boardContents = []string{"","","x","","","x","","","x"}
+        board = GenerateBoard(boardContents)
+        Expect(board.ColumnWinner()).To(Equal("X"))
+      })
+
+      It("does not generate false positives", func() {
+
+        boardContents := []string{"","","","","","","","",""}
+        board := GenerateBoard(boardContents)
+        Expect(board.ColumnWinner()).To(Equal(""))
+
+        boardContents = []string{"","","","x","x","x","","",""}
+        board = GenerateBoard(boardContents)
+        Expect(board.ColumnWinner()).To(Equal(""))
+
+        boardContents = []string{"x","","","","x","","","","x"}
+        board = GenerateBoard(boardContents)
+        Expect(board.ColumnWinner()).To(Equal(""))
+      })
+
+    })
+
+    Context("when scoring a diagonal", func() {
+
+      It("finds a diagonal winner", func() {
+        boardContents := []string{"x","","","","x","","","","x"}
+        board := GenerateBoard(boardContents)
+        Expect(board.DiagonalWinner()).To(Equal("X"))
+
+        boardContents = []string{"","","o","","o","","o","",""}
+        board = GenerateBoard(boardContents)
+        Expect(board.DiagonalWinner()).To(Equal("O"))
+      })
+
+      It("does not generate false positives", func() {
+
+        boardContents := []string{"","","","","","","","",""}
+        board := GenerateBoard(boardContents)
+        Expect(board.DiagonalWinner()).To(Equal(""))
+
+        boardContents = []string{"","","","","","","x","x","x"}
+        board = GenerateBoard(boardContents)
+        Expect(board.DiagonalWinner()).To(Equal(""))
+
+        boardContents = []string{"","","o","","","o","","","o"}
+        board = GenerateBoard(boardContents)
+        Expect(board.DiagonalWinner()).To(Equal(""))
+      })
+
     })
 
   })

@@ -7,4 +7,8 @@ type Board interface {
   RecordMove(int, string) bool;
   RemoveMove(int);
   Status() string;
+  //bundle below to common location
+  RowWinner() string;
+  ColumnWinner() string;
+  DiagonalWinner() string;
 }
