@@ -69,6 +69,15 @@ func (b *BasicBoard) Status() (string) {
   columnStatus := b.ColumnWinner()
   if  columnStatus != "" {
     return columnStatus
+  }
+
+  diagonalStatus := b.DiagonalWinner()
+  if  diagonalStatus != "" {
+    return diagonalStatus
+  }
+
+  if len(b.OpenSpots()) == 0 {
+    return "tie"
   } else {
     return ""
   }

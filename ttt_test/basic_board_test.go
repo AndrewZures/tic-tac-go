@@ -98,6 +98,33 @@ var _ = Describe("Basic Board", func() {
 
   Context("when scoring a game", func() {
 
+    Context("when getting game status", func() {
+
+      It("returns winner if there is a row winner", func() {
+        boardContents := []string{"x","x","x","","","","","",""}
+        board := GenerateBoard(boardContents)
+        Expect(board.Status()).To(Equal("X"))
+      })
+
+      It("returns winner if there is a column winner", func() {
+        boardContents := []string{"o","","","o","","","o","",""}
+        board := GenerateBoard(boardContents)
+        Expect(board.Status()).To(Equal("O"))
+      })
+
+      It("returns winner if there is a diagonal winner", func() {
+        boardContents := []string{"","","x","","x","","x","",""}
+        board := GenerateBoard(boardContents)
+        Expect(board.Status()).To(Equal("X"))
+      })
+
+      It("returns tie if no winner and no more avialable moves", func() {
+        boardContents := []string{"o","x","o","o","x","o","x","o","x"}
+        board := GenerateBoard(boardContents)
+        Expect(board.Status()).To(Equal("tie"))
+      })
+    })
+
     Context("when scoring a row", func() {
 
       It("finds a row winner", func() {
