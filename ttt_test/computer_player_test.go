@@ -81,9 +81,3 @@ var _ = Describe("Computer Player", func() {
 
   })
 
-func GenerateBoard(startSymbol string, gameState []string) (Board) {
-  newBoard := Board(new(BasicBoard))
-  newBoard.NewBoard(startSymbol)
-  newBoard.SetArray(gameState)
-  return newBoard
-}

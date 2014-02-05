@@ -243,12 +243,3 @@ var _ = Describe("Basic Board", func() {
 
 })
 
-func getPlayers() (Player, Player) {
-  human1 := new(HumanPlayer)
-  human1.SetSymbol("x")
-
-  human2 := new(HumanPlayer)
-  human2.SetSymbol("o")
-
-  return Player(human1), Player(human2)
-}
