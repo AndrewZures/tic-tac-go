@@ -95,7 +95,7 @@ var _ = Describe("Basic Board", func() {
     })
   })
 
-  Context("holding and accessing board status", func() {
+  Context("holding and accessing game state", func() {
     var emptyBoardState []string
 
     BeforeEach(func(){
@@ -129,7 +129,7 @@ var _ = Describe("Basic Board", func() {
 
   Context("when scoring a game", func() {
 
-    Context("when getting game status", func() {
+    Context("when scoring board's internal game status", func() {
 
       It("returns winner if there is a row winner", func() {
         board := GenerateBoard("x", []string{"x","x","x","","","","","",""})
@@ -154,6 +154,38 @@ var _ = Describe("Basic Board", func() {
       It("returns inproress if no winner but more moves available", func() {
         board := GenerateBoard("x", []string{"o","","","","x","","","",""})
         Expect(board.Status()).To(Equal("inprogress"))
+
+        board = GenerateBoard("x", []string{"o","x","x","","x","o","o","",""})
+        Expect(board.Status()).To(Equal("inprogress"))
+      })
+
+    })
+
+    Context("when scoring a provided game array", func() {
+
+      It("returns winner if there is a row winner", func() {
+        gameState := []string{"x","x","x","","","","","",""}
+        Expect(board.Score(gameState)).To(Equal("x"))
+      })
+
+      It("returns winner if there is a column winner", func() {
+        gameState := []string{"o","","","o","","","o","",""}
+        Expect(board.Score(gameState)).To(Equal("o"))
+      })
+
+      It("returns winner if there is a diagonal winner", func() {
+        gameState := []string{"","","x","","x","","x","",""}
+        Expect(board.Score(gameState)).To(Equal("x"))
+      })
+
+      It("returns tie if no winner and no more avialable moves", func() {
+        gameState := []string{"o","x","o","o","x","o","x","o","x"}
+        Expect(board.Score(gameState)).To(Equal("tie"))
+      })
+
+      It("returns inprogress if no winner but more moves available", func() {
+        gameState := []string{"o","","","","x","","","",""}
+        Expect(board.Score(gameState)).To(Equal("inprogress"))
 
         board = GenerateBoard("x", []string{"o","x","x","","x","o","o","",""})
         Expect(board.Status()).To(Equal("inprogress"))
