@@ -123,6 +123,17 @@ var _ = Describe("Basic Board", func() {
         board := GenerateBoard(boardContents)
         Expect(board.Status()).To(Equal("tie"))
       })
+
+      It("returns inproress if no winner but more moves available", func() {
+        boardContents := []string{"o","","","","x","","","",""}
+        board := GenerateBoard(boardContents)
+        Expect(board.Status()).To(Equal("inprogress"))
+
+        boardContents = []string{"o","x","x","","x","o","o","",""}
+        board = GenerateBoard(boardContents)
+        Expect(board.Status()).To(Equal("inprogress"))
+      })
+
     })
 
     Context("when scoring a row", func() {

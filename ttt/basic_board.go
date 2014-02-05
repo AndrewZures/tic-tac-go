@@ -79,7 +79,7 @@ func (b *BasicBoard) Status() (string) {
   if len(b.OpenSpots()) == 0 {
     return "tie"
   } else {
-    return ""
+    return "inprogress"
   }
 
 }

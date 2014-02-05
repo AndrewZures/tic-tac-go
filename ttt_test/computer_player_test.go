@@ -61,10 +61,6 @@ var _ = Describe("Computer Player", func() {
         It("takes index 7 when it's a winner", func() {
           boardContents := []string{"x","o","x","","o","","","","x"}
           board := GenerateBoard(boardContents)
-
-          //TODO remove this later
-          Expect(board.RecordMove(0, computer.Symbol())).To(Equal(false))
-
           Expect(computer.MakeMove(board)).To(Equal(7))
         })
 
@@ -85,6 +81,28 @@ var _ = Describe("Computer Player", func() {
           board := GenerateBoard(boardContents)
           Expect(player.MakeMove(board)).To(Equal(8))
         })
+      })
+
+      Context("defends against immediate loss", func() {
+
+        It("takes index 3 when it blocks opponent win", func() {
+          boardContents := []string{"x","o","x","x","x","o","o","",""}
+          board := GenerateBoard(boardContents)
+          Expect(computer.MakeMove(board)).To(Equal(8))
+        })
+
+        XIt("takes index 3 when it blocks opponent win", func() {
+          boardContents := []string{"x","","","","","o","x","",""}
+          board := GenerateBoard(boardContents)
+          Expect(computer.MakeMove(board)).To(Equal(3))
+        })
+
+        XIt("takes index 1 when it blocks opponent win", func() {
+          boardContents := []string{"x","","x","o","","","","",""}
+          board := GenerateBoard(boardContents)
+          Expect(computer.MakeMove(board)).To(Equal(1))
+        })
+
       })
 
     })
