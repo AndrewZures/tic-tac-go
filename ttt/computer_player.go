@@ -1,16 +1,19 @@
 package ttt
 
-import "fmt"
+//import "fmt"
 
 type ComputerPlayer struct {
   symbol string;
+  board Board;
 }
 
 func (h *ComputerPlayer) MakeMove(board Board) (int) {
-  return h.startMiniMax(board)
+  h.board = board
+  return h.startMiniMax()
+
 }
 
-func (h *ComputerPlayer) startMiniMax(board Board) (int) {
+func (h *ComputerPlayer) startMiniMax() (int) {
   var bestMove int
   var score float64
   var bestScore float64
@@ -18,10 +21,11 @@ func (h *ComputerPlayer) startMiniMax(board Board) (int) {
   bestMove = -1
   depth := 1
 
-  openMoves := board.OpenSpots()
+  gameState := h.board.Array()
+  openMoves := h.board.OpenSpots(gameState)
 
   for i := 0; i < len(openMoves); i++ {
-    score = h.executeMiniMax(board, h.Symbol(), openMoves[i], depth)
+    score = h.executeMiniMax(gameState, h.Symbol(), openMoves[i], depth)
 
     if score > bestScore {
       bestScore = score
@@ -32,14 +36,14 @@ func (h *ComputerPlayer) startMiniMax(board Board) (int) {
   return bestMove
 }
 
-func (h *ComputerPlayer) miniMax(board Board, symbol string, depth int) (float64) {
+func (h *ComputerPlayer) miniMax(gameState []string, symbol string, depth int) (float64) {
   var score float64
   bestScore := -10000000.0000
-  openMoves := board.OpenSpots()
+  openMoves := h.board.OpenSpots(gameState)
 
   for i := 0; i < len(openMoves); i++ {
 
-    score = h.executeMiniMax(board, symbol, openMoves[i], depth)
+    score = h.executeMiniMax(gameState, symbol, openMoves[i], depth)
 
     if score > bestScore {
       bestScore = score
@@ -49,33 +53,40 @@ func (h *ComputerPlayer) miniMax(board Board, symbol string, depth int) (float64
   return bestScore
 }
 
-func (h *ComputerPlayer) executeMiniMax(board Board, symbol string, index int, depth int) (float64){
+func (h *ComputerPlayer) executeMiniMax(gameState []string, symbol string, index int, depth int) (float64){
     var score float64
 
-    result := board.RecordMove(index, symbol)
-    //board.RecordMove(index, symbol)
-    fmt.Printf("player move is initially = %v\n", board.PlayerTurn())
-    fmt.Printf("board recording index %v with symbol %v at depth %v, with result %v\n", index, symbol, depth, result)
-    fmt.Printf("player move is later = %v\n", board.PlayerTurn())
-    fmt.Println(board.Array())
-    score = h.GetScore(board, symbol, depth)
-    board.RemoveMove(index)
+    gameState = h.recordTempMove(gameState, index, symbol)
+    score = h.GetScore(gameState, symbol, depth)
+    gameState = h.removeTempMove(gameState, index)
 
     return score
 }
 
+func (h *ComputerPlayer) recordTempMove(gameState []string, index int, symbol string) ([]string) {
+  gameState[index] = symbol
+  return gameState
+}
 
-func (h *ComputerPlayer) GetScore(board Board, symbol string, depth int) (float64){
+func (h *ComputerPlayer) removeTempMove(gameState []string, index int) ([]string) {
+  gameState[index] = ""
+  return gameState
+}
+
+
+func (h *ComputerPlayer) GetScore(gameState []string, symbol string, depth int) (float64){
   var score float64
 
-  if board.Status() == symbol{
+  gameStatus := h.board.Score(gameState)
+
+  if gameStatus == symbol{
     score = 1.0 / float64(depth)
-  } else if board.Status() == "tie"{
+  } else if gameStatus == "tie"{
     score = 0
   } else if depth > 7 {
     score = 0
   } else {
-    score = -h.miniMax(board, opponent(symbol), depth + 1)
+    score = -h.miniMax(gameState, opponent(symbol), depth + 1)
   }
 
   return score

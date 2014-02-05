@@ -4,7 +4,6 @@ type Board interface {
   Array() []string; //TODO can probably get rid of this
   SetArray([]string);
   NewBoard(string) bool;
-  OpenSpots() []int;
   RecordMove(int, string) bool;
   RemoveMove(int);
   Status() string;
@@ -12,6 +11,7 @@ type Board interface {
   Score([]string) string;
 
   //bundle below to common location
+  OpenSpots([]string) []int;
   RowWinner([]string) string;
   ColumnWinner([]string) string;
   DiagonalWinner([]string) string;

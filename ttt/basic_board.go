@@ -31,11 +31,11 @@ func (b *BasicBoard) SetArray(newArray []string ) {
   b.array = newArray
 }
 
-func (b *BasicBoard) OpenSpots() ([]int) {
+func (b *BasicBoard) OpenSpots(gameState []string) ([]int) {
   openSpots := make([]int, 0)
 
-  for i := 0; i < len(b.array); i++ {
-    if b.array[i] == "" {
+  for i := 0; i < len(gameState); i++ {
+    if gameState[i] == "" {
       openSpots = append(openSpots, i)
     }
   }
@@ -53,9 +53,8 @@ func (b *BasicBoard) RecordMove(move int, symbol string) (bool) {
   }
 }
 
-func (b *BasicBoard) Score([]string) (string) {
-
-  return "something"
+func (b *BasicBoard) Status() (string) {
+  return b.Score(b.array)
 }
 
 func (b *BasicBoard) toggleTurn() {
@@ -90,23 +89,23 @@ func (b *BasicBoard) spotIsAvailable (move int) (bool) {
 
 /////
 
-func (b *BasicBoard) Status() (string) {
-  rowStatus := b.RowWinner(b.array)
+func (b *BasicBoard) Score(gameState []string) (string) {
+  rowStatus := b.RowWinner(gameState)
   if  rowStatus != "" {
     return rowStatus
   }
 
-  columnStatus := b.ColumnWinner(b.array)
+  columnStatus := b.ColumnWinner(gameState)
   if  columnStatus != "" {
     return columnStatus
   }
 
-  diagonalStatus := b.DiagonalWinner(b.array)
+  diagonalStatus := b.DiagonalWinner(gameState)
   if  diagonalStatus != "" {
     return diagonalStatus
   }
 
-  if len(b.OpenSpots()) == 0 {
+  if len(b.OpenSpots(gameState)) == 0 {
     return "tie"
   } else {
     return "inprogress"
