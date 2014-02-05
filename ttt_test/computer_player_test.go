@@ -91,13 +91,13 @@ var _ = Describe("Computer Player", func() {
           Expect(computer.MakeMove(board)).To(Equal(8))
         })
 
-        XIt("takes index 3 when it blocks opponent win", func() {
+        It("takes index 3 when it blocks opponent win", func() {
           boardContents := []string{"x","","","","","o","x","",""}
           board := GenerateBoard(boardContents)
           Expect(computer.MakeMove(board)).To(Equal(3))
         })
 
-        XIt("takes index 1 when it blocks opponent win", func() {
+        It("takes index 1 when it blocks opponent win", func() {
           boardContents := []string{"x","","x","o","","","","",""}
           board := GenerateBoard(boardContents)
           Expect(computer.MakeMove(board)).To(Equal(1))
