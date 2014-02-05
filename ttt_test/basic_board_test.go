@@ -7,56 +7,46 @@ import (
 )
 
 var _ = Describe("Basic Board", func() {
-  var playerX, playerO Player
   var board Board
 
   BeforeEach(func(){
-    playerX, playerO = getPlayers()
     board = Board(new(BasicBoard))
     board.NewBoard("o")
   })
 
   It("can implement the Board interface", func() {
-    board := Board(new(BasicBoard))
-    board.NewBoard("x")
-    Expect(board.RecordMove(0,playerX.Symbol())).To(Equal(true))
+    Expect(board.RecordMove(0, "o")).To(Equal(true))
   })
 
   Context("recording player moves", func() {
-    var basicBoard *BasicBoard
-
-    BeforeEach(func(){
-      basicBoard = new(BasicBoard)
-      basicBoard.NewBoard("x")
-    })
 
     Context("validates moves", func() {
 
       It("determines if move choice is within board bounds", func(){
-        Expect(basicBoard.RecordMove(-1,playerX.Symbol())).To(Equal(false))
-        Expect(basicBoard.RecordMove(0,playerX.Symbol())).To(Equal(true))
+        Expect(board.RecordMove(-1,"o")).To(Equal(false))
+        Expect(board.RecordMove(0,"o")).To(Equal(true))
 
-        Expect(basicBoard.RecordMove(9,playerO.Symbol())).To(Equal(false))
-        Expect(basicBoard.RecordMove(8,playerO.Symbol())).To(Equal(true))
+        Expect(board.RecordMove(9,"x")).To(Equal(false))
+        Expect(board.RecordMove(8,"x")).To(Equal(true))
       })
 
       It("determines if move choice has already been selected", func(){
-        expectedResult := []string{"","","","x","","","","",""}
+        expectedResult := []string{"","","","o","","","","",""}
 
-        Expect(basicBoard.RecordMove(3,playerX.Symbol())).To(Equal(true))
-        Expect(basicBoard.Array()).To(Equal(expectedResult))
+        Expect(board.RecordMove(3,"o")).To(Equal(true))
+        Expect(board.Array()).To(Equal(expectedResult))
 
-        Expect(basicBoard.RecordMove(3,playerO.Symbol())).To(Equal(false))
-        Expect(basicBoard.Array()).To(Equal(expectedResult))
+        Expect(board.RecordMove(3,"x")).To(Equal(false))
+        Expect(board.Array()).To(Equal(expectedResult))
       })
     })
 
     Context("adds state to internal board array", func() {
 
       It("records a player's move", func() {
-        expectedResult := []string{"x","","","","","","","",""}
-        basicBoard.RecordMove(0,playerX.Symbol())
-        Expect(basicBoard.Array()).To(Equal(expectedResult))
+        expectedResult := []string{"o","","","","","","","",""}
+        board.RecordMove(0,"o")
+        Expect(board.Array()).To(Equal(expectedResult))
       })
 
       It("records multiple moves", func() {
@@ -73,11 +63,9 @@ var _ = Describe("Basic Board", func() {
         Expect(board.PlayerTurn()).To(Equal("o"))
 
         board.RecordMove(0, "x")
-
         Expect(board.PlayerTurn()).To(Equal("o"))
 
         board.RecordMove(1, "o")
-
         Expect(board.PlayerTurn()).To(Equal("x"))
       })
 
@@ -88,8 +76,7 @@ var _ = Describe("Basic Board", func() {
 
         Expect(board.PlayerTurn()).To(Equal("x"))
         Expect(board.RecordMove(1,"o")).To(Equal(false))
-        Expect(board.RecordMove(2,"o")).To(Equal(false))
-        Expect(board.RecordMove(3,"o")).To(Equal(false))
+        Expect(board.RecordMove(1,"o")).To(Equal(false))
         Expect(board.RecordMove(1,"x")).To(Equal(true))
       })
     })
