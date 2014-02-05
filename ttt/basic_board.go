@@ -8,11 +8,11 @@ type BasicBoard struct {
     offset int;
 }
 
-func (b *BasicBoard) NewBoard() (bool) {
+func (b *BasicBoard) NewBoard(startSymbol string) (bool) {
   if b.array == nil {
     b.array = make([]string, 9, 9)
     b.offset = 3
-    b.playerTurn = "x"
+    b.playerTurn = startSymbol
     return true
   } else {
     return false
@@ -53,6 +53,11 @@ func (b *BasicBoard) RecordMove(move int, symbol string) (bool) {
   }
 }
 
+func (b *BasicBoard) Score([]string) (string) {
+
+  return "something"
+}
+
 func (b *BasicBoard) toggleTurn() {
   if b.playerTurn == "x" {
     b.playerTurn = "o"
@@ -86,17 +91,17 @@ func (b *BasicBoard) spotIsAvailable (move int) (bool) {
 /////
 
 func (b *BasicBoard) Status() (string) {
-  rowStatus := b.RowWinner()
+  rowStatus := b.RowWinner(b.array)
   if  rowStatus != "" {
     return rowStatus
   }
 
-  columnStatus := b.ColumnWinner()
+  columnStatus := b.ColumnWinner(b.array)
   if  columnStatus != "" {
     return columnStatus
   }
 
-  diagonalStatus := b.DiagonalWinner()
+  diagonalStatus := b.DiagonalWinner(b.array)
   if  diagonalStatus != "" {
     return diagonalStatus
   }
@@ -109,74 +114,74 @@ func (b *BasicBoard) Status() (string) {
 
 }
 
-func (b *BasicBoard) RowWinner() (string) {
+func (b *BasicBoard) RowWinner(gameState []string) (string) {
   var row []string
 
   for i := 0; i < len(b.array); i += b.offset {
-    row = b.rowElements(i)
+    row = b.rowElements(gameState, i)
     if b.AllSameSymbols(row) == true {
-      return b.array[i]
+      return gameState[i]
     }
   }
   return ""
 }
 
-func (b *BasicBoard) rowElements(startIndex int) ([]string) {
-  return b.array[startIndex:startIndex+b.offset]
+func (b *BasicBoard) rowElements(gameState []string, startIndex int) ([]string) {
+  return gameState[startIndex:startIndex+b.offset]
 }
 
-func (b *BasicBoard) ColumnWinner() (string) {
+func (b *BasicBoard) ColumnWinner(gameState []string) (string) {
   var column []string
 
   for i := 0; i < b.offset; i++ {
-    column = b.columnElements(i)
+    column = b.columnElements(gameState, i)
     if b.AllSameSymbols(column) == true {
-      return b.array[i]
+      return gameState[i]
     }
   }
   return ""
 
 }
 
-func (b *BasicBoard) columnElements(startIndex int) ([]string) {
+func (b *BasicBoard) columnElements(gameState []string, startIndex int) ([]string) {
   elements := make([]string, 0)
 
-  for i := startIndex; i < len(b.array); i += b.offset {
-    elements = append(elements,b.array[i])
+  for i := startIndex; i < len(gameState); i += b.offset {
+    elements = append(elements,gameState[i])
   }
   return elements
 
 }
 
-func (b *BasicBoard) DiagonalWinner() (string) {
-    if b.AllSameSymbols(b.LRDiagonalElements()){
-      return b.array[0]
+func (b *BasicBoard) DiagonalWinner(gameState []string) (string) {
+    if b.AllSameSymbols(b.LRDiagonalElements(gameState)){
+      return gameState[0]
     }
 
-    if b.AllSameSymbols(b.RLDiagonalElements()){
-      return b.array[b.offset - 1]
+    if b.AllSameSymbols(b.RLDiagonalElements(gameState)){
+      return gameState[b.offset - 1]
     }
 
   return ""
 }
 
-func (b *BasicBoard) LRDiagonalElements() ([]string) {
+func (b *BasicBoard) LRDiagonalElements(gameState []string) ([]string) {
   elements := make([]string, 0)
 
-  for i := 0; i < len(b.array); i += b.offset+1 {
-    elements = append(elements,b.array[i])
+  for i := 0; i < len(gameState); i += b.offset+1 {
+    elements = append(elements, gameState[i])
   }
   return elements
 
 }
 
 //TODO refactor
-func (b *BasicBoard) RLDiagonalElements() ([]string) {
+func (b *BasicBoard) RLDiagonalElements(gameState []string) ([]string) {
   elements := make([]string, 0)
   newOffset := b.offset - 1
 
-  for i := newOffset; i < len(b.array)-1; i += newOffset {
-    elements = append(elements,b.array[i])
+  for i := newOffset; i < len(gameState)-1; i += newOffset {
+    elements = append(elements,gameState[i])
   }
   return elements
 

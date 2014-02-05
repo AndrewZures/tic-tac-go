@@ -7,7 +7,7 @@ import (
 
 )
 
-var _ = Describe("Computer Player", func() {
+var _ = Describe("Factory", func() {
     var computer *ComputerPlayer
     var player Player
     var board Board
@@ -34,20 +34,11 @@ var _ = Describe("Computer Player", func() {
 
 //    Context("Minimax Implementation", func() {
 //
-      Context("takes win if available", func() {
-
-//        It("takes index 7 when it's a winner", func() {
-//          boardContents := []string{"x","o","x","o","o","","x","","x"}
-//          board := GenerateBoard(boardContents)
-//          Expect(computer.Symbol()).To(Equal("o"))
-//          Expect(board.PlayerTurn()).To(Equal("o"))
-//          Expect(computer.MakeMove(board)).To(Equal(7))
-//        })
+//      Context("takes win if available", func() {
 //
 //        It("takes index 7 when it's a winner", func() {
 //          boardContents := []string{"x","o","x","","o","","","","x"}
 //          board := GenerateBoard(boardContents)
-//          Expect(board.PlayerTurn()).To(Equal("x"))
 //          Expect(computer.MakeMove(board)).To(Equal(7))
 //        })
 //
@@ -68,7 +59,7 @@ var _ = Describe("Computer Player", func() {
 //          board := GenerateBoard(boardContents)
 //          Expect(player.MakeMove(board)).To(Equal(8))
 //        })
-      })
+//      })
 //
 //      Context("defends against immediate loss", func() {
 //
@@ -96,21 +87,3 @@ var _ = Describe("Computer Player", func() {
 
   })
 
-func GenerateBoard(gameState []string) (Board) {
-  newBoard := Board(new(BasicBoard))
-  newBoard.NewBoard("o")
-  newBoard.SetArray(gameState)
-//  playerX, playerO := getPlayers()
-//
-//  for i := 0; i < len(gameState); i++ {
-//    if gameState[i] == "x" || gameState[i] == "X" {
-//      newBoard.RecordMove(i, playerX.Symbol())
-//    }
-//
-//    if gameState[i] == "o" || gameState[i] == "O" {
-//      newBoard.RecordMove(i, playerO.Symbol())
-//    }
-//  }
-//
-  return newBoard
-}

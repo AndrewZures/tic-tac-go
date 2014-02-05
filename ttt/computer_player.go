@@ -1,5 +1,7 @@
 package ttt
 
+import "fmt"
+
 type ComputerPlayer struct {
   symbol string;
 }
@@ -50,7 +52,12 @@ func (h *ComputerPlayer) miniMax(board Board, symbol string, depth int) (float64
 func (h *ComputerPlayer) executeMiniMax(board Board, symbol string, index int, depth int) (float64){
     var score float64
 
-    board.RecordMove(index, symbol)
+    result := board.RecordMove(index, symbol)
+    //board.RecordMove(index, symbol)
+    fmt.Printf("player move is initially = %v\n", board.PlayerTurn())
+    fmt.Printf("board recording index %v with symbol %v at depth %v, with result %v\n", index, symbol, depth, result)
+    fmt.Printf("player move is later = %v\n", board.PlayerTurn())
+    fmt.Println(board.Array())
     score = h.GetScore(board, symbol, depth)
     board.RemoveMove(index)
 
@@ -65,6 +72,8 @@ func (h *ComputerPlayer) GetScore(board Board, symbol string, depth int) (float6
     score = 1.0 / float64(depth)
   } else if board.Status() == "tie"{
     score = 0
+  } else if depth > 7 {
+    score = 0
   } else {
     score = -h.miniMax(board, opponent(symbol), depth + 1)
   }
@@ -73,13 +82,14 @@ func (h *ComputerPlayer) GetScore(board Board, symbol string, depth int) (float6
 }
 
 func opponent(symbol string) (string) {
-  if symbol == "X" {
-    return "O"
-  } else if symbol == "O" {
-    return "X"
-  } else {
-    return "other"
+  opponentSymbol := "other"
+  if symbol == "o" {
+    opponentSymbol = "x"
+  } else if symbol == "x" {
+    opponentSymbol = "o"
   }
+
+  return opponentSymbol
 }
 
 func (h *ComputerPlayer) Symbol() (string) {
