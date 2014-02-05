@@ -4,6 +4,7 @@ package ttt
 
 type BasicBoard struct {
     array []string;
+    playerTurn string;
     offset int;
 }
 
@@ -11,14 +12,23 @@ func (b *BasicBoard) NewBoard() (bool) {
   if b.array == nil {
     b.array = make([]string, 9, 9)
     b.offset = 3
+    b.playerTurn = "x"
     return true
   } else {
     return false
   }
 }
 
+func (b *BasicBoard) PlayerTurn() (string) {
+  return b.playerTurn
+}
+
 func (b *BasicBoard) Array() ([]string) {
   return b.array
+}
+
+func (b *BasicBoard) SetArray(newArray []string ) {
+  b.array = newArray
 }
 
 func (b *BasicBoard) OpenSpots() ([]int) {
@@ -34,11 +44,22 @@ func (b *BasicBoard) OpenSpots() ([]int) {
 }
 
 func (b *BasicBoard) RecordMove(move int, symbol string) (bool) {
-  if b.validateMove(move) == true {
+  if b.validateMove(move, symbol) == true {
     b.array[move] = symbol
+    b.toggleTurn()
     return true
   } else {
     return false
+  }
+}
+
+func (b *BasicBoard) toggleTurn() {
+  if b.playerTurn == "x" {
+    b.playerTurn = "o"
+  } else if b.playerTurn == "o" {
+    b.playerTurn = "x"
+  } else {
+    b.playerTurn = "z"
   }
 }
 
@@ -46,8 +67,12 @@ func (b *BasicBoard) RemoveMove(move int) {
   b.array[move] = ""
 }
 
-func (b *BasicBoard) validateMove(move int) (bool) {
-  return b.moveIsWithinBounds(move) && b.spotIsAvailable(move)
+func (b *BasicBoard) validateMove(move int, symbol string) (bool) {
+  return b.moveIsWithinBounds(move) && b.spotIsAvailable(move) && b.isPlayerTurn(symbol)
+}
+
+func (b *BasicBoard) isPlayerTurn (symbol string) (bool) {
+  return b.PlayerTurn() == symbol
 }
 
 func (b *BasicBoard) moveIsWithinBounds (move int) (bool) {
