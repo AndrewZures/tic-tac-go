@@ -32,28 +32,6 @@ var _ = Describe("Computer Player", func() {
 
     })
 
-    Context("Utility Functions", func() {
-
-      It("compares two different strings", func() {
-        string1 := "x"
-        string2 := "o"
-        Expect(computer.CompareStrings(string1, string2)).To(Equal(false))
-      })
-
-      It("compares two equal strings", func() {
-        string1 := "x"
-        string2 := "x"
-        Expect(computer.CompareStrings(string1, string2)).To(Equal(true))
-      })
-
-      It("compares two empty strings", func() {
-        string1 := ""
-        string2 := ""
-        Expect(computer.CompareStrings(string1, string2)).To(Equal(true))
-      })
-
-    })
-
     Context("Minimax Implementation", func() {
 
       Context("takes win if available", func() {
@@ -85,7 +63,7 @@ var _ = Describe("Computer Player", func() {
 
       Context("defends against immediate loss", func() {
 
-        It("takes index 3 when it blocks opponent win", func() {
+        It("takes index 8 when it blocks opponent win", func() {
           boardContents := []string{"x","o","x","x","x","o","o","",""}
           board := GenerateBoard(boardContents)
           Expect(computer.MakeMove(board)).To(Equal(8))
