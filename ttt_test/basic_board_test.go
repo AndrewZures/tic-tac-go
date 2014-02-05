@@ -61,7 +61,7 @@ var _ = Describe("Basic Board", func() {
 
       It("records multiple moves", func() {
         expectedResult := []string{"x","","","x","","","x","","x"}
-        board := GenerateBoard([]string{"x","","","x","","","x","","x"})
+        board := GenerateBoard("o", []string{"x","","","x","","","x","","x"})
         Expect(board.Array()).To(Equal(expectedResult))
       })
     })
@@ -69,7 +69,7 @@ var _ = Describe("Basic Board", func() {
     Context("keeps track of player turns", func() {
 
       It("records a player's move", func() {
-        board := GenerateBoard([]string{"","","","","","","","",""})
+        board := GenerateBoard("o", []string{"","","","","","","","",""})
         Expect(board.PlayerTurn()).To(Equal("o"))
 
         board.RecordMove(0, "x")
@@ -82,7 +82,7 @@ var _ = Describe("Basic Board", func() {
       })
 
       It("records a player's move also", func() {
-        board := GenerateBoard([]string{"","","","","","","","",""})
+        board := GenerateBoard("o", []string{"","","","","","","","",""})
         moveResult := board.RecordMove(0, "o")
         Expect(moveResult).To(Equal(true))
 
@@ -103,13 +103,13 @@ var _ = Describe("Basic Board", func() {
     })
 
     It("initalizes with empty board", func() {
-      board := GenerateBoard([]string{"","","","","","","","",""})
+      board := GenerateBoard("x", []string{"","","","","","","","",""})
       Expect(board.Array()).To(Equal(emptyBoardState))
       Expect(len(board.Array())).To(Equal(9))
     })
 
     It("keeps game state after attempted reset", func() {
-      board := GenerateBoard([]string{"","x","","","x","","","",""})
+      board := GenerateBoard("x", []string{"","x","","","x","","","",""})
       board.NewBoard("x")
       Expect(board.Array()).NotTo((Equal(emptyBoardState)))
     })
@@ -132,36 +132,30 @@ var _ = Describe("Basic Board", func() {
     Context("when getting game status", func() {
 
       It("returns winner if there is a row winner", func() {
-        boardContents := []string{"x","x","x","","","","","",""}
-        board := GenerateBoard(boardContents)
+        board := GenerateBoard("x", []string{"x","x","x","","","","","",""})
         Expect(board.Status()).To(Equal("x"))
       })
 
       It("returns winner if there is a column winner", func() {
-        boardContents := []string{"o","","","o","","","o","",""}
-        board := GenerateBoard(boardContents)
+        board := GenerateBoard("x",[]string{"o","","","o","","","o","",""})
         Expect(board.Status()).To(Equal("o"))
       })
 
       It("returns winner if there is a diagonal winner", func() {
-        boardContents := []string{"","","x","","x","","x","",""}
-        board := GenerateBoard(boardContents)
+        board := GenerateBoard("x", []string{"","","x","","x","","x","",""})
         Expect(board.Status()).To(Equal("x"))
       })
 
       It("returns tie if no winner and no more avialable moves", func() {
-        boardContents := []string{"o","x","o","o","x","o","x","o","x"}
-        board := GenerateBoard(boardContents)
+        board := GenerateBoard("x",[]string{"o","x","o","o","x","o","x","o","x"})
         Expect(board.Status()).To(Equal("tie"))
       })
 
       It("returns inproress if no winner but more moves available", func() {
-        boardContents := []string{"o","","","","x","","","",""}
-        board := GenerateBoard(boardContents)
+        board := GenerateBoard("x", []string{"o","","","","x","","","",""})
         Expect(board.Status()).To(Equal("inprogress"))
 
-        boardContents = []string{"o","x","x","","x","o","o","",""}
-        board = GenerateBoard(boardContents)
+        board = GenerateBoard("x", []string{"o","x","x","","x","o","o","",""})
         Expect(board.Status()).To(Equal("inprogress"))
       })
 
@@ -183,15 +177,12 @@ var _ = Describe("Basic Board", func() {
       It("does not generate false positives", func() {
 
         boardContents := []string{"","","","","","","","",""}
-        board := GenerateBoard(boardContents)
         Expect(board.RowWinner(boardContents)).To(Equal(""))
 
         boardContents = []string{"x","","","x","","","x","",""}
-        board = GenerateBoard(boardContents)
         Expect(board.RowWinner(boardContents)).To(Equal(""))
 
         boardContents = []string{"x","","","","x","","","","x"}
-        board = GenerateBoard(boardContents)
         Expect(board.RowWinner(boardContents)).To(Equal(""))
       })
 
