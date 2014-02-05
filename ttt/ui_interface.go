@@ -1,5 +1,6 @@
 package ttt
 
 type UserInterface interface {
-  PrintBoard();
+  DisplayBoard();
+  DisplayPlayerTypes([]Player);
 }

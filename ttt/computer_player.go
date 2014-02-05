@@ -4,7 +4,13 @@ package ttt
 
 type ComputerPlayer struct {
   symbol string;
+  typeTitle string;
   board Board;
+}
+
+func (h *ComputerPlayer) NewComputerPlayer(symbol string, typeTitle string){
+  h.symbol = symbol
+  h.typeTitle = typeTitle
 }
 
 func (h *ComputerPlayer) MakeMove(board Board) (int) {
@@ -83,8 +89,6 @@ func (h *ComputerPlayer) GetScore(gameState []string, symbol string, depth int) 
     score = 1.0 / float64(depth)
   } else if gameStatus == "tie"{
     score = 0
-  } else if depth > 7 {
-    score = 0
   } else {
     score = -h.miniMax(gameState, opponent(symbol), depth + 1)
   }
@@ -107,6 +111,6 @@ func (h *ComputerPlayer) Symbol() (string) {
   return h.symbol
 }
 
-func (h *ComputerPlayer) SetSymbol(newSymbol string) {
-  h.symbol = newSymbol
+func (h *ComputerPlayer) Description() (string) {
+  return h.typeTitle
 }

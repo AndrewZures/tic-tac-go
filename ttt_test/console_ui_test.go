@@ -9,11 +9,13 @@ import (
 
 var _ = Describe("Console UI", func() {
     var console ConsoleUI
+    var factory Factory
     var writer bytes.Buffer
     var board []int
 
     BeforeEach(func(){
       console = ConsoleUI{&writer}
+      factory = Factory(new(TTTFactory))
       board = make([]int, 9, 9)
     })
 
@@ -22,10 +24,16 @@ var _ = Describe("Console UI", func() {
       Expect(writer.String()).To(ContainSubstring("hello world\n"))
     })
 
-    //TODO refactor with or without break?
+    //TODO refactor with or without break? int to string
     It("prints a board", func() {
-      console.PrintBoard(board, 3)
+      console.DisplayBoard(board, 3)
       Expect(writer.String()).To(ContainSubstring("0 0 0 \n0 0 0 \n0 0 0 \n"))
+    })
+
+    It("lists available player types", func() {
+      console.DisplayPlayerTypes(factory.PlayerTypes())
+      Expect(writer.String()).To(ContainSubstring("Human"))
+      Expect(writer.String()).To(ContainSubstring("Computer"))
     })
 
     AfterEach(func(){

@@ -13,7 +13,7 @@ var _ = Describe("Human Player", func() {
 
     BeforeEach(func(){
       human = new(HumanPlayer)
-      human.SetSymbol("X")
+      human.NewHumanPlayer("x", "human")
       player = Player(human)
       board = Board(new(BasicBoard))
     })
@@ -27,7 +27,7 @@ var _ = Describe("Human Player", func() {
     })
 
     It("has a symbol", func() {
-        Expect(player.Symbol()).To(Equal("X"))
+        Expect(player.Symbol()).To(Equal("x"))
     })
 
 })

@@ -1,89 +1,60 @@
 package ttt_test
 
+
 import (
 	. "github.com/andrewzures/tictactoe/ttt"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-
 )
 
 var _ = Describe("Factory", func() {
-    var computer *ComputerPlayer
-    var player Player
-    var board Board
+    var factory *TTTFactory
 
     BeforeEach(func(){
-      computer = new(ComputerPlayer)
-      computer.SetSymbol("o")
-      board = Board(new(BasicBoard))
-      board.NewBoard("o")
+      factory = new(TTTFactory)
     })
 
-    Context("Basic Player Attributes", func() {
+    Context("Player Generation", func() {
 
-      It("has a symbol", func() {
-        Expect(computer.Symbol()).To(Equal("o"))
+      It("provides of a list of available player types", func() {
+        playerList := factory.PlayerTypes()
+        descriptions := getPlayerDescriptions(playerList)
+
+        Expect(descriptions).To(ContainElement("Human"))
+        Expect(descriptions).To(ContainElement("Computer"))
       })
 
-      It("meets player interface requirements", func() {
-        player = Player(computer)
-        Expect(player.Symbol()).To(Equal("o"))
+      It("each player type in player list is a unique type", func() {
+        playerList := factory.PlayerTypes()
+        descriptions := getPlayerDescriptions(playerList)
+        Expect(allElementsUnique(descriptions)).To(Equal(true))
       })
 
     })
-
-//    Context("Minimax Implementation", func() {
-//
-//      Context("takes win if available", func() {
-//
-//        It("takes index 7 when it's a winner", func() {
-//          boardContents := []string{"x","o","x","","o","","","","x"}
-//          board := GenerateBoard(boardContents)
-//          Expect(computer.MakeMove(board)).To(Equal(7))
-//        })
-//
-//        It("takes index 5 when it's a winner", func() {
-//          boardContents := []string{"x","","x","o","o","","","","x"}
-//          board := GenerateBoard(boardContents)
-//          Expect(computer.MakeMove(board)).To(Equal(5))
-//        })
-//
-//        It("takes index 3 when it's a winner", func() {
-//          boardContents := []string{"x","","x","","o","o","x","",""}
-//          board := GenerateBoard(boardContents)
-//          Expect(computer.MakeMove(board)).To(Equal(3))
-//        })
-//
-//        It("takes index 8 when it's a winner", func() {
-//          boardContents := []string{"o","x","x","x","o","","","",""}
-//          board := GenerateBoard(boardContents)
-//          Expect(player.MakeMove(board)).To(Equal(8))
-//        })
-//      })
-//
-//      Context("defends against immediate loss", func() {
-//
-//        It("takes index 8 when it blocks opponent win", func() {
-//          boardContents := []string{"x","o","x","x","x","o","o","",""}
-//          board := GenerateBoard(boardContents)
-//          Expect(computer.MakeMove(board)).To(Equal(8))
-//        })
-//
-//        It("takes index 3 when it blocks opponent win", func() {
-//          boardContents := []string{"x","","","","","o","x","",""}
-//          board := GenerateBoard(boardContents)
-//          Expect(computer.MakeMove(board)).To(Equal(3))
-//        })
-//
-//        It("takes index 1 when it blocks opponent win", func() {
-//          boardContents := []string{"x","","x","o","","","","",""}
-//          board := GenerateBoard(boardContents)
-//          Expect(computer.MakeMove(board)).To(Equal(1))
-//        })
-//
-//      })
-//
-//    })
 
   })
 
+
+  func allElementsUnique(elementList []string) (bool) {
+
+    for i := 0; i < len(elementList); i++ {
+      for j := i+1; j < len(elementList); j++ {
+        if elementList[j] == elementList[i] {
+          return false
+        }
+      }
+    }
+
+    return true
+  }
+
+
+  func getPlayerDescriptions(playerList []Player) ([]string) {
+    options := make([]string, len(playerList))
+
+    for i := 0; i < len(options); i++ {
+      options[i] = playerList[i].Description()
+    }
+
+    return options
+  }

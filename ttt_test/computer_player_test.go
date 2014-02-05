@@ -14,7 +14,7 @@ var _ = Describe("Computer Player", func() {
 
     BeforeEach(func(){
       computer = new(ComputerPlayer)
-      computer.SetSymbol("o")
+      computer.NewComputerPlayer("o", "Computer")
       board = Board(new(BasicBoard))
       board.NewBoard("o")
     })
