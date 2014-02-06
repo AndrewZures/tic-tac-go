@@ -21,10 +21,13 @@ var _ = Describe("Console UI", func() {
       board = make([]int, 9, 9)
     })
 
-    It("reads in data", func() {
+    It("reads from console", func() {
       fmt.Fprintf(&reader, "Test Console Input")
       result := console.ReadConsole()
       Expect(result).To(Equal("Test Console Input"))
+    })
+
+    It("write error message to console if integer expected", func() {
     })
 
     //TODO refactor with or without break? int to string

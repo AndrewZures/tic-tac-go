@@ -4,8 +4,8 @@ package ttt
 
 type BasicBoard struct {
     array []string;
-    playerTurn string;
     offset int;
+    playerTurn string;
 }
 
 func (b *BasicBoard) NewBoard(startSymbol string) (bool) {
