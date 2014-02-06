@@ -63,17 +63,17 @@ var _ = Describe("Console UI", func() {
     })
 
     Context ("when displaying game board", func() {
-      var board Board
 
-      BeforeEach(func() {
-        basicBoard := GenerateBoard("x", []string{"","","","","","","","",""})
-        board = Board(basicBoard)
+      It("prints a board", func() {
+        board := GenerateBoard("x", []string{"","","","","","","","",""})
+        console.DisplayBoard(board)
+        Expect(writer.String()).To(ContainSubstring("  |   |  \n  |   |  \n  |   |  \n"))
       })
 
-      //TODO refactor with or without break? int to string
-      It("prints a board", func() {
+      It("prints current gamestate", func() {
+        board := GenerateBoard("x", []string{"","x","o","","","","","x",""})
         console.DisplayBoard(board)
-        Expect(writer.String()).To(ContainSubstring("- - - \n- - - \n- - - \n"))
+        Expect(writer.String()).To(ContainSubstring("  | X | O\n  |   |  \n  | X |  \n"))
       })
     })
 

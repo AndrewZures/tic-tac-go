@@ -4,6 +4,7 @@ import ("fmt"
         "io"
         "bufio"
         "strconv"
+        "strings"
       )
 
 type ConsoleUI struct {
@@ -13,15 +14,42 @@ type ConsoleUI struct {
 
 func (c *ConsoleUI) DisplayBoard(board Board) {
   gameState := board.Array()
-  symbolMap := map[string]string {"":"-","x":"X","o":"O"}
+  gameState = c.FormatGameState(gameState)
 
-  //TODO Refactor, Esp for Readability
+
   for i := 0; i < len(gameState); i++ {
-    fmt.Fprintf(c.Writer, "%v ", symbolMap[gameState[i]])
+
+    fmt.Fprintf(c.Writer, "%v", gameState[i])
+
     if (i+1) % board.Offset() == 0 {
         fmt.Fprintf(c.Writer, "\n")
+    } else {
+        fmt.Fprintf(c.Writer, " | ")
     }
   }
+}
+
+func (c *ConsoleUI) FormatGameState(list []string) ([]string) {
+  list = c.ConvertToUpperCase(list)
+  list = c.FormatEmptySpots(list)
+  return list
+}
+
+func (c *ConsoleUI) ConvertToUpperCase(list []string) ([]string) {
+  for i := 0; i < len(list); i++ {
+    list[i] = strings.ToUpper(list[i])
+  }
+  return list
+}
+
+func (c *ConsoleUI) FormatEmptySpots(list []string) ([]string) {
+
+  for i := 0; i < len(list); i++ {
+    if list[i] == "" {
+      list[i] = " "
+    }
+  }
+  return list
 }
 
 func (c *ConsoleUI) SelectPlayerChoice(playerList []Player) (Player) {
