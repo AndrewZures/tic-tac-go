@@ -29,13 +29,13 @@ func (c *ConsoleUI) SelectPlayerChoice(playerList []Player) (Player) {
 
 func (c *ConsoleUI) GetIntegerFromUser() (int) {
   userInput := c.ReadConsole()
-  for i := 0; i < 4; i++ {
+  for {
     value, err := strconv.ParseInt(userInput,0,0)
+
     if err == nil {
       return int(value)
     } else {
-      //c.PrintChoiceInvalid()
-      fmt.Println(err)
+      c.PrintChoiceInvalid()
       userInput = c.ReadConsole()
     }
   }
@@ -44,7 +44,7 @@ func (c *ConsoleUI) GetIntegerFromUser() (int) {
 }
 
 func (c *ConsoleUI) PrintChoiceInvalid(){
-  fmt.Println("Whoops, that choice is invalid! Try Again")
+  fmt.Fprintln(c.Writer, "Whoops, that choice is invalid! Try Again")
 }
 
 func (c *ConsoleUI) DisplayPlayerTypes(playerList []Player){
