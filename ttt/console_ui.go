@@ -19,14 +19,30 @@ func (c *ConsoleUI) DisplayBoard(board Board) {
 
   for i := 0; i < len(gameState); i++ {
 
-    fmt.Fprintf(c.Writer, "%v", gameState[i])
+    c.PrintSymbol(gameState[i])
 
-    if (i+1) % board.Offset() == 0 {
-        fmt.Fprintf(c.Writer, "\n")
+    if c.EndOfRow(board, i) {
+      c.PrintHorizontalDivider()
     } else {
-        fmt.Fprintf(c.Writer, " | ")
+      c.PrintVerticalDivider()
     }
   }
+}
+
+func (c *ConsoleUI) EndOfRow(board Board, index int) (bool) {
+    return (index+1) % board.Offset() == 0
+}
+
+func (c *ConsoleUI) PrintSymbol(symbol string) {
+    fmt.Fprintf(c.Writer, "%v", symbol)
+}
+
+func (c *ConsoleUI) PrintHorizontalDivider() {
+  fmt.Fprintf(c.Writer, "\n-----------------\n")
+}
+
+func (c *ConsoleUI) PrintVerticalDivider() {
+  fmt.Fprintf(c.Writer, " | ")
 }
 
 func (c *ConsoleUI) FormatGameState(list []string) ([]string) {
