@@ -8,7 +8,6 @@ import ("fmt"
 
 type ConsoleUI struct {
   Writer io.Writer;
-  //Reader io.Reader;
   Reader bufio.Reader;
 }
 
@@ -24,7 +23,33 @@ func (c *ConsoleUI) DisplayBoard(boardArray []int, preferredBreak int) {
 }
 
 func (c *ConsoleUI) SelectPlayerChoice(playerList []Player) (Player) {
+  c.DisplayPlayerTypes(playerList)
+  return c.PlayerChoice(playerList)
   return playerList[0]
+}
+
+func (c *ConsoleUI) PlayerChoice(playerList []Player) (Player) {
+  var userChoice int
+
+  for {
+    userChoice = c.GetIntegerFromUser()
+    if c.ChoiceValid(userChoice, len(playerList)){
+      userChoice = c.shiftOnesBasedToZerosBased(userChoice)
+      return playerList[userChoice]
+    } else {
+      c.PrintChoiceInvalid()
+      userChoice = c.GetIntegerFromUser()
+    }
+  }
+}
+
+func (c *ConsoleUI) shiftOnesBasedToZerosBased(onesBasedIndexChoice int) (int) {
+  zerosBasedIndexChoice := onesBasedIndexChoice - 1
+  return zerosBasedIndexChoice
+}
+
+func (c *ConsoleUI) ChoiceValid(choice int, numChoices int) (bool) {
+  return choice > 0 && choice <= numChoices
 }
 
 func (c *ConsoleUI) GetIntegerFromUser() (int) {
@@ -39,8 +64,6 @@ func (c *ConsoleUI) GetIntegerFromUser() (int) {
       userInput = c.ReadConsole()
     }
   }
-
-  return -1
 }
 
 func (c *ConsoleUI) PrintChoiceInvalid(){

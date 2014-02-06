@@ -42,7 +42,7 @@ var _ = Describe("Console UI", func() {
     })
   })
 
-  Context("when sending information to user", func() {
+  Context("when displaying information to user", func() {
 
     It("indicates invalid choice to user and asks for another choice", func() {
       console.PrintChoiceInvalid()
@@ -64,11 +64,15 @@ var _ = Describe("Console UI", func() {
       Expect(writer.String()).To(ContainSubstring("Computer"))
     })
 
-    //TODO refactor with or without break? int to string
-    It("prints a board", func() {
-      console.DisplayBoard(board, 3)
-      Expect(writer.String()).To(ContainSubstring("0 0 0 \n0 0 0 \n0 0 0 \n"))
+    Context ("when displaying game board", func() {
+
+      //TODO refactor with or without break? int to string
+      It("prints a board", func() {
+        console.DisplayBoard(board, 3)
+        Expect(writer.String()).To(ContainSubstring("0 0 0 \n0 0 0 \n0 0 0 \n"))
+      })
     })
+
   })
 
   Context("when communicating with rest of program", func() {
@@ -78,6 +82,10 @@ var _ = Describe("Console UI", func() {
       playerTypes := factory.PlayerTypes()
       selectedPlayer := console.SelectPlayerChoice(playerTypes)
       Expect(selectedPlayer.Description()).To(Equal("Human"))
+
+      fmt.Fprintf(&reader, "2")
+      selectedPlayer = console.SelectPlayerChoice(playerTypes)
+      Expect(selectedPlayer.Description()).To(Equal("Computer"))
     })
 
   })
