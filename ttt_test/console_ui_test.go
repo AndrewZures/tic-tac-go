@@ -6,6 +6,7 @@ import (
 	. "github.com/onsi/gomega"
    "bytes"
    "fmt"
+   "bufio"
 )
 
 var _ = Describe("Console UI", func() {
@@ -16,7 +17,7 @@ var _ = Describe("Console UI", func() {
     var board []int
 
     BeforeEach(func(){
-      console = ConsoleUI{&writer, &reader}
+      console = ConsoleUI{&writer, *bufio.NewReader(&reader)}
       factory = Factory(new(TTTFactory))
       board = make([]int, 9, 9)
     })
@@ -42,11 +43,22 @@ var _ = Describe("Console UI", func() {
       Expect(writer.String()).To(ContainSubstring("Computer"))
     })
 
-    It("returns selected player choice", func() {
+    XIt("returns selected player choice", func() {
       fmt.Fprintf(&reader, "1")
       playerTypes := factory.PlayerTypes()
       selectedPlayer := console.SelectPlayerChoice(playerTypes)
       Expect(selectedPlayer.Description()).To(Equal("Human"))
+    })
+
+    It("validates input from use is integer", func() {
+      fmt.Fprintf(&reader, "3")
+      Expect(console.GetIntegerFromUser()).To(Equal(3))
+    })
+
+    It("requeries user until integer is provided", func() {
+      fmt.Fprintf(&reader, "firsstring\nsecondstring2\n1\n")
+      Expect(console.GetIntegerFromUser()).To(Equal(1))
+
     })
 
     AfterEach(func(){
