@@ -22,7 +22,7 @@ func (c *ConsoleUI) DisplayBoard(board Board) {
     c.PrintSymbol(gameState[i])
 
     if c.EndOfRow(board, i) {
-      c.PrintHorizontalDivider()
+      c.PrintHorizontalDivider(len(gameState))
     } else {
       c.PrintVerticalDivider()
     }
@@ -30,15 +30,23 @@ func (c *ConsoleUI) DisplayBoard(board Board) {
 }
 
 func (c *ConsoleUI) EndOfRow(board Board, index int) (bool) {
-    return (index+1) % board.Offset() == 0
+  return (index+1) % board.Offset() == 0
 }
 
 func (c *ConsoleUI) PrintSymbol(symbol string) {
-    fmt.Fprintf(c.Writer, "%v", symbol)
+  fmt.Fprintf(c.Writer, "%v", symbol)
 }
 
-func (c *ConsoleUI) PrintHorizontalDivider() {
-  fmt.Fprintf(c.Writer, "\n-----------------\n")
+func (c *ConsoleUI) PrintHorizontalDivider(dividerLength int) {
+  divider := []byte("\n")
+
+  //TODO this may not work for larger board sizes
+  for i := 0; i < dividerLength; i++ {
+    divider = append(divider, []byte("-")...)
+  }
+
+  divider = append(divider, []byte("\n")...)
+  fmt.Fprintf(c.Writer, string(divider))
 }
 
 func (c *ConsoleUI) PrintVerticalDivider() {
@@ -82,10 +90,9 @@ func (c *ConsoleUI) DisplayPlayerTypes(playerList []Player){
 }
 
 func (c *ConsoleUI) PlayerChoice(playerList []Player) (Player) {
-  var userChoice int
 
   for {
-    userChoice = c.GetIntegerFromUser()
+    userChoice := c.GetIntegerFromUser()
 
     if c.ChoiceValid(userChoice, len(playerList)){
       userChoice = c.shiftToZerosBasedIndex(userChoice)
@@ -97,10 +104,9 @@ func (c *ConsoleUI) PlayerChoice(playerList []Player) (Player) {
 }
 
 func (c *ConsoleUI) GetIntegerFromUser() (int) {
-  var userInput string
 
   for {
-    userInput = c.ReadConsole()
+    userInput := c.ReadConsole()
     value, err := strconv.ParseInt(userInput,0,0)
 
     if err == nil {
@@ -126,10 +132,9 @@ func (c *ConsoleUI) PrintChoiceInvalid(){
 
 func (c *ConsoleUI) ReadConsole() (string) {
   line, _, _ := c.Reader.ReadLine()
-    return string(line)
+  return string(line)
 }
 
 func (c *ConsoleUI) Print (input string){
   fmt.Fprintln(c.Writer, input)
 }
-

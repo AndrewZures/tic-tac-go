@@ -67,13 +67,17 @@ var _ = Describe("Console UI", func() {
       It("prints a board", func() {
         board := GenerateBoard("x", []string{"","","","","","","","",""})
         console.DisplayBoard(board)
-        Expect(writer.String()).To(ContainSubstring("  |   |  \n  |   |  \n  |   |  \n"))
+        //Expect(writer.String()).To(ContainSubstring("  |   |  \n  |   |  \n  |   |  \n"))
+        Expect(writer.String()).To(ContainSubstring("  |   |  \n"))
       })
 
       It("prints current gamestate", func() {
-        board := GenerateBoard("x", []string{"","x","o","","","","","x",""})
+        board := GenerateBoard("x", []string{"","x","o","o","o","x","","x",""})
         console.DisplayBoard(board)
-        Expect(writer.String()).To(ContainSubstring("  | X | O\n  |   |  \n  | X |  \n"))
+        Expect(writer.String()).To(ContainSubstring(  "  | X | O\n"))
+        Expect(writer.String()).To(ContainSubstring("\n---------\n"))
+        Expect(writer.String()).To(ContainSubstring("\nO | O | X\n"))
+        Expect(writer.String()).To(ContainSubstring("\n  | X |  \n"))
       })
     })
 
