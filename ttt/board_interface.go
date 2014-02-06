@@ -3,6 +3,7 @@ package ttt
 type Board interface {
   Array() []string; //TODO can probably get rid of this
   SetArray([]string);
+  Offset() int;
   NewBoard(string) bool;
   RecordMove(int, string) bool;
   RemoveMove(int);

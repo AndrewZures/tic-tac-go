@@ -27,6 +27,10 @@ func (b *BasicBoard) Array() ([]string) {
   return b.array
 }
 
+func (b *BasicBoard) Offset() (int) {
+  return b.offset
+}
+
 func (b *BasicBoard) SetArray(newArray []string ) {
   b.array = newArray
 }

@@ -14,12 +14,10 @@ var _ = Describe("Console UI", func() {
   var factory Factory
   var writer bytes.Buffer
   var reader bytes.Buffer
-  var board []int
 
   BeforeEach(func(){
     console = ConsoleUI{&writer, *bufio.NewReader(&reader)}
     factory = Factory(new(TTTFactory))
-    board = make([]int, 9, 9)
   })
 
   Context("when receiving input from user", func() {
@@ -65,11 +63,17 @@ var _ = Describe("Console UI", func() {
     })
 
     Context ("when displaying game board", func() {
+      var board Board
+
+      BeforeEach(func() {
+        basicBoard := GenerateBoard("x", []string{"","","","","","","","",""})
+        board = Board(basicBoard)
+      })
 
       //TODO refactor with or without break? int to string
       It("prints a board", func() {
-        console.DisplayBoard(board, 3)
-        Expect(writer.String()).To(ContainSubstring("0 0 0 \n0 0 0 \n0 0 0 \n"))
+        console.DisplayBoard(board)
+        Expect(writer.String()).To(ContainSubstring("- - - \n- - - \n- - - \n"))
       })
     })
 
