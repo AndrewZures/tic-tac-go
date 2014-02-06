@@ -3,6 +3,7 @@ package ttt
 import ("fmt"
         "io"
         "bufio"
+        "strconv"
       )
 
 type ConsoleUI struct {
@@ -33,12 +34,18 @@ func (c *ConsoleUI) DisplayPlayerTypes(playerList []Player){
 
 }
 
-func (c *ConsoleUI) TestIO() (string) {
-
+func (c *ConsoleUI) ReadConsole() (string) {
   bio := bufio.NewReader(c.Reader)
   line, _, _ := bio.ReadLine()
-  //fmt.Printf("return contents is: %v", line)
-  return string(line)
+  //value, err := strconv.ParseInt(string(line),0,0)
+  //value, err := strconv.ParseInt(string("1"),0,0)
+  _, err := strconv.ParseInt(string("1"),0,0)
+
+  if err != nil {
+    return string(line)
+  } else {
+    return string(line)
+  }
 }
 
 func (c *ConsoleUI) Print (input string){
