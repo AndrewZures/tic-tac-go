@@ -35,14 +35,10 @@ var _ = Describe("Console UI", func() {
     })
 
     It("reads multiple times from console", func() {
-      SetMockInput(&reader, "Test\nConsole\nInput\n1\n2\n3\n4\n")
+      SetMockInput(&reader, "Test\nConsole\nInput\n")
       Expect(console.ReadConsole()).To(Equal("Test"))
       Expect(console.ReadConsole()).To(Equal("Console"))
       Expect(console.ReadConsole()).To(Equal("Input"))
-      Expect(console.ReadConsole()).To(Equal("1"))
-      Expect(console.ReadConsole()).To(Equal("2"))
-      Expect(console.ReadConsole()).To(Equal("3"))
-      Expect(console.ReadConsole()).To(Equal("4"))
     })
 
     It("validates input from use is integer", func() {
@@ -64,7 +60,7 @@ var _ = Describe("Console UI", func() {
 
   Context("when displaying information to user", func() {
 
-    It("indicates invalid choice to user and asks for another choice", func() {
+    It("indicates invalid choice to user", func() {
       console.PrintChoiceInvalid()
       Expect(writer.String()).To(ContainSubstring("Whoops, that choice is invalid"))
       Expect(writer.String()).To(ContainSubstring("Try Again"))
@@ -78,10 +74,22 @@ var _ = Describe("Console UI", func() {
 
     })
 
-    It("lists available player types", func() {
-      console.DisplayPlayerTypes(factory.PlayerTypes())
-      Expect(writer.String()).To(ContainSubstring("Human"))
-      Expect(writer.String()).To(ContainSubstring("Computer"))
+    Context ("when displaying Player Type Information", func() {
+
+      It("lists available player types", func() {
+        console.DisplayPlayerTypes(factory.PlayerTypes())
+        Expect(writer.String()).To(ContainSubstring("Human"))
+        Expect(writer.String()).To(ContainSubstring("Computer"))
+      })
+    })
+
+    Context ("when displaying Board Type Information", func() {
+
+      It("lists available board types", func() {
+        console.DisplayBoardTypes(factory.BoardTypes())
+        Expect(writer.String()).To(ContainSubstring("3x3 Board"))
+      })
+
     })
 
     Context ("when displaying game board", func() {
@@ -106,9 +114,11 @@ var _ = Describe("Console UI", func() {
 
   Context("when communicating with rest of program", func() {
     var playerTypes []Player
+    var boardTypes []Board
 
     BeforeEach(func() {
       playerTypes = factory.PlayerTypes()
+      boardTypes = factory.BoardTypes()
     })
 
     It("returns selected player choice", func() {
@@ -127,14 +137,26 @@ var _ = Describe("Console UI", func() {
       Expect(selectedPlayer.Description()).To(Equal("Computer"))
     })
 
-   It("returns multiptle players", func() {
+    It("returns multiptle players", func() {
       SetMockInput(&reader, "a\n1\n2\n2\n")
       selectedPlayer := console.SelectPlayerChoice(playerTypes, "player 1")
       Expect(selectedPlayer.Description()).To(Equal("Human"))
 
       anotherPlayer := console.SelectPlayerChoice(playerTypes, "player 2")
       Expect(anotherPlayer.Description()).To(Equal("Computer"))
-   })
+    })
+
+    It("returns board type template", func() {
+      SetMockInput(&reader, "1\n")
+      console.SelectBoardChoice(boardTypes)
+      Expect(writer.String()).To(ContainSubstring("3x3 Board"))
+    })
+
+    It("returns board type template", func() {
+      SetMockInput(&reader, "2\n1\n")
+      console.SelectBoardChoice(boardTypes)
+      Expect(writer.String()).To(ContainSubstring("Whoops, that choice is invalid"))
+    })
 
   })
 

@@ -67,13 +67,12 @@ var _ = Describe("Factory", func() {
         board3x3Template.NewBoard("X")
 
         newBoard := factory.Board(board3x3Template)
-        Expect(newBoard.Description()).To(Equal("3x3_Board"))
+        Expect(newBoard.Description()).To(Equal("3x3 Board"))
       })
 
     })
 
   })
-
 
   func allElementsUnique(elementList []string) (bool) {
 
@@ -87,7 +86,6 @@ var _ = Describe("Factory", func() {
 
     return true
   }
-
 
   func getPlayerDescriptions(playerList []Player) ([]string) {
     options := make([]string, len(playerList))

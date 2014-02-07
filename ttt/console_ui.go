@@ -82,8 +82,6 @@ func (c *ConsoleUI) FormatEmptySpots(list []string) ([]string) {
 func (c ConsoleUI) SelectPlayerChoice(playerList []Player, description string) (Player) {
   c.DisplayPlayerTypes(playerList)
   playerChoice := c.PlayerChoice(playerList)
-//      secondChoice := c.GetIntegerFromUser()
-//      fmt.Println("secondChoice---->",secondChoice,"<---")
   return playerChoice
 }
 
@@ -110,6 +108,33 @@ func (c *ConsoleUI) PlayerChoice(playerList []Player) (Player) {
 
 
   return playerList[0]
+}
+
+func (c ConsoleUI) DisplayBoardTypes(boardList []Board){
+
+  for i := 0; i < len(boardList); i++ {
+    fmt.Fprintln(c.Writer, boardList[i].Description())
+  }
+
+}
+
+func (c ConsoleUI) SelectBoardChoice(boardList []Board) (Board) {
+  c.DisplayBoardTypes(boardList)
+  boardChoice := c.BoardChoice(boardList)
+  return boardChoice
+}
+
+func (c ConsoleUI) BoardChoice(boardList []Board) (Board) {
+  for {
+    userChoice := c.GetIntegerFromUser()
+
+    if c.ChoiceValid(userChoice, len(boardList)) {
+      userChoice = c.shiftToZerosBasedIndex(userChoice)
+      return boardList[userChoice]
+    } else {
+      c.PrintChoiceInvalid()
+    }
+  }
 }
 
 func (c *ConsoleUI) GetIntegerFromUser() (int) {

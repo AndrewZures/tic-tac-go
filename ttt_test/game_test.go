@@ -22,13 +22,14 @@ var _ = Describe("Game", func() {
   })
 
   It("sets up a game", func() {
-    SetMockInput(&reader, "1\n2\n2\n")
+    SetMockInput(&reader, "1\n2\n1\n")
     emptyBoardArray := []string{"","","","","","","","",""}
 
     board, player1, player2 := game.SetupNewGame(userInterface,factory)
 
     Expect(player1.Description()).To(Equal("Human"))
     Expect(player2.Description()).To(Equal("Computer"))
+    Expect(board.Description()).To(Equal("3x3 Board"))
     Expect(board.Array()).To(Equal(emptyBoardArray))
   })
 

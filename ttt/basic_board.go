@@ -12,6 +12,7 @@ func (b *BasicBoard) NewBoard(startSymbol string) (bool) {
     b.array = make([]string, 9, 9)
     b.offset = 3
     b.playerTurn = startSymbol
+    b.description = "3x3 Board"
     return true
   } else {
     return false
