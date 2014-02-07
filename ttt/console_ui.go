@@ -29,6 +29,10 @@ func (c ConsoleUI) DisplayBoard(board Board) {
   }
 }
 
+func (c ConsoleUI) DisplayWinner(winner string) {
+  fmt.Fprintf(c.Writer, "The Winner is ", winner)
+}
+
 func (c *ConsoleUI) EndOfRow(board Board, index int) (bool) {
   return (index+1) % board.Offset() == 0
 }
@@ -105,7 +109,7 @@ func (c *ConsoleUI) PlayerChoice(playerList []Player) (Player) {
 
 func (c *ConsoleUI) GetIntegerFromUser() (int) {
 
-  for {
+  for i := 0; i < 4; i++ {
     userInput := c.ReadConsole()
     value, err := strconv.ParseInt(userInput,0,0)
 
@@ -115,6 +119,8 @@ func (c *ConsoleUI) GetIntegerFromUser() (int) {
       c.PrintChoiceInvalid()
     }
   }
+
+  return -1
 }
 
 func (c *ConsoleUI) shiftToZerosBasedIndex(onesBasedIndexChoice int) (int) {

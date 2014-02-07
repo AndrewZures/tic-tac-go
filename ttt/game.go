@@ -2,49 +2,48 @@ package ttt
 
 type Game struct {
   status string;
+  userInterface UserInterface
+  factory Factory
 }
 
 //TODO complete
-func setupNewGame(console ConsoleUI, factory Factory){
- // playerTypes := factory.PlayerTypes()
- // console.DisplayPlayerTypes(playerTypes)
- // player1Type := console.SelectPlayerChoice(playerTypes, "Player 1")
- // console.DisplayPlayerTypes(playerTypes)
- // player2Type := console.SelectPlayerChoice(playerTypes, "Player 2")
+func (g Game) setupNewGame(console UserInterface, factory Factory) (Board, Player, Player) {
+  playerTypes := factory.PlayerTypes()
+  console.DisplayPlayerTypes(playerTypes)
+  player1Template := console.SelectPlayerChoice(playerTypes, "Player 1")
+  console.DisplayPlayerTypes(playerTypes)
+  player2Template := console.SelectPlayerChoice(playerTypes, "Player 2")
 
- // //Player1 := factor.Player(player1Type)
+  player1 := factory.Player(player1Template)
+  player2 := factory.Player(player2Template)
+  board := new(BasicBoard)
 
-
-
-
-
-
-  //playerTypes = factory.PlayerTypes()
-  //console.ShowPlayerTypes(playerTypes)
-  //player1Type := console.QueryForPlayerType(playerTypes)
-  //player2Type := console.QueryForPlayerType(playerTypes)
-  //player1 := factory.NewPlayer(player1type)
-  //player2 := factory.NewPlayer(player2type)
-
-  //boardTypes = factory.BoardTypes()
-  //console.ShowBoardTypes(boardTypes)
-  //board = factory.Board(boardType)
-
-  //game = Game{board, player1, player2}
-  //game.Run()
-
-
-
-
-
-  //playerTypes := []Player{Player(new(HumanPlayer)), Player(new(ComputerPlayer))}
-  ////player1Type := console.QueryPlayerType(playerTypes)
-  ////player2Type := console.QueryPlayerType(playerTypes)
-  //if player1Type == player2Type {
-
-  //}
-}
-
-func runGame(){
+  return board, player1, player2
 
 }
+
+func (g Game) Run(console UserInterface, factory Factory) {
+  board, player1, player2 := g.setupNewGame(console, factory)
+
+  currentPlayer := player1
+
+  for i := 0; i < 100; i++ {
+    console.DisplayBoard(board)
+    currentMove := currentPlayer.MakeMove(board)
+    board.RecordMove(currentMove, currentPlayer.Symbol())
+
+    if board.Status() != "inprogress" {
+      console.DisplayWinner(board.Winner())
+      return
+    }
+
+    if currentPlayer == player1{
+      currentPlayer = player2
+    } else {
+      currentPlayer = player1
+    }
+  }
+}
+
+
+

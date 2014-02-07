@@ -34,6 +34,7 @@ var _ = Describe("Factory", func() {
         humanTemplate := new(HumanPlayer)
         humanTemplate.NewHumanPlayer("X", "Human")
         player := factory.Player(humanTemplate)
+
         //Expect(player).NotTo(Equal(humanTemplate))
         Expect(player.Description()).To(Equal("Human"))
         Expect(player.Symbol()).To(Equal("X"))
@@ -43,6 +44,7 @@ var _ = Describe("Factory", func() {
         computerTemplate := new(ComputerPlayer)
         computerTemplate.NewComputerPlayer("O", "Computer")
         player := factory.Player(computerTemplate)
+
         //Expect(player).NotTo(Equal(computerTemplate))
         Expect(player.Description()).To(Equal("Computer"))
         Expect(player.Symbol()).To(Equal("O"))

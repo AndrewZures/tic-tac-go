@@ -23,12 +23,12 @@ func (f *TTTFactory) Player(playerTemplate Player) (Player) {
 
       case playerTemplate.Description() == "Human":
         human := new(HumanPlayer)
-        human.NewHumanPlayer(playerTemplate.Symbol(), "Human")
+        human.NewHumanPlayer("X", "Human")
         return human
 
       case playerTemplate.Description() == "Computer":
         computer := new(ComputerPlayer)
-        computer.NewComputerPlayer(playerTemplate.Symbol(), "Computer")
+        computer.NewComputerPlayer("O", "Computer")
         return computer
     }
 

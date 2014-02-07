@@ -1,7 +1,5 @@
 package ttt
 
-//import "fmt"
-
 type BasicBoard struct {
     array []string;
     offset int;
@@ -59,6 +57,14 @@ func (b *BasicBoard) RecordMove(move int, symbol string) (bool) {
 
 func (b *BasicBoard) Status() (string) {
   return b.Score(b.array)
+}
+
+func (b *BasicBoard) Winner() (string) {
+  if b.Status() == "inprogress" {
+    return "no winner yet"
+  } else {
+    return b.Status()
+  }
 }
 
 func (b *BasicBoard) toggleTurn() {
