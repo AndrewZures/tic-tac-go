@@ -5,6 +5,8 @@ import (
   . "github.com/onsi/ginkgo"
   . "github.com/onsi/gomega"
   "bytes"
+//  "fmt"
+
 )
 
 var _ = Describe("Console UI", func() {
@@ -74,6 +76,15 @@ var _ = Describe("Console UI", func() {
 
     })
 
+    It("Asks player for move", func() {
+      player := new(HumanPlayer)
+      player.NewHumanPlayer("X", "Player 1")
+      console.AskUserForMove(player)
+      Expect(writer.String()).To(ContainSubstring("Choose a Move"))
+
+    })
+
+
     Context ("when displaying Player Type Information", func() {
 
       It("lists available player types", func() {
@@ -91,6 +102,15 @@ var _ = Describe("Console UI", func() {
       })
 
     })
+
+    It ("validates chosen move against available moves", func() {
+        board := GenerateBoard("x", []string{"x","o","x","o","","x","","o",""})
+        result := console.ValidateMove(8, board)
+        Expect(result).To(Equal(true))
+
+        result = console.ValidateMove(1, board)
+        Expect(result).To(Equal(false))
+      })
 
     Context ("when displaying game board", func() {
 

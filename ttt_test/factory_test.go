@@ -63,10 +63,12 @@ var _ = Describe("Factory", func() {
       })
 
       It("provides board when given a board template", func() {
+        player := new(HumanPlayer)
+        player.NewHumanPlayer("X", "Human")
         board3x3Template := new(BasicBoard)
-        board3x3Template.NewBoard("X")
+        board3x3Template.NewBoard("")
 
-        newBoard := factory.Board(board3x3Template)
+        newBoard := factory.Board(board3x3Template, player.Symbol())
         Expect(newBoard.Description()).To(Equal("3x3 Board"))
       })
 

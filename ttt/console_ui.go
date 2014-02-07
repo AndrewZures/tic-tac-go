@@ -28,6 +28,36 @@ func (c ConsoleUI) DisplayBoard(board Board) {
   }
 }
 
+func (c ConsoleUI) SelectMove(player Player, board Board) (int){
+
+  for {
+    c.AskUserForMove(player)
+    move := c.GetIntegerFromUser()
+    if c.ValidateMove(move, board) {
+      return move
+    } else {
+      c.PrintChoiceInvalid()
+    }
+  }
+}
+
+func (c ConsoleUI) AskUserForMove(player Player) {
+  fmt.Fprintf(c.Writer, "%v, Choose a Move!", player.Description())
+}
+
+func (c ConsoleUI) ValidateMove(move int, board Board) (bool) {
+  availableMoves := board.OpenSpots(board.Array())
+  status := false
+
+  for i := 0; i < len(availableMoves); i++ {
+    if move == availableMoves[i] {
+      status = true
+    }
+  }
+
+  return status
+}
+
 func (c ConsoleUI) DisplayWinner(winner string) {
   fmt.Fprintf(c.Writer, "The Winner is ", winner)
 }
@@ -106,8 +136,6 @@ func (c *ConsoleUI) PlayerChoice(playerList []Player) (Player) {
     }
   }
 
-
-  return playerList[0]
 }
 
 func (c ConsoleUI) DisplayBoardTypes(boardList []Board){

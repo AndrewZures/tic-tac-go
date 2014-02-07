@@ -46,15 +46,16 @@ func (f TTTFactory) BoardTypes() ([]Board) {
   return boardList
 }
 
-func (f *TTTFactory) Board(boardTemplate Board) (Board) {
+func (f *TTTFactory) Board(boardTemplate Board, startSymbol string) (Board) {
   var board Board
 
   switch {
   case boardTemplate.Description() == "3x3 Board":
     board = new(BasicBoard)
-    board.NewBoard("X")
+    board.NewBoard(startSymbol)
     return board
   }
 
   return nil
 }
+
