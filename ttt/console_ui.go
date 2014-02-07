@@ -2,14 +2,13 @@ package ttt
 
 import ("fmt"
         "io"
-        "bufio"
         "strconv"
         "strings"
       )
 
 type ConsoleUI struct {
   Writer io.Writer;
-  Reader bufio.Reader;
+  Reader io.Reader;
 }
 
 func (c ConsoleUI) DisplayBoard(board Board) {
@@ -82,7 +81,10 @@ func (c *ConsoleUI) FormatEmptySpots(list []string) ([]string) {
 
 func (c ConsoleUI) SelectPlayerChoice(playerList []Player, description string) (Player) {
   c.DisplayPlayerTypes(playerList)
-  return c.PlayerChoice(playerList)
+  playerChoice := c.PlayerChoice(playerList)
+//      secondChoice := c.GetIntegerFromUser()
+//      fmt.Println("secondChoice---->",secondChoice,"<---")
+  return playerChoice
 }
 
 func (c ConsoleUI) DisplayPlayerTypes(playerList []Player){
@@ -95,7 +97,7 @@ func (c ConsoleUI) DisplayPlayerTypes(playerList []Player){
 
 func (c *ConsoleUI) PlayerChoice(playerList []Player) (Player) {
 
-  for {
+  for i := 0; i < 6; i++ {
     userChoice := c.GetIntegerFromUser()
 
     if c.ChoiceValid(userChoice, len(playerList)){
@@ -114,7 +116,7 @@ func (c *ConsoleUI) GetIntegerFromUser() (int) {
   var userInput string
   var copiedInput string
 
-  for {
+  for i := 0; i < 3; i++ {
     userInput = c.ReadConsole()
     copiedInput = strings.Repeat(userInput, 1)
     value, err := strconv.ParseInt(copiedInput,0,0)
@@ -143,8 +145,9 @@ func (c *ConsoleUI) PrintChoiceInvalid(){
 
 
 func (c *ConsoleUI) ReadConsole() (string) {
-  line, _, _ := c.Reader.ReadLine()
-  return string(line)
+  var result string
+  fmt.Fscanln(c.Reader, &result)
+  return string(result)
 }
 
 func (c *ConsoleUI) Print (input string){
