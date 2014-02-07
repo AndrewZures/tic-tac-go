@@ -165,7 +165,7 @@ func (c ConsoleUI) BoardChoice(boardList []Board) (Board) {
   }
 }
 
-func (c *ConsoleUI) GetIntegerFromUser() (int) {
+func (c ConsoleUI) GetIntegerFromUser() (int) {
   var userInput string
   var copiedInput string
 
@@ -192,7 +192,7 @@ func (c *ConsoleUI) ChoiceValid(choice int, numChoices int) (bool) {
   return choice > 0 && choice <= numChoices
 }
 
-func (c *ConsoleUI) PrintChoiceInvalid(){
+func (c ConsoleUI) PrintChoiceInvalid(){
   fmt.Fprintln(c.Writer, "Whoops, that choice is invalid! Try Again")
 }
 

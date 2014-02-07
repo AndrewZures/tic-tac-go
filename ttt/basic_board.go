@@ -73,6 +73,10 @@ func (b *BasicBoard) Winner() (string) {
   }
 }
 
+func (b BasicBoard) GameOver() (bool){
+  return b.Status() != "inprogress"
+}
+
 func (b *BasicBoard) toggleTurn() {
   if b.playerTurn == "x" {
     b.playerTurn = "o"

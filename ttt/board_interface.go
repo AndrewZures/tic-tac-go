@@ -9,6 +9,7 @@ type Board interface {
   RecordMove(int, string) bool;
   RemoveMove(int);
   Status() string;
+  GameOver() bool;
   Winner() string;
   PlayerTurn() string;
   Score([]string) string;

@@ -15,18 +15,24 @@ func (g TTTGame) Run(console UserInterface, factory Factory) {
   for {
     console.DisplayBoard(board)
     currentMove := currentPlayer.MakeMove(board)
-    board.RecordMove(currentMove, currentPlayer.Symbol())
+    validMove := board.RecordMove(currentMove, currentPlayer.Symbol())
 
-    if board.Status() != "inprogress" {
-      console.DisplayWinner(board.Winner())
-      return
-    }
-
-    if currentPlayer == player1{
-      currentPlayer = player2
+    if !validMove {
+      console.PrintChoiceInvalid()
     } else {
-      currentPlayer = player1
+
+      if board.GameOver() {
+        console.DisplayWinner(board.Winner())
+        return
+      }
+
+      if currentPlayer == player1{
+        currentPlayer = player2
+      } else {
+        currentPlayer = player1
+      }
     }
+
   }
 }
 

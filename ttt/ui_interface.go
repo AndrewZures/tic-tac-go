@@ -5,6 +5,7 @@ type UserInterface interface {
   SelectBoardChoice([]Board) (Board);
   DisplayPlayerTypes([]Player);
   SelectPlayerChoice([]Player, string) (Player);
+  PrintChoiceInvalid();
   DisplayWinner(string);
   SelectMove(Player, Board) (int)
 }
