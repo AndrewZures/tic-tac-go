@@ -12,7 +12,7 @@ type ConsoleUI struct {
   Reader bufio.Reader;
 }
 
-func (c *ConsoleUI) DisplayBoard(board Board) {
+func (c ConsoleUI) DisplayBoard(board Board) {
   gameState := board.Array()
   gameState = c.FormatGameState(gameState)
 
@@ -76,12 +76,12 @@ func (c *ConsoleUI) FormatEmptySpots(list []string) ([]string) {
   return list
 }
 
-func (c *ConsoleUI) SelectPlayerChoice(playerList []Player) (Player) {
+func (c ConsoleUI) SelectPlayerChoice(playerList []Player, description string) (Player) {
   c.DisplayPlayerTypes(playerList)
   return c.PlayerChoice(playerList)
 }
 
-func (c *ConsoleUI) DisplayPlayerTypes(playerList []Player){
+func (c ConsoleUI) DisplayPlayerTypes(playerList []Player){
 
   for i := 0; i < len(playerList); i++ {
     fmt.Fprintln(c.Writer, playerList[i].Description())

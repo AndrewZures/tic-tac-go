@@ -20,21 +20,29 @@ var _ = Describe("Console UI", func() {
     factory = Factory(new(TTTFactory))
   })
 
+  It("implements UserInterface", func() {
+    playerTypes := factory.PlayerTypes()
+    interfacedConsole := UserInterface(console)
+    setMockInput(&reader, "1")
+    selectedPlayer := interfacedConsole.SelectPlayerChoice(playerTypes, "player 1")
+    Expect(selectedPlayer.Description()).To(Equal("Human"))
+  })
+
   Context("when receiving input from user", func() {
 
     It("reads from console", func() {
-      fmt.Fprintf(&reader, "Test Console Input")
+      setMockInput(&reader, "Test Console Input")
       result := console.ReadConsole()
       Expect(result).To(Equal("Test Console Input"))
     })
 
     It("validates input from use is integer", func() {
-      fmt.Fprintf(&reader, "3")
+      setMockInput(&reader, "3")
       Expect(console.GetIntegerFromUser()).To(Equal(3))
     })
 
     It("requeries user until integer is provided", func() {
-      fmt.Fprintf(&reader, "firsstring\nsecondstring2\n1\n")
+      setMockInput(&reader, "firsstring\nsecond123string2\n1\n")
       Expect(console.GetIntegerFromUser()).To(Equal(1))
 
     })
@@ -49,7 +57,7 @@ var _ = Describe("Console UI", func() {
     })
 
     It("indicates invalid choice to user if integer expected and not received", func() {
-      fmt.Fprintf(&reader, "firsstring\n1\n")
+      setMockInput(&reader, "firsstring\n1\n")
       console.GetIntegerFromUser()
       Expect(writer.String()).To(ContainSubstring("Whoops, that choice is invalid"))
       Expect(writer.String()).To(ContainSubstring("Try Again"))
@@ -67,7 +75,6 @@ var _ = Describe("Console UI", func() {
       It("prints a board", func() {
         board := GenerateBoard("x", []string{"","","","","","","","",""})
         console.DisplayBoard(board)
-        //Expect(writer.String()).To(ContainSubstring("  |   |  \n  |   |  \n  |   |  \n"))
         Expect(writer.String()).To(ContainSubstring("  |   |  \n"))
       })
 
@@ -84,15 +91,25 @@ var _ = Describe("Console UI", func() {
   })
 
   Context("when communicating with rest of program", func() {
+    var playerTypes []Player
+
+    BeforeEach(func() {
+      playerTypes = factory.PlayerTypes()
+    })
 
     It("returns selected player choice", func() {
-      fmt.Fprintf(&reader, "1")
-      playerTypes := factory.PlayerTypes()
-      selectedPlayer := console.SelectPlayerChoice(playerTypes)
+      setMockInput(&reader, "1")
+      selectedPlayer := console.SelectPlayerChoice(playerTypes, "player 1")
       Expect(selectedPlayer.Description()).To(Equal("Human"))
 
-      fmt.Fprintf(&reader, "2")
-      selectedPlayer = console.SelectPlayerChoice(playerTypes)
+      setMockInput(&reader, "2")
+      selectedPlayer = console.SelectPlayerChoice(playerTypes, "player 1")
+      Expect(selectedPlayer.Description()).To(Equal("Computer"))
+    })
+
+    It("only returns valid player choice", func() {
+      setMockInput(&reader, "-1\n100\na\n2\n")
+      selectedPlayer := console.SelectPlayerChoice(playerTypes, "player 1")
       Expect(selectedPlayer.Description()).To(Equal("Computer"))
     })
 
@@ -104,3 +121,8 @@ var _ = Describe("Console UI", func() {
   })
 
 })
+
+func setMockInput(reader *bytes.Buffer, input string){
+    fmt.Fprintf(reader, input)
+}
+

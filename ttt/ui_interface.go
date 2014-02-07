@@ -1,7 +1,7 @@
 package ttt
 
 type UserInterface interface {
-  DisplayBoard();
+  DisplayBoard(Board);
   DisplayPlayerTypes([]Player);
-  SelectPlayerChoice([]Player) (Player);
+  SelectPlayerChoice([]Player, string) (Player);
 }
