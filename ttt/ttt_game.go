@@ -1,15 +1,14 @@
 package ttt
 
-type Game struct {
+type TTTGame struct {
   status string;
   userInterface UserInterface
   factory Factory
 }
 
 //TODO complete
-func (g Game) setupNewGame(console UserInterface, factory Factory) (Board, Player, Player) {
+func (g *TTTGame) SetupNewGame(console UserInterface, factory Factory) (Board, Player, Player) {
   playerTypes := factory.PlayerTypes()
-  console.DisplayPlayerTypes(playerTypes)
   player1Template := console.SelectPlayerChoice(playerTypes, "Player 1")
   console.DisplayPlayerTypes(playerTypes)
   player2Template := console.SelectPlayerChoice(playerTypes, "Player 2")
@@ -17,13 +16,14 @@ func (g Game) setupNewGame(console UserInterface, factory Factory) (Board, Playe
   player1 := factory.Player(player1Template)
   player2 := factory.Player(player2Template)
   board := new(BasicBoard)
+  board.NewBoard("X")
 
   return board, player1, player2
 
 }
 
-func (g Game) Run(console UserInterface, factory Factory) {
-  board, player1, player2 := g.setupNewGame(console, factory)
+func (g TTTGame) Run(console UserInterface, factory Factory) {
+  board, player1, player2 := g.SetupNewGame(console, factory)
 
   currentPlayer := player1
 

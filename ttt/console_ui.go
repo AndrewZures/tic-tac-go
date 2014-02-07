@@ -97,7 +97,7 @@ func (c ConsoleUI) DisplayPlayerTypes(playerList []Player){
 
 func (c *ConsoleUI) PlayerChoice(playerList []Player) (Player) {
 
-  for i := 0; i < 6; i++ {
+  for {
     userChoice := c.GetIntegerFromUser()
 
     if c.ChoiceValid(userChoice, len(playerList)){
@@ -116,7 +116,7 @@ func (c *ConsoleUI) GetIntegerFromUser() (int) {
   var userInput string
   var copiedInput string
 
-  for i := 0; i < 3; i++ {
+  for {
     userInput = c.ReadConsole()
     copiedInput = strings.Repeat(userInput, 1)
     value, err := strconv.ParseInt(copiedInput,0,0)

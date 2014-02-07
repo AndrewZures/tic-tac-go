@@ -5,8 +5,6 @@ import (
   . "github.com/onsi/ginkgo"
   . "github.com/onsi/gomega"
   "bytes"
-  "fmt"
-  //"bufio"
 )
 
 var _ = Describe("Console UI", func() {
@@ -23,7 +21,7 @@ var _ = Describe("Console UI", func() {
   It("implements UserInterface", func() {
     playerTypes := factory.PlayerTypes()
     interfacedConsole := UserInterface(console)
-    setMockInput(&reader, "1")
+    SetMockInput(&reader, "1")
     selectedPlayer := interfacedConsole.SelectPlayerChoice(playerTypes, "player 1")
     Expect(selectedPlayer.Description()).To(Equal("Human"))
   })
@@ -31,13 +29,13 @@ var _ = Describe("Console UI", func() {
   Context("when receiving input from user", func() {
 
     XIt("reads from console", func() {
-      setMockInput(&reader, "Test Console Input")
+      SetMockInput(&reader, "Test Console Input")
       result := console.ReadConsole()
       Expect(result).To(Equal("Test Console Input"))
     })
 
     It("reads multiple times from console", func() {
-      setMockInput(&reader, "Test\nConsole\nInput\n1\n2\n3\n4\n")
+      SetMockInput(&reader, "Test\nConsole\nInput\n1\n2\n3\n4\n")
       Expect(console.ReadConsole()).To(Equal("Test"))
       Expect(console.ReadConsole()).To(Equal("Console"))
       Expect(console.ReadConsole()).To(Equal("Input"))
@@ -48,17 +46,17 @@ var _ = Describe("Console UI", func() {
     })
 
     It("validates input from use is integer", func() {
-      setMockInput(&reader, "3")
+      SetMockInput(&reader, "3")
       Expect(console.GetIntegerFromUser()).To(Equal(3))
     })
 
     It("requeries user until integer is provided", func() {
-      setMockInput(&reader, "firsstring\nsecond123string2\n1\n")
+      SetMockInput(&reader, "firsstring\nsecond123string2\n1\n")
       Expect(console.GetIntegerFromUser()).To(Equal(1))
     })
 
     It("reads multiple integer inputs from user", func() {
-      setMockInput(&reader, "firsstring\nsecond123string2\n3\n6\n")
+      SetMockInput(&reader, "firsstring\nsecond123string2\n3\n6\n")
       Expect(console.GetIntegerFromUser()).To(Equal(3))
       Expect(console.GetIntegerFromUser()).To(Equal(6))
     })
@@ -73,7 +71,7 @@ var _ = Describe("Console UI", func() {
     })
 
     It("indicates invalid choice to user if integer expected and not received", func() {
-      setMockInput(&reader, "firsstring\n1\n")
+      SetMockInput(&reader, "firsstring\n1\n")
       console.GetIntegerFromUser()
       Expect(writer.String()).To(ContainSubstring("Whoops, that choice is invalid"))
       Expect(writer.String()).To(ContainSubstring("Try Again"))
@@ -114,31 +112,29 @@ var _ = Describe("Console UI", func() {
     })
 
     It("returns selected player choice", func() {
-      setMockInput(&reader, "1")
+      SetMockInput(&reader, "1")
       selectedPlayer := console.SelectPlayerChoice(playerTypes, "player 1")
       Expect(selectedPlayer.Description()).To(Equal("Human"))
 
-      setMockInput(&reader, "2")
+      SetMockInput(&reader, "2")
       selectedPlayer = console.SelectPlayerChoice(playerTypes, "player 1")
       Expect(selectedPlayer.Description()).To(Equal("Computer"))
     })
 
     It("only returns valid player choice", func() {
-      setMockInput(&reader, "-1\n100\na\n2\n1\n")
+      SetMockInput(&reader, "-1\n100\na\n2\n1\n")
       selectedPlayer := console.SelectPlayerChoice(playerTypes, "player 1")
       Expect(selectedPlayer.Description()).To(Equal("Computer"))
     })
 
    It("returns multiptle players", func() {
-      setMockInput(&reader, "a\n1\n2\n2\n")
+      SetMockInput(&reader, "a\n1\n2\n2\n")
       selectedPlayer := console.SelectPlayerChoice(playerTypes, "player 1")
       Expect(selectedPlayer.Description()).To(Equal("Human"))
 
       anotherPlayer := console.SelectPlayerChoice(playerTypes, "player 2")
       Expect(anotherPlayer.Description()).To(Equal("Computer"))
-
    })
-
 
   })
 
@@ -149,7 +145,4 @@ var _ = Describe("Console UI", func() {
 
 })
 
-func setMockInput(reader *bytes.Buffer, input string){
-    fmt.Fprintf(reader, input)
-}
 
