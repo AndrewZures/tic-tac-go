@@ -110,6 +110,7 @@ func (c *ConsoleUI) FormatEmptySpots(list []string) ([]string) {
 }
 
 func (c ConsoleUI) SelectPlayerChoice(playerList []Player, description string) (Player) {
+  c.PrintPlayerTypeQuestion(description)
   c.DisplayPlayerTypes(playerList)
   playerChoice := c.PlayerChoice(playerList)
   return playerChoice
@@ -118,10 +119,19 @@ func (c ConsoleUI) SelectPlayerChoice(playerList []Player, description string) (
 func (c ConsoleUI) DisplayPlayerTypes(playerList []Player){
 
   for i := 0; i < len(playerList); i++ {
-    fmt.Fprintln(c.Writer, playerList[i].Description())
+    fmt.Fprintf(c.Writer, "%v. %v\n", (i+1), playerList[i].Description())
   }
 
 }
+
+func (c ConsoleUI) PrintPlayerTypeQuestion(playerDescription string) {
+  fmt.Fprintf(c.Writer, "Choose Type for %v:\n", playerDescription)
+}
+
+func (c ConsoleUI) PrintBoardTypeQuestion() {
+  fmt.Fprintln(c.Writer, "Choose Board Type:")
+}
+
 
 func (c *ConsoleUI) PlayerChoice(playerList []Player) (Player) {
 
@@ -141,12 +151,13 @@ func (c *ConsoleUI) PlayerChoice(playerList []Player) (Player) {
 func (c ConsoleUI) DisplayBoardTypes(boardList []Board){
 
   for i := 0; i < len(boardList); i++ {
-    fmt.Fprintln(c.Writer, boardList[i].Description())
+    fmt.Fprintf(c.Writer, "%v. %v\n", (i+1), boardList[i].Description())
   }
 
 }
 
 func (c ConsoleUI) SelectBoardChoice(boardList []Board) (Board) {
+  c.PrintBoardTypeQuestion()
   c.DisplayBoardTypes(boardList)
   boardChoice := c.BoardChoice(boardList)
   return boardChoice
