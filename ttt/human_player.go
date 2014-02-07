@@ -10,6 +10,10 @@ func (h *HumanPlayer) NewHumanPlayer(symbol string, typeTitle string){
   h.typeTitle = typeTitle
 }
 
+func (h *HumanPlayer) SetSymbol(thisSymbol string) {
+  h.symbol = thisSymbol
+}
+
 func (h *HumanPlayer) MakeMove(board Board) (int) {
   return 1
 }

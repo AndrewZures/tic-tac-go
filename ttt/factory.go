@@ -53,6 +53,7 @@ func (f *TTTFactory) Board(boardTemplate Board, startSymbol string) (Board) {
   case boardTemplate.Description() == "3x3 Board":
     board = new(BasicBoard)
     board.NewBoard(startSymbol)
+
     return board
   }
 

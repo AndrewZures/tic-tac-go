@@ -8,6 +8,10 @@ type ComputerPlayer struct {
   board Board;
 }
 
+func (h *ComputerPlayer) SetSymbol(symbol string) {
+  h.symbol = symbol
+}
+
 func (h *ComputerPlayer) NewComputerPlayer(symbol string, typeTitle string){
   h.symbol = symbol
   h.typeTitle = typeTitle

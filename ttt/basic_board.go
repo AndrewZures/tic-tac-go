@@ -28,7 +28,16 @@ func (b *BasicBoard) PlayerTurn() (string) {
 }
 
 func (b *BasicBoard) Array() ([]string) {
-  return b.array
+  return b.copyStringArray(b.array)
+}
+
+func (b BasicBoard) copyStringArray(stringToCopy []string) ([]string) {
+  newString := make([]string, len(stringToCopy))
+  for i := 0; i < len(stringToCopy); i++ {
+    newString[i] = stringToCopy[i]
+  }
+
+  return newString
 }
 
 func (b *BasicBoard) Offset() (int) {

@@ -1,5 +1,7 @@
 package ttt
 
+//import "fmt"
+
 type TTTGame struct {
   status string;
   userInterface UserInterface
@@ -36,14 +38,19 @@ func (g TTTGame) Run(console UserInterface, factory Factory) {
   }
 }
 
-//TODO complete
 func (g TTTGame) SetupNewGame(console UserInterface, factory Factory) (Board, Player, Player) {
   playerTypes := factory.PlayerTypes()
   player1Template := console.SelectPlayerChoice(playerTypes, "Player 1")
   player2Template := console.SelectPlayerChoice(playerTypes, "Player 2")
 
+
+
   player1 := factory.Player(player1Template)
   player2 := factory.Player(player2Template)
+
+
+  player1.SetSymbol("x")
+  player2.SetSymbol("o")
 
   boardTypes := factory.BoardTypes()
   boardTemplate := console.SelectBoardChoice(boardTypes)

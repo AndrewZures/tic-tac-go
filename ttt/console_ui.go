@@ -59,7 +59,7 @@ func (c ConsoleUI) ValidateMove(move int, board Board) (bool) {
 }
 
 func (c ConsoleUI) DisplayWinner(winner string) {
-  fmt.Fprintf(c.Writer, "The Winner is ", winner)
+  fmt.Fprintf(c.Writer, "The Winner is %v\n", winner)
 }
 
 func (c *ConsoleUI) EndOfRow(board Board, index int) (bool) {
