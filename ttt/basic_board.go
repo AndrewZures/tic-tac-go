@@ -4,6 +4,7 @@ type BasicBoard struct {
     array []string;
     offset int;
     playerTurn string;
+    description string;
 }
 
 func (b *BasicBoard) NewBoard(startSymbol string) (bool) {
@@ -15,6 +16,10 @@ func (b *BasicBoard) NewBoard(startSymbol string) (bool) {
   } else {
     return false
   }
+}
+
+func (b *BasicBoard) Description() (string) {
+  return b.description
 }
 
 func (b *BasicBoard) PlayerTurn() (string) {

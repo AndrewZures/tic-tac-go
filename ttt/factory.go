@@ -4,6 +4,7 @@ type TTTFactory struct {
   playerList []Player;
 }
 
+
 func (f *TTTFactory) PlayerTypes() ([]Player) {
   playerList := make([]Player, 0)
 
@@ -34,3 +35,27 @@ func (f *TTTFactory) Player(playerTemplate Player) (Player) {
 
     return nil
 }
+
+func (f TTTFactory) BoardTypes() ([]Board) {
+  boardList := make([]Board, 0)
+
+  board3x3 := new(BasicBoard)
+  board3x3.NewBoard("")
+  boardList = append(boardList, Board(board3x3))
+
+  return boardList
+}
+
+func (f *TTTFactory) Board(boardTemplate Board) (Board) {
+  var board Board
+
+  switch {
+  case boardTemplate.Description() == "3x3 Board":
+    board = new(BasicBoard)
+    board.NewBoard("X")
+    return board
+  }
+
+  return nil
+}
+

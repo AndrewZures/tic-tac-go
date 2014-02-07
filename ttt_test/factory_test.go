@@ -34,8 +34,9 @@ var _ = Describe("Factory", func() {
         humanTemplate := new(HumanPlayer)
         humanTemplate.NewHumanPlayer("X", "Human")
         player := factory.Player(humanTemplate)
+        comparison := player == humanTemplate
 
-        //Expect(player).NotTo(Equal(humanTemplate))
+        Expect(comparison).To(Equal(false))
         Expect(player.Description()).To(Equal("Human"))
         Expect(player.Symbol()).To(Equal("X"))
       })
@@ -44,10 +45,29 @@ var _ = Describe("Factory", func() {
         computerTemplate := new(ComputerPlayer)
         computerTemplate.NewComputerPlayer("O", "Computer")
         player := factory.Player(computerTemplate)
+        comparison := player == computerTemplate
 
-        //Expect(player).NotTo(Equal(computerTemplate))
+        Expect(comparison).To(Equal(false))
         Expect(player.Description()).To(Equal("Computer"))
         Expect(player.Symbol()).To(Equal("O"))
+      })
+
+    })
+
+    Context("Board Generation", func() {
+
+      It("generates list of avaiable boards", func() {
+        boardList := factory.BoardTypes()
+        descriptions := getBoardDescriptions(boardList)
+        Expect(allElementsUnique(descriptions)).To(Equal(true))
+      })
+
+      It("provides board when given a board template", func() {
+        board3x3Template := new(BasicBoard)
+        board3x3Template.NewBoard("X")
+
+        newBoard := factory.Board(board3x3Template)
+        Expect(newBoard.Description()).To(Equal("3x3_Board"))
       })
 
     })
@@ -74,6 +94,16 @@ var _ = Describe("Factory", func() {
 
     for i := 0; i < len(options); i++ {
       options[i] = playerList[i].Description()
+    }
+
+    return options
+  }
+
+  func getBoardDescriptions(boardList []Board) ([]string) {
+    options := make([]string, len(boardList))
+
+    for i := 0; i < len(options); i++ {
+      options[i] = boardList[i].Description()
     }
 
     return options
