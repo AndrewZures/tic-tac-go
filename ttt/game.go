@@ -6,13 +6,13 @@ type Game struct {
 
 //TODO complete
 func setupNewGame(console ConsoleUI, factory Factory){
-    playerTypes := factory.PlayerTypes()
-    console.DisplayPlayerTypes(playerTypes)
+ // playerTypes := factory.PlayerTypes()
+ // console.DisplayPlayerTypes(playerTypes)
+ // player1Type := console.SelectPlayerChoice(playerTypes, "Player 1")
+ // console.DisplayPlayerTypes(playerTypes)
+ // player2Type := console.SelectPlayerChoice(playerTypes, "Player 2")
 
-//  player1Type := console.QueryUserForPlayerType(playerTypes, "Player 1")
-//
-//  console.DisplayPlayerTypes(playerTypes)
-//  player2Type := console.QueryForPlayerType(playerTypes, "Player 2")
+ // //Player1 := factor.Player(player1Type)
 
 
 

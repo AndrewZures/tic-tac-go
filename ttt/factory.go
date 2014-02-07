@@ -18,4 +18,19 @@ func (f *TTTFactory) PlayerTypes() ([]Player) {
   return playerList
 }
 
+func (f *TTTFactory) Player(playerTemplate Player) (Player) {
+    switch {
 
+      case playerTemplate.Description() == "Human":
+        human := new(HumanPlayer)
+        human.NewHumanPlayer(playerTemplate.Symbol(), "Human")
+        return human
+
+      case playerTemplate.Description() == "Computer":
+        computer := new(ComputerPlayer)
+        computer.NewComputerPlayer(playerTemplate.Symbol(), "Computer")
+        return computer
+    }
+
+    return nil
+}
