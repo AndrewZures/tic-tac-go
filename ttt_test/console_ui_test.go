@@ -36,6 +36,17 @@ var _ = Describe("Console UI", func() {
       Expect(result).To(Equal("Test Console Input"))
     })
 
+    It("reads multiple times from console", func() {
+      setMockInput(&reader, "Test\nConsole\nInput\n1\n2\n3\n4\n")
+      Expect(console.ReadConsole()).To(Equal("Test"))
+      Expect(console.ReadConsole()).To(Equal("Console"))
+      Expect(console.ReadConsole()).To(Equal("Input"))
+      Expect(console.ReadConsole()).To(Equal("1"))
+      Expect(console.ReadConsole()).To(Equal("2"))
+      Expect(console.ReadConsole()).To(Equal("3"))
+      Expect(console.ReadConsole()).To(Equal("4"))
+    })
+
     It("validates input from use is integer", func() {
       setMockInput(&reader, "3")
       Expect(console.GetIntegerFromUser()).To(Equal(3))
@@ -44,7 +55,12 @@ var _ = Describe("Console UI", func() {
     It("requeries user until integer is provided", func() {
       setMockInput(&reader, "firsstring\nsecond123string2\n1\n")
       Expect(console.GetIntegerFromUser()).To(Equal(1))
+    })
 
+    It("reads multiple integer inputs from user", func() {
+      setMockInput(&reader, "firsstring\nsecond123string2\n3\n6\n")
+      Expect(console.GetIntegerFromUser()).To(Equal(3))
+      Expect(console.GetIntegerFromUser()).To(Equal(6))
     })
   })
 

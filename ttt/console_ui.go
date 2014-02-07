@@ -105,13 +105,19 @@ func (c *ConsoleUI) PlayerChoice(playerList []Player) (Player) {
       c.PrintChoiceInvalid()
     }
   }
+
+
+  return playerList[0]
 }
 
 func (c *ConsoleUI) GetIntegerFromUser() (int) {
+  var userInput string
+  var copiedInput string
 
-  for i := 0; i < 4; i++ {
-    userInput := c.ReadConsole()
-    value, err := strconv.ParseInt(userInput,0,0)
+  for {
+    userInput = c.ReadConsole()
+    copiedInput = strings.Repeat(userInput, 1)
+    value, err := strconv.ParseInt(copiedInput,0,0)
 
     if err == nil {
       return int(value)

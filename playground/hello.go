@@ -1,21 +1,21 @@
 package main
 
 import (
-        "os"
+  //      "os"
         "fmt"
         "bufio"
         "io"
-   //     "bytes"
-      )
+       "bytes"
+     )
 
 
 func main() {
   var reader io.Reader
-  //var buffer bytes.Buffer
+  var buffer bytes.Buffer
 
-  reader = os.Stdin
-  //reader = &buffer
-  //fmt.Fprintf(&buffer, "Hello")
+  //reader = os.Stdin
+  reader = &buffer
+  fmt.Fprintf(&buffer, "Hello\n1\n2\n")
 
   bio := bufio.NewReader(reader)
   for i := 0; i < 10; i++ {
