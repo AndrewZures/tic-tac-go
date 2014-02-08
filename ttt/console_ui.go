@@ -42,7 +42,7 @@ func (c ConsoleUI) SelectMove(player Player, board Board) (int){
 }
 
 func (c ConsoleUI) AskUserForMove(player Player) {
-  fmt.Fprintf(c.Writer, "%v, Choose a Move!", player.Description())
+  fmt.Fprintf(c.Writer, "%v, Choose a Move!\n", player.Description())
 }
 
 func (c ConsoleUI) ValidateMove(move int, board Board) (bool) {
@@ -59,7 +59,11 @@ func (c ConsoleUI) ValidateMove(move int, board Board) (bool) {
 }
 
 func (c ConsoleUI) DisplayWinner(winner string) {
-  fmt.Fprintf(c.Writer, "The Winner is %v\n", winner)
+  if winner == "tie"{
+    fmt.Fprintf(c.Writer, "The Game Has Ended In A Tie\n")
+  } else {
+    fmt.Fprintf(c.Writer, "The Winner is %v\n", winner)
+  }
 }
 
 func (c *ConsoleUI) EndOfRow(board Board, index int) (bool) {
@@ -125,7 +129,7 @@ func (c ConsoleUI) DisplayPlayerTypes(playerList []Player){
 }
 
 func (c ConsoleUI) PrintPlayerTypeQuestion(playerDescription string) {
-  fmt.Fprintf(c.Writer, "Choose Type for %v:\n", playerDescription)
+  fmt.Fprintf(c.Writer, "Choose Type for: %v\n", playerDescription)
 }
 
 func (c ConsoleUI) PrintBoardTypeQuestion() {
@@ -145,7 +149,6 @@ func (c *ConsoleUI) PlayerChoice(playerList []Player) (Player) {
       c.PrintChoiceInvalid()
     }
   }
-
 }
 
 func (c ConsoleUI) DisplayBoardTypes(boardList []Board){

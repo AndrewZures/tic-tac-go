@@ -9,15 +9,18 @@ import (
 
 var _ = Describe("Factory", func() {
     var factory *TTTFactory
+    var userInterface UserInterface
 
     BeforeEach(func(){
       factory = new(TTTFactory)
+      console := new(ConsoleUI)
+      userInterface = UserInterface(console)
     })
 
     Context("Player Generation", func() {
 
       It("provides of a list of available player types", func() {
-        playerList := factory.PlayerTypes()
+        playerList := factory.PlayerTypes(userInterface)
         descriptions := getPlayerDescriptions(playerList)
 
         Expect(descriptions).To(ContainElement("Human"))
@@ -25,15 +28,15 @@ var _ = Describe("Factory", func() {
       })
 
       It("each player type in player list is a unique type", func() {
-        playerList := factory.PlayerTypes()
+        playerList := factory.PlayerTypes(userInterface)
         descriptions := getPlayerDescriptions(playerList)
         Expect(allElementsUnique(descriptions)).To(Equal(true))
       })
 
       It("provides human player when given a human player type (Player)", func() {
         humanTemplate := new(HumanPlayer)
-        humanTemplate.NewHumanPlayer("X", "Human")
-        player := factory.Player(humanTemplate)
+        humanTemplate.NewHumanPlayer("X", "Human", userInterface)
+        player := factory.Player(humanTemplate, userInterface)
         comparison := player == humanTemplate
 
         Expect(comparison).To(Equal(false))
@@ -44,7 +47,7 @@ var _ = Describe("Factory", func() {
       It("provides computerplayer when given a computer player type (Player)", func() {
         computerTemplate := new(ComputerPlayer)
         computerTemplate.NewComputerPlayer("O", "Computer")
-        player := factory.Player(computerTemplate)
+        player := factory.Player(computerTemplate, userInterface)
         comparison := player == computerTemplate
 
         Expect(comparison).To(Equal(false))
@@ -64,7 +67,7 @@ var _ = Describe("Factory", func() {
 
       It("provides board when given a board template", func() {
         player := new(HumanPlayer)
-        player.NewHumanPlayer("X", "Human")
+        player.NewHumanPlayer("X", "Human", userInterface)
         board3x3Template := new(BasicBoard)
         board3x3Template.NewBoard("")
 

@@ -1,8 +1,8 @@
 package ttt
 
 type Factory interface {
-  PlayerTypes() ([]Player);
-  Player(Player) (Player);
+  PlayerTypes(UserInterface) ([]Player);
+  Player(Player, UserInterface) (Player);
   BoardTypes() ([]Board);
   Board(Board, string) (Board);
 }

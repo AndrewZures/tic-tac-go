@@ -5,11 +5,11 @@ type TTTFactory struct {
 }
 
 
-func (f *TTTFactory) PlayerTypes() ([]Player) {
+func (f *TTTFactory) PlayerTypes(userInterface UserInterface) ([]Player) {
   playerList := make([]Player, 0)
 
   human := new(HumanPlayer)
-  human.NewHumanPlayer("", "Human")
+  human.NewHumanPlayer("", "Human", userInterface)
   playerList = append(playerList, Player(human))
 
   computer := new(ComputerPlayer)
@@ -19,12 +19,12 @@ func (f *TTTFactory) PlayerTypes() ([]Player) {
   return playerList
 }
 
-func (f *TTTFactory) Player(playerTemplate Player) (Player) {
+func (f *TTTFactory) Player(playerTemplate Player, userInterface UserInterface) (Player) {
     switch {
 
       case playerTemplate.Description() == "Human":
         human := new(HumanPlayer)
-        human.NewHumanPlayer(playerTemplate.Symbol(), "Human")
+        human.NewHumanPlayer(playerTemplate.Symbol(), "Human", userInterface)
         return human
 
       case playerTemplate.Description() == "Computer":

@@ -1,7 +1,5 @@
 package ttt
 
-//import "fmt"
-
 type ComputerPlayer struct {
   symbol string;
   typeTitle string;
@@ -24,13 +22,13 @@ func (h *ComputerPlayer) MakeMove(board Board) (int) {
 }
 
 func (h *ComputerPlayer) startMiniMax() (int) {
-  var bestMove int
+  var bestMove, depth int
   var score, bestScore, minAlpha, maxBeta float64
   bestScore = -100000000.0000
   minAlpha = -100000000.0000
   maxBeta = 100000000.0000
   bestMove = -1
-  depth := 1
+  depth = 1
 
   gameState := h.board.Array()
   openMoves := h.board.OpenSpots(gameState)

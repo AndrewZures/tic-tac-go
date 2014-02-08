@@ -21,7 +21,7 @@ var _ = Describe("Console UI", func() {
   })
 
   It("implements UserInterface", func() {
-    playerTypes := factory.PlayerTypes()
+    playerTypes := factory.PlayerTypes(console)
     interfacedConsole := UserInterface(console)
     SetMockInput(&reader, "1")
     selectedPlayer := interfacedConsole.SelectPlayerChoice(playerTypes, "player 1")
@@ -30,13 +30,7 @@ var _ = Describe("Console UI", func() {
 
   Context("when receiving input from user", func() {
 
-    XIt("reads from console", func() {
-      SetMockInput(&reader, "Test Console Input")
-      result := console.ReadConsole()
-      Expect(result).To(Equal("Test Console Input"))
-    })
-
-    It("reads multiple times from console", func() {
+    It("reads from console", func() {
       SetMockInput(&reader, "Test\nConsole\nInput\n")
       Expect(console.ReadConsole()).To(Equal("Test"))
       Expect(console.ReadConsole()).To(Equal("Console"))
@@ -78,17 +72,26 @@ var _ = Describe("Console UI", func() {
 
     It("Asks player for move", func() {
       player := new(HumanPlayer)
-      player.NewHumanPlayer("X", "Player 1")
+      player.NewHumanPlayer("X", "Player 1", console)
       console.AskUserForMove(player)
       Expect(writer.String()).To(ContainSubstring("Choose a Move"))
 
     })
 
+    It("Asks user for board type", func() {
+      console.PrintBoardTypeQuestion()
+      Expect(writer.String()).To(ContainSubstring("Choose Board Type:"))
+    })
+
+    It("Asks user for player type", func() {
+      console.PrintPlayerTypeQuestion("Player 1")
+      Expect(writer.String()).To(ContainSubstring("Choose Type for: Player 1"))
+    })
 
     Context ("when displaying Player Type Information", func() {
 
       It("lists available player types", func() {
-        console.DisplayPlayerTypes(factory.PlayerTypes())
+        console.DisplayPlayerTypes(factory.PlayerTypes(console))
         Expect(writer.String()).To(ContainSubstring("Human"))
         Expect(writer.String()).To(ContainSubstring("Computer"))
       })
@@ -137,7 +140,7 @@ var _ = Describe("Console UI", func() {
     var boardTypes []Board
 
     BeforeEach(func() {
-      playerTypes = factory.PlayerTypes()
+      playerTypes = factory.PlayerTypes(console)
       boardTypes = factory.BoardTypes()
     })
 

@@ -24,6 +24,7 @@ func (g TTTGame) Run(console UserInterface, factory Factory) {
     } else {
 
       if board.GameOver() {
+        console.DisplayBoard(board)
         console.DisplayWinner(board.Winner())
         return
       }
@@ -38,22 +39,22 @@ func (g TTTGame) Run(console UserInterface, factory Factory) {
   }
 }
 
-func (g TTTGame) SetupNewGame(console UserInterface, factory Factory) (Board, Player, Player) {
-  playerTypes := factory.PlayerTypes()
-  player1Template := console.SelectPlayerChoice(playerTypes, "Player 1")
-  player2Template := console.SelectPlayerChoice(playerTypes, "Player 2")
+func (g TTTGame) SetupNewGame(userInterface UserInterface, factory Factory) (Board, Player, Player) {
+  playerTypes := factory.PlayerTypes(userInterface)
+  player1Template := userInterface.SelectPlayerChoice(playerTypes, "Player 1")
+  player2Template := userInterface.SelectPlayerChoice(playerTypes, "Player 2")
 
 
 
-  player1 := factory.Player(player1Template)
-  player2 := factory.Player(player2Template)
+  player1 := factory.Player(player1Template, userInterface)
+  player2 := factory.Player(player2Template, userInterface)
 
 
   player1.SetSymbol("x")
   player2.SetSymbol("o")
 
   boardTypes := factory.BoardTypes()
-  boardTemplate := console.SelectBoardChoice(boardTypes)
+  boardTemplate := userInterface.SelectBoardChoice(boardTypes)
   board := factory.Board(boardTemplate, player1.Symbol())
 
   return board, player1, player2
