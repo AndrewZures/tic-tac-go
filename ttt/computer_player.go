@@ -25,9 +25,10 @@ func (h *ComputerPlayer) MakeMove(board Board) (int) {
 
 func (h *ComputerPlayer) startMiniMax() (int) {
   var bestMove int
-  var score float64
-  var bestScore float64
+  var score, bestScore, minAlpha, maxBeta float64
   bestScore = -100000000.0000
+  minAlpha = -100000000.0000
+  maxBeta = 100000000.0000
   bestMove = -1
   depth := 1
 
@@ -35,7 +36,7 @@ func (h *ComputerPlayer) startMiniMax() (int) {
   openMoves := h.board.OpenSpots(gameState)
 
   for i := 0; i < len(openMoves); i++ {
-    score = h.executeMiniMax(gameState, h.Symbol(), openMoves[i], depth)
+    score = h.executeMiniMax(gameState, h.Symbol(), openMoves[i], depth, minAlpha, maxBeta)
 
     if score > bestScore {
       bestScore = score
@@ -46,28 +47,27 @@ func (h *ComputerPlayer) startMiniMax() (int) {
   return bestMove
 }
 
-func (h *ComputerPlayer) miniMax(gameState []string, symbol string, depth int) (float64) {
+func (h *ComputerPlayer) miniMax(gameState []string, symbol string, depth int, alpha float64, beta float64) (float64) {
   var score float64
-  bestScore := -10000000.0000
   openMoves := h.board.OpenSpots(gameState)
 
   for i := 0; i < len(openMoves); i++ {
 
-    score = h.executeMiniMax(gameState, symbol, openMoves[i], depth)
+    score = h.executeMiniMax(gameState, symbol, openMoves[i], depth, alpha, beta)
 
-    if score > bestScore {
-      bestScore = score
+    if score > alpha {
+      alpha = score
     }
   }
 
-  return bestScore
+  return alpha
 }
 
-func (h *ComputerPlayer) executeMiniMax(gameState []string, symbol string, index int, depth int) (float64){
+func (h *ComputerPlayer) executeMiniMax(gameState []string, symbol string, index int, depth int, alpha float64, beta float64) (float64){
     var score float64
 
     gameState = h.recordTempMove(gameState, index, symbol)
-    score = h.GetScore(gameState, symbol, depth)
+    score = h.GetScore(gameState, symbol, depth, alpha, beta)
     gameState = h.removeTempMove(gameState, index)
 
     return score
@@ -84,8 +84,12 @@ func (h *ComputerPlayer) removeTempMove(gameState []string, index int) ([]string
 }
 
 
-func (h *ComputerPlayer) GetScore(gameState []string, symbol string, depth int) (float64){
+func (h *ComputerPlayer) GetScore(gameState []string, symbol string, depth int, alpha float64, beta float64) (float64){
   var score float64
+
+  if alpha >= beta {
+    return 0
+  }
 
   gameStatus := h.board.Score(gameState)
 
@@ -94,8 +98,9 @@ func (h *ComputerPlayer) GetScore(gameState []string, symbol string, depth int) 
   } else if gameStatus == "tie"{
     score = 0
   } else {
-    score = -h.miniMax(gameState, opponent(symbol), depth + 1)
+    score = -h.miniMax(gameState, opponent(symbol), depth + 1, -beta, -alpha)
   }
+
 
   return score
 }
