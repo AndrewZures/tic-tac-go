@@ -1,15 +1,21 @@
 package ttt
 
-//import "fmt"
-
 type TTTGame struct {
   status string;
   userInterface UserInterface
   factory Factory
 }
 
-
 func (g TTTGame) Run(console UserInterface, factory Factory) {
+  newGame := true
+
+  for newGame == true {
+    newGame = g.RunGame(console, factory)
+  }
+}
+
+
+func (g TTTGame) RunGame(console UserInterface, factory Factory) (bool) {
   board, player1, player2 := g.SetupNewGame(console, factory)
 
   currentPlayer := player1
@@ -26,7 +32,8 @@ func (g TTTGame) Run(console UserInterface, factory Factory) {
       if board.GameOver() {
         console.DisplayBoard(board)
         console.DisplayWinner(board.Winner())
-        return
+        newGame := console.AskForNewGame()
+        return newGame
       }
 
       if currentPlayer == player1{
@@ -43,8 +50,6 @@ func (g TTTGame) SetupNewGame(userInterface UserInterface, factory Factory) (Boa
   playerTypes := factory.PlayerTypes(userInterface)
   player1Template := userInterface.SelectPlayerChoice(playerTypes, "Player 1")
   player2Template := userInterface.SelectPlayerChoice(playerTypes, "Player 2")
-
-
 
   player1 := factory.Player(player1Template, userInterface)
   player2 := factory.Player(player2Template, userInterface)

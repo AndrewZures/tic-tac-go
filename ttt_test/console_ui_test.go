@@ -5,8 +5,6 @@ import (
   . "github.com/onsi/ginkgo"
   . "github.com/onsi/gomega"
   "bytes"
-//  "fmt"
-
 )
 
 var _ = Describe("Console UI", func() {
@@ -86,6 +84,16 @@ var _ = Describe("Console UI", func() {
     It("Asks user for player type", func() {
       console.PrintPlayerTypeQuestion("Player 1")
       Expect(writer.String()).To(ContainSubstring("Choose Type for: Player 1"))
+    })
+
+    It("Asks user for new game", func() {
+      SetMockInput(&reader, "y\nn\n")
+      result := console.AskForNewGame()
+      Expect(writer.String()).To(ContainSubstring("Would you like to start a new game"))
+      Expect(result).To(Equal(true))
+
+      result = console.AskForNewGame()
+      Expect(result).To(Equal(false))
     })
 
     Context ("when displaying Player Type Information", func() {

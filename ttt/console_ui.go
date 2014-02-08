@@ -198,6 +198,20 @@ func (c ConsoleUI) GetIntegerFromUser() (int) {
   return -1
 }
 
+func (c ConsoleUI) AskForNewGame() (bool) {
+  c.displayNewGameQuery()
+  response := c.ReadConsole()
+  if response == "y" {
+    return true
+  } else {
+    return false
+  }
+}
+
+func (c ConsoleUI) displayNewGameQuery() {
+    fmt.Fprintln(c.Writer, "Would you like to start a new game? Press (Y) for yes, any other key to exit")
+}
+
 func (c *ConsoleUI) shiftToZerosBasedIndex(onesBasedIndexChoice int) (int) {
   return onesBasedIndexChoice - 1
 }

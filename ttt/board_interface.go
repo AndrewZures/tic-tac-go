@@ -14,7 +14,6 @@ type Board interface {
   PlayerTurn() string;
   Score([]string) string;
 
-  //bundle below to common location
   OpenSpots([]string) []int;
   RowWinner([]string) string;
   ColumnWinner([]string) string;
