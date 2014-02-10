@@ -2,7 +2,6 @@ package ttt
 
 import ( "strconv"
         "strings"
-        "fmt"
       )
 
 type ConsoleUI struct {

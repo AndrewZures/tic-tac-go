@@ -14,6 +14,11 @@ func GenerateBoard(boardSize int, offset int, startSymbol string, description st
   return newBoard
 }
 
+func GenerateEmpty3x3Board(startSymbol string) (Board) {
+  gameState := []string{"","","","","","","","",""}
+  return Generate3x3Board(startSymbol, gameState)
+}
+
 func Generate3x3Board(startSymbol string, gameState []string) (Board) {
   return GenerateBoard(9, 3, startSymbol, "3x3 Board", gameState)
 }
