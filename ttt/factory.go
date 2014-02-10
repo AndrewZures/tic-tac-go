@@ -40,7 +40,7 @@ func (f TTTFactory) BoardTypes() ([]Board) {
   boardList := make([]Board, 0)
 
   board3x3 := new(BasicBoard)
-  board3x3.NewBoard("")
+  board3x3.NewBoard(9,3,"", "3x3 Board")
   boardList = append(boardList, Board(board3x3))
 
   return boardList
@@ -52,7 +52,7 @@ func (f *TTTFactory) Board(boardTemplate Board, startSymbol string) (Board) {
   switch {
   case boardTemplate.Description() == "3x3 Board":
     board = new(BasicBoard)
-    board.NewBoard(startSymbol)
+    board.NewBoard(9,3,startSymbol, "3x3 Board")
 
     return board
   }

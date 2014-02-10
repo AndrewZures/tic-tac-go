@@ -7,11 +7,15 @@ import (
 )
 
 
-func GenerateBoard(startSymbol string, gameState []string) (Board) {
+func GenerateBoard(boardSize int, offset int, startSymbol string, description string, gameState []string) (Board) {
   newBoard := Board(new(BasicBoard))
-  newBoard.NewBoard(startSymbol)
+  newBoard.NewBoard(boardSize, offset, startSymbol, description)
   newBoard.SetArray(gameState)
   return newBoard
+}
+
+func Generate3x3Board(startSymbol string, gameState []string) (Board) {
+  return GenerateBoard(9, 3, startSymbol, "3x3 Board", gameState)
 }
 
 func SetMockInput(reader *bytes.Buffer, input string){

@@ -7,12 +7,12 @@ type BasicBoard struct {
     description string;
 }
 
-func (b *BasicBoard) NewBoard(startSymbol string) (bool) {
+func (b *BasicBoard) NewBoard(boardLength int,  offset int, startSymbol string, description string) (bool) {
   if b.array == nil {
-    b.array = make([]string, 9, 9)
-    b.offset = 3
+    b.array = make([]string, boardLength, boardLength)
+    b.offset = offset
     b.playerTurn = startSymbol
-    b.description = "3x3 Board"
+    b.description = description
     return true
   } else {
     return false

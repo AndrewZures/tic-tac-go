@@ -5,7 +5,7 @@ type Board interface {
   Description() string;
   SetArray([]string);
   Offset() int;
-  NewBoard(string) bool;
+  NewBoard(int, int, string, string) bool;
   RecordMove(int, string) bool;
   RemoveMove(int);
   Status() string;

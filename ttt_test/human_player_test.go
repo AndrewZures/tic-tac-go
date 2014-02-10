@@ -26,8 +26,7 @@ var _ = Describe("Human Player", func() {
       userInterface := UserInterface(console)
       human.NewHumanPlayer("x", "human", userInterface)
       player = Player(human)
-      board = Board(new(BasicBoard))
-      board.NewBoard("x")
+      board = Generate3x3Board("x", make([]string, 9,9))
     })
 
     It("meets player interface requirements", func() {

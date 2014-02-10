@@ -123,7 +123,7 @@ var _ = Describe("Console UI", func() {
     })
 
     It ("validates chosen move against available moves", func() {
-        board := GenerateBoard("x", []string{"x","o","x","o","","x","","o",""})
+        board := Generate3x3Board("x", []string{"x","o","x","o","","x","","o",""})
         result := console.ValidateMove(8, board)
         Expect(result).To(Equal(true))
 
@@ -134,13 +134,13 @@ var _ = Describe("Console UI", func() {
     Context ("when displaying game board", func() {
 
       It("prints a board", func() {
-        board := GenerateBoard("x", []string{"","","","","","","","",""})
+        board := Generate3x3Board("x", []string{"","","","","","","","",""})
         console.DisplayBoard(board)
         Expect(writer.String()).To(ContainSubstring("  |   |  \n"))
       })
 
       It("prints current gamestate", func() {
-        board := GenerateBoard("x", []string{"","x","o","o","o","x","","x",""})
+        board := Generate3x3Board("x", []string{"","x","o","o","o","x","","x",""})
         console.DisplayBoard(board)
         Expect(writer.String()).To(ContainSubstring(  "  | X | O\n"))
         Expect(writer.String()).To(ContainSubstring("\n---------\n"))
