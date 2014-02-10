@@ -2,28 +2,18 @@ package ttt
 
 import ( "strconv"
         "strings"
+        "fmt"
       )
 
 type ConsoleUI struct {
   InOut InOutInterface
   Messages MessagesInterface
+  BoardFormatter BoardFormatterInterface
 }
 
 func (c ConsoleUI) DisplayBoard(board Board) {
-  gameState := board.Array()
-  gameState = c.FormatGameState(gameState)
-
-
-  for i := 0; i < len(gameState); i++ {
-
-    c.PrintSymbol(gameState[i])
-
-    if c.EndOfRow(board, i) {
-      c.PrintHorizontalDivider(len(gameState))
-    } else {
-      c.PrintVerticalDivider()
-    }
-  }
+  formattedBoard := c.BoardFormatter.FormatBoard(board, c.Messages)
+  c.InOut.Println(formattedBoard)
 }
 
 func (c ConsoleUI) SelectMove(player Player, board Board) (int){
@@ -64,53 +54,6 @@ func (c ConsoleUI) DisplayWinner(winner string) {
   }
 }
 
-func (c *ConsoleUI) EndOfRow(board Board, index int) (bool) {
-  return (index+1) % board.Offset() == 0
-}
-
-func (c *ConsoleUI) PrintSymbol(symbol string) {
-  c.InOut.Printf("%v", symbol)
-}
-
-func (c *ConsoleUI) PrintHorizontalDivider(dividerLength int) {
-  divider := []byte("\n")
-
-  //TODO this may not work for larger board sizes
-  for i := 0; i < dividerLength; i++ {
-    divider = append(divider, []byte("-")...)
-  }
-
-  divider = append(divider, []byte("\n")...)
-  c.InOut.Printf(string(divider))
-}
-
-func (c *ConsoleUI) PrintVerticalDivider() {
-  c.InOut.Printf(" | ")
-}
-
-func (c *ConsoleUI) FormatGameState(list []string) ([]string) {
-  list = c.ConvertToUpperCase(list)
-  list = c.FormatEmptySpots(list)
-  return list
-}
-
-func (c *ConsoleUI) ConvertToUpperCase(list []string) ([]string) {
-  for i := 0; i < len(list); i++ {
-    list[i] = strings.ToUpper(list[i])
-  }
-  return list
-}
-
-func (c *ConsoleUI) FormatEmptySpots(list []string) ([]string) {
-
-  for i := 0; i < len(list); i++ {
-    if list[i] == "" {
-      list[i] = " "
-    }
-  }
-  return list
-}
-
 func (c ConsoleUI) SelectPlayerChoice(playerList []Player, description string) (Player) {
   c.PrintPlayerTypeQuestion(description)
   c.DisplayPlayerTypes(playerList)
@@ -127,6 +70,7 @@ func (c ConsoleUI) DisplayPlayerTypes(playerList []Player){
 }
 
 func (c ConsoleUI) PrintPlayerTypeQuestion(playerDescription string) {
+  fmt.Printf(c.Messages.PlayerTypePrompt())
   c.InOut.Printf(c.Messages.PlayerTypePrompt(), playerDescription)
 }
 
@@ -152,7 +96,7 @@ func (c *ConsoleUI) PlayerChoice(playerList []Player) (Player) {
 func (c ConsoleUI) DisplayBoardTypes(boardList []Board){
 
   for i := 0; i < len(boardList); i++ {
-    c.InOut.Printf("%v. %v\n", (i+1), boardList[i].Description())
+    c.InOut.Printf(c.Messages.BoardTypesResponse(), (i+1), boardList[i].Description())
   }
 
 }
@@ -193,7 +137,6 @@ func (c ConsoleUI) GetIntegerFromUser() (int) {
     }
   }
 
-  return -1
 }
 
 func (c ConsoleUI) AskForNewGame() (bool) {

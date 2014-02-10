@@ -19,7 +19,9 @@ var _ = Describe("Console UI", func() {
     consoleMessages := new(ConsoleMessages)
     consoleMessages.BuildMessages()
     messages = MessagesInterface(consoleMessages)
-    console = ConsoleUI{inOut, messages}
+    boardFormatter := BoardFormatterInterface(new(ConsoleBoardFormatter))
+
+    console = ConsoleUI{inOut, messages, boardFormatter}
     factory = Factory(new(TTTFactory))
   })
 

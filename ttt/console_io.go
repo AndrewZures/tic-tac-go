@@ -23,5 +23,3 @@ func (c ConsoleIO) Println (input string){
 func (c ConsoleIO) Printf (input string, a...interface{}) {
   fmt.Fprintf(c.Writer, input, a...)
 }
-
-

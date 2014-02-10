@@ -14,6 +14,7 @@ type ConsoleMessages struct {
   gameWinnerResponse string
   invalidChoiceResponse string
   playerTypesResponse string
+  boardTypesResponse string
 
   verticalDivider string
   horizontalDivider string
@@ -28,6 +29,7 @@ func (c *ConsoleMessages) BuildMessages() {
   c.newGamePrompt = "Would you like to start a new game? Press (Y) for yes, any other key to exit"
   c.invalidChoiceResponse = "Whoops, that choice is invalid! Try Again"
   c.boardTypePrompt = "Choose Board Type:"
+  c.boardTypesResponse = "%v. %v\n"
   c.playerTypePrompt = "Choose Type for: %v\n"
   c.playerTypesResponse = "%v. %v\n"
 
@@ -73,6 +75,10 @@ func (c *ConsoleMessages) InvalidChoiceResponse() string {
 
 func (c *ConsoleMessages) BoardTypePrompt() string {
   return c.boardTypePrompt
+}
+
+func (c *ConsoleMessages) BoardTypesResponse() string {
+  return c.boardTypesResponse
 }
 
 func (c *ConsoleMessages) PlayerTypePrompt() string {

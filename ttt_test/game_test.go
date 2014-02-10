@@ -21,7 +21,8 @@ var _ = Describe("Game", func() {
     consoleMessages := new(ConsoleMessages)
     consoleMessages.BuildMessages()
     messages = MessagesInterface(consoleMessages)
-    console := ConsoleUI{inOut, messages}
+    boardFormatter := BoardFormatterInterface(new(ConsoleBoardFormatter))
+    console := ConsoleUI{inOut, messages, boardFormatter}
     userInterface = UserInterface(console)
     factory = Factory(new(TTTFactory))
     game = Game(new(TTTGame))

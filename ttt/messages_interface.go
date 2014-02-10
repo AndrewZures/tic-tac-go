@@ -8,6 +8,7 @@ type MessagesInterface interface {
   NewGamePrompt() string
   InvalidChoiceResponse() string
   BoardTypePrompt() string
+  BoardTypesResponse() string
   PlayerTypePrompt() string
   PlayerTypesResponse() string
   HorizontalDivider() string

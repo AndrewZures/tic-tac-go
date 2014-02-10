@@ -22,7 +22,8 @@ var _ = Describe("Human Player", func() {
       consoleMessages := new(ConsoleMessages)
       consoleMessages.BuildMessages()
       messages = MessagesInterface(consoleMessages)
-      console := ConsoleUI{inOut, messages}
+      boardFormatter := BoardFormatterInterface(new(ConsoleBoardFormatter))
+      console := ConsoleUI{inOut, messages, boardFormatter}
       userInterface := UserInterface(console)
       human.NewHumanPlayer("x", "human", userInterface)
       player = Player(human)
