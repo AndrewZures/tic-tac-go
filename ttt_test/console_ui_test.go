@@ -16,7 +16,7 @@ var _ = Describe("Console UI", func() {
 
   BeforeEach(func(){
     inOut = InOutInterface(ConsoleIO{&writer, &reader})
-    console = ConsoleUI{&writer, &reader, inOut}
+    console = ConsoleUI{inOut}
     factory = Factory(new(TTTFactory))
   })
 

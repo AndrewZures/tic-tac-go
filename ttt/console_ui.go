@@ -2,12 +2,9 @@ package ttt
 
 import ( "strconv"
         "strings"
-        "io"
       )
 
 type ConsoleUI struct {
-  Writer io.Writer
-  Reader io.Reader
   InOut InOutInterface
 }
 

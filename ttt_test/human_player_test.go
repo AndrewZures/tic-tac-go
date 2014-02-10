@@ -18,7 +18,7 @@ var _ = Describe("Human Player", func() {
     BeforeEach(func(){
       human = new(HumanPlayer)
       inOut = InOutInterface(ConsoleIO{&writer, &reader})
-      console := ConsoleUI{&writer, &reader, inOut}
+      console := ConsoleUI{inOut}
       userInterface := UserInterface(console)
       human.NewHumanPlayer("x", "human", userInterface)
       player = Player(human)
