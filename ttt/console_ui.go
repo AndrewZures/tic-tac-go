@@ -70,7 +70,6 @@ func (c ConsoleUI) DisplayPlayerTypes(playerList []Player){
 }
 
 func (c ConsoleUI) PrintPlayerTypeQuestion(playerDescription string) {
-  fmt.Printf(c.Messages.PlayerTypePrompt())
   c.InOut.Printf(c.Messages.PlayerTypePrompt(), playerDescription)
 }
 
