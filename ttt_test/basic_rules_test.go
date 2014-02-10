@@ -19,7 +19,25 @@ var _ = Describe("Basic Rules", func() {
         })
 
 
-    Context("when scoring a provided game array", func() {
+      It("determines if winner exists", func() {
+        board := Generate3x3Board("", []string{"x","x","x","","","","","",""})
+        Expect(rules.IsWinner(board)).To(Equal(true))
+
+        board = Generate3x3Board("", []string{"x","o","x","","","","","",""})
+        Expect(rules.IsWinner(board)).To(Equal(false))
+      })
+
+      It("returns winner", func() {
+
+        board := Generate3x3Board("", []string{"x","x","x","","","","","",""})
+        Expect(rules.Winner(board)).To(Equal("x"))
+
+        board = Generate3x3Board("", []string{"x","o","x","","","","","",""})
+        Expect(rules.Winner(board)).To(Equal("inprogress"))
+      })
+
+
+    Context("when scoring a board", func() {
 
       It("returns winner if there is a row winner", func() {
         board := Generate3x3Board("", []string{"x","x","x","","","","","",""})
