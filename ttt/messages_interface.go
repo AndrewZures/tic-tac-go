@@ -10,5 +10,10 @@ type MessagesInterface interface {
   BoardTypePrompt() string
   PlayerTypePrompt() string
   PlayerTypesResponse() string
-  DisplayBoard(Board) string
+  HorizontalDivider() string
+  VerticalDivider() string
+  EmptySpot() string
+  PlayerXSymbol() string
+  PlayerOSymbol() string
+
 }

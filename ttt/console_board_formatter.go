@@ -1,0 +1,60 @@
+package ttt
+
+type ConsoleBoardFormatter struct {
+}
+
+func (c *ConsoleBoardFormatter) FormatBoard (board Board, messages MessagesInterface) (string) {
+  var boardResult string
+
+  gameState := board.Array()
+
+  for i := 0; i < len(gameState); i++ {
+
+    boardResult += c.FormatSpot(gameState[i], messages)
+
+    if c.LastIndex(board, i) {
+      boardResult += "\n"
+    } else if c.EndOfRow(board, i) {
+      boardResult += c.BuildHorizontalDivider(len(gameState), messages)
+    } else {
+      boardResult += messages.VerticalDivider()
+    }
+  }
+
+  return boardResult
+}
+
+func (c *ConsoleBoardFormatter) FormatSpot(spotData string, messages MessagesInterface) string {
+  switch spotData {
+  case "": return messages.EmptySpot()
+  case "x": return messages.PlayerXSymbol()
+  case "o": return messages.PlayerOSymbol()
+  }
+
+  return ""
+}
+
+func (c *ConsoleBoardFormatter) LastIndex(board Board, index int) (bool) {
+  return index == len(board.Array()) - 1
+}
+
+func (c *ConsoleBoardFormatter) PrintSymbol(symbol string) (string) {
+  return symbol
+}
+
+func (c *ConsoleBoardFormatter) EndOfRow(board Board, index int) (bool) {
+  return (index+1) % board.Offset() == 0
+}
+
+
+func (c *ConsoleBoardFormatter) BuildHorizontalDivider(dividerLength int, messages MessagesInterface) (string) {
+  divider := []byte("\n")
+
+  //TODO this may not work for larger board sizes
+  for i := 0; i < dividerLength; i++ {
+    divider = append(divider, []byte(messages.HorizontalDivider())...)
+  }
+
+  divider = append(divider, []byte("\n")...)
+  return string(divider)
+}
