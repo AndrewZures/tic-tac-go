@@ -151,6 +151,7 @@ func (b *BasicBoard) RowWinner(gameState []string) (string) {
       return gameState[i]
     }
   }
+
   return ""
 }
 
@@ -167,8 +168,8 @@ func (b *BasicBoard) ColumnWinner(gameState []string) (string) {
       return gameState[i]
     }
   }
-  return ""
 
+  return ""
 }
 
 func (b *BasicBoard) columnElements(gameState []string, startIndex int) ([]string) {
@@ -199,8 +200,8 @@ func (b *BasicBoard) LRDiagonalElements(gameState []string) ([]string) {
   for i := 0; i < len(gameState); i += b.offset+1 {
     elements = append(elements, gameState[i])
   }
-  return elements
 
+  return elements
 }
 
 func (b *BasicBoard) RLDiagonalElements(gameState []string) ([]string) {
@@ -210,8 +211,8 @@ func (b *BasicBoard) RLDiagonalElements(gameState []string) ([]string) {
   for i := newOffset; i < len(gameState)-1; i += newOffset {
     elements = append(elements,gameState[i])
   }
-  return elements
 
+  return elements
 }
 
 func (b *BasicBoard) AllSameSymbols (data []string) (bool) {

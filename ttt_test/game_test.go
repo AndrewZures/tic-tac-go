@@ -13,9 +13,11 @@ var _ = Describe("Game", func() {
   var game Game
   var writer bytes.Buffer
   var reader bytes.Buffer
+  var inOut InOutInterface
 
   BeforeEach(func(){
-    console := ConsoleUI{&writer, &reader}
+    inOut = InOutInterface(ConsoleIO{&writer, &reader})
+    console := ConsoleUI{&writer, &reader, inOut}
     userInterface = UserInterface(console)
     factory = Factory(new(TTTFactory))
     game = Game(new(TTTGame))

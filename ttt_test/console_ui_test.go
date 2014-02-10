@@ -12,9 +12,11 @@ var _ = Describe("Console UI", func() {
   var factory Factory
   var writer bytes.Buffer
   var reader bytes.Buffer
+  var inOut InOutInterface
 
   BeforeEach(func(){
-    console = ConsoleUI{&writer, &reader}
+    inOut = InOutInterface(ConsoleIO{&writer, &reader})
+    console = ConsoleUI{&writer, &reader, inOut}
     factory = Factory(new(TTTFactory))
   })
 
@@ -27,13 +29,6 @@ var _ = Describe("Console UI", func() {
   })
 
   Context("when receiving input from user", func() {
-
-    It("reads from console", func() {
-      SetMockInput(&reader, "Test\nConsole\nInput\n")
-      Expect(console.ReadConsole()).To(Equal("Test"))
-      Expect(console.ReadConsole()).To(Equal("Console"))
-      Expect(console.ReadConsole()).To(Equal("Input"))
-    })
 
     It("validates input from use is integer", func() {
       SetMockInput(&reader, "3")

@@ -13,10 +13,12 @@ var _ = Describe("Human Player", func() {
     var board Board
     var writer bytes.Buffer
     var reader bytes.Buffer
+    var inOut InOutInterface
 
     BeforeEach(func(){
       human = new(HumanPlayer)
-      console := ConsoleUI{&writer, &reader}
+      inOut = InOutInterface(ConsoleIO{&writer, &reader})
+      console := ConsoleUI{&writer, &reader, inOut}
       userInterface := UserInterface(console)
       human.NewHumanPlayer("x", "human", userInterface)
       player = Player(human)

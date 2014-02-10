@@ -1,14 +1,15 @@
 package ttt
 
 import ("fmt"
-        "io"
         "strconv"
         "strings"
+        "io"
       )
 
 type ConsoleUI struct {
-  Writer io.Writer;
-  Reader io.Reader;
+  Writer io.Writer
+  Reader io.Reader
+  InOut InOutInterface
 }
 
 func (c ConsoleUI) DisplayBoard(board Board) {
@@ -133,7 +134,7 @@ func (c ConsoleUI) PrintPlayerTypeQuestion(playerDescription string) {
 }
 
 func (c ConsoleUI) PrintBoardTypeQuestion() {
-  fmt.Fprintln(c.Writer, "Choose Board Type:")
+  c.InOut.Println("Choose Board Type:")
 }
 
 
@@ -184,7 +185,7 @@ func (c ConsoleUI) GetIntegerFromUser() (int) {
   var copiedInput string
 
   for {
-    userInput = c.ReadConsole()
+    userInput = c.InOut.Read()
     copiedInput = strings.Repeat(userInput, 1)
     value, err := strconv.ParseInt(copiedInput,0,0)
 
@@ -200,7 +201,7 @@ func (c ConsoleUI) GetIntegerFromUser() (int) {
 
 func (c ConsoleUI) AskForNewGame() (bool) {
   c.displayNewGameQuery()
-  response := c.ReadConsole()
+  response := c.InOut.Read()
   if response == "y" {
     return true
   } else {
@@ -209,7 +210,7 @@ func (c ConsoleUI) AskForNewGame() (bool) {
 }
 
 func (c ConsoleUI) displayNewGameQuery() {
-    fmt.Fprintln(c.Writer, "Would you like to start a new game? Press (Y) for yes, any other key to exit")
+  c.InOut.Println("Would you like to start a new game? Press (Y) for yes, any other key to exit")
 }
 
 func (c *ConsoleUI) shiftToZerosBasedIndex(onesBasedIndexChoice int) (int) {
@@ -221,15 +222,9 @@ func (c *ConsoleUI) ChoiceValid(choice int, numChoices int) (bool) {
 }
 
 func (c ConsoleUI) PrintChoiceInvalid(){
-  fmt.Fprintln(c.Writer, "Whoops, that choice is invalid! Try Again")
+  c.InOut.Println("Whoops, that choice is invalid! Try Again")
 }
 
-
-func (c *ConsoleUI) ReadConsole() (string) {
-  var result string
-  fmt.Fscanln(c.Reader, &result)
-  return string(result)
-}
 
 func (c *ConsoleUI) Print (input string){
   fmt.Fprintln(c.Writer, input)
