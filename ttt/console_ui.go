@@ -1,7 +1,6 @@
 package ttt
 
-import ("fmt"
-        "strconv"
+import ( "strconv"
         "strings"
         "io"
       )
@@ -43,7 +42,7 @@ func (c ConsoleUI) SelectMove(player Player, board Board) (int){
 }
 
 func (c ConsoleUI) AskUserForMove(player Player) {
-  fmt.Fprintf(c.Writer, "%v, Choose a Move!\n", player.Description())
+  c.InOut.Printf("%v, Choose a Move!\n", player.Description())
 }
 
 func (c ConsoleUI) ValidateMove(move int, board Board) (bool) {
@@ -61,9 +60,9 @@ func (c ConsoleUI) ValidateMove(move int, board Board) (bool) {
 
 func (c ConsoleUI) DisplayWinner(winner string) {
   if winner == "tie"{
-    fmt.Fprintf(c.Writer, "The Game Has Ended In A Tie\n")
+    c.InOut.Printf("The Game Has Ended In A Tie\n")
   } else {
-    fmt.Fprintf(c.Writer, "The Winner is %v\n", winner)
+    c.InOut.Printf("The Winner is %v\n", winner)
   }
 }
 
@@ -72,7 +71,7 @@ func (c *ConsoleUI) EndOfRow(board Board, index int) (bool) {
 }
 
 func (c *ConsoleUI) PrintSymbol(symbol string) {
-  fmt.Fprintf(c.Writer, "%v", symbol)
+  c.InOut.Printf("%v", symbol)
 }
 
 func (c *ConsoleUI) PrintHorizontalDivider(dividerLength int) {
@@ -84,11 +83,11 @@ func (c *ConsoleUI) PrintHorizontalDivider(dividerLength int) {
   }
 
   divider = append(divider, []byte("\n")...)
-  fmt.Fprintf(c.Writer, string(divider))
+  c.InOut.Printf(string(divider))
 }
 
 func (c *ConsoleUI) PrintVerticalDivider() {
-  fmt.Fprintf(c.Writer, " | ")
+  c.InOut.Printf(" | ")
 }
 
 func (c *ConsoleUI) FormatGameState(list []string) ([]string) {
@@ -124,13 +123,13 @@ func (c ConsoleUI) SelectPlayerChoice(playerList []Player, description string) (
 func (c ConsoleUI) DisplayPlayerTypes(playerList []Player){
 
   for i := 0; i < len(playerList); i++ {
-    fmt.Fprintf(c.Writer, "%v. %v\n", (i+1), playerList[i].Description())
+    c.InOut.Printf("%v. %v\n", (i+1), playerList[i].Description())
   }
 
 }
 
 func (c ConsoleUI) PrintPlayerTypeQuestion(playerDescription string) {
-  fmt.Fprintf(c.Writer, "Choose Type for: %v\n", playerDescription)
+  c.InOut.Printf("Choose Type for: %v\n", playerDescription)
 }
 
 func (c ConsoleUI) PrintBoardTypeQuestion() {
@@ -155,7 +154,7 @@ func (c *ConsoleUI) PlayerChoice(playerList []Player) (Player) {
 func (c ConsoleUI) DisplayBoardTypes(boardList []Board){
 
   for i := 0; i < len(boardList); i++ {
-    fmt.Fprintf(c.Writer, "%v. %v\n", (i+1), boardList[i].Description())
+    c.InOut.Printf("%v. %v\n", (i+1), boardList[i].Description())
   }
 
 }
@@ -226,6 +225,3 @@ func (c ConsoleUI) PrintChoiceInvalid(){
 }
 
 
-func (c *ConsoleUI) Print (input string){
-  fmt.Fprintln(c.Writer, input)
-}
