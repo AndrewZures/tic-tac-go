@@ -15,5 +15,5 @@ type MessagesInterface interface {
   EmptySpot() string
   PlayerXSymbol() string
   PlayerOSymbol() string
-
+  SpotWidth() int
 }

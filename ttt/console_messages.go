@@ -18,6 +18,7 @@ type ConsoleMessages struct {
   verticalDivider string
   horizontalDivider string
   emptySpot string
+  spotWidth int
 }
 
 func (c *ConsoleMessages) BuildMessages() {
@@ -35,6 +36,7 @@ func (c *ConsoleMessages) BuildMessages() {
   c.emptySpot = " "
   c.xSymbol = "X"
   c.oSymbol = "O"
+  c.spotWidth = 3
 }
 
 func (c *ConsoleMessages) HorizontalDivider() string {
@@ -79,6 +81,10 @@ func (c *ConsoleMessages) PlayerTypePrompt() string {
 
 func (c *ConsoleMessages) PlayerTypesResponse() string {
   return c.playerTypesResponse
+}
+
+func (c *ConsoleMessages) SpotWidth() int {
+  return c.spotWidth
 }
 
 func (c *ConsoleMessages) SetPlayerXSymbol(newSymbol string) {

@@ -30,8 +30,8 @@ var _ = Describe("Console UI", func() {
   })
 
   It("returns properly formatted 4x4 board", func() {
-    consoleBoard := "  |   |   |  \n---------\n  |   |   |  \n---------\n  |   |   |  \n---------\n  |   |   |  \n"
-    board := Generate3x3Board("x", []string{"x","o","","","","","","","","","","","","","",""})
+    consoleBoard := "  |   |   |  \n------------\n  |   |   |  \n------------\n  |   |   |  \n------------\n  |   |   |  \n"
+    board := GenerateBoard(16, 4, "x", "4x4 Board", []string{"","","","","","","","","","","","","","","",""})
     Expect(boardFormatter.FormatBoard(board, messages)).To(Equal(consoleBoard))
   })
 
