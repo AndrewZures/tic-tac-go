@@ -6,6 +6,7 @@ import ( "strconv"
 
 type ConsoleUI struct {
   InOut InOutInterface
+  Messages MessagesInterface
 }
 
 func (c ConsoleUI) DisplayBoard(board Board) {
@@ -39,7 +40,7 @@ func (c ConsoleUI) SelectMove(player Player, board Board) (int){
 }
 
 func (c ConsoleUI) AskUserForMove(player Player) {
-  c.InOut.Printf("%v, Choose a Move!\n", player.Description())
+  c.InOut.Printf(c.Messages.ChooseMovePrompt(), player.Description())
 }
 
 func (c ConsoleUI) ValidateMove(move int, board Board) (bool) {
@@ -57,9 +58,9 @@ func (c ConsoleUI) ValidateMove(move int, board Board) (bool) {
 
 func (c ConsoleUI) DisplayWinner(winner string) {
   if winner == "tie"{
-    c.InOut.Printf("The Game Has Ended In A Tie\n")
+    c.InOut.Printf(c.Messages.GameTieResponse())
   } else {
-    c.InOut.Printf("The Winner is %v\n", winner)
+    c.InOut.Printf(c.Messages.GameWinnerResponse(), winner)
   }
 }
 
@@ -120,17 +121,17 @@ func (c ConsoleUI) SelectPlayerChoice(playerList []Player, description string) (
 func (c ConsoleUI) DisplayPlayerTypes(playerList []Player){
 
   for i := 0; i < len(playerList); i++ {
-    c.InOut.Printf("%v. %v\n", (i+1), playerList[i].Description())
+    c.InOut.Printf(c.Messages.PlayerTypesResponse(), (i+1), playerList[i].Description())
   }
 
 }
 
 func (c ConsoleUI) PrintPlayerTypeQuestion(playerDescription string) {
-  c.InOut.Printf("Choose Type for: %v\n", playerDescription)
+  c.InOut.Printf(c.Messages.PlayerTypePrompt(), playerDescription)
 }
 
 func (c ConsoleUI) PrintBoardTypeQuestion() {
-  c.InOut.Println("Choose Board Type:")
+  c.InOut.Println(c.Messages.BoardTypePrompt())
 }
 
 
@@ -206,7 +207,7 @@ func (c ConsoleUI) AskForNewGame() (bool) {
 }
 
 func (c ConsoleUI) displayNewGameQuery() {
-  c.InOut.Println("Would you like to start a new game? Press (Y) for yes, any other key to exit")
+  c.InOut.Println(c.Messages.NewGamePrompt())
 }
 
 func (c *ConsoleUI) shiftToZerosBasedIndex(onesBasedIndexChoice int) (int) {
@@ -218,7 +219,7 @@ func (c *ConsoleUI) ChoiceValid(choice int, numChoices int) (bool) {
 }
 
 func (c ConsoleUI) PrintChoiceInvalid(){
-  c.InOut.Println("Whoops, that choice is invalid! Try Again")
+  c.InOut.Println(c.Messages.InvalidChoiceResponse())
 }
 
 

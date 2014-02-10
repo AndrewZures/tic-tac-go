@@ -10,13 +10,16 @@ import (
 var _ = Describe("Console UI", func() {
   var console ConsoleUI
   var factory Factory
+  var messages MessagesInterface
   var writer bytes.Buffer
   var reader bytes.Buffer
-  var inOut InOutInterface
 
   BeforeEach(func(){
-    inOut = InOutInterface(ConsoleIO{&writer, &reader})
-    console = ConsoleUI{inOut}
+    inOut := InOutInterface(ConsoleIO{&writer, &reader})
+    consoleMessages := new(ConsoleMessages)
+    consoleMessages.BuildMessages()
+    messages = MessagesInterface(consoleMessages)
+    console = ConsoleUI{inOut, messages}
     factory = Factory(new(TTTFactory))
   })
 
@@ -61,6 +64,16 @@ var _ = Describe("Console UI", func() {
       Expect(writer.String()).To(ContainSubstring("Whoops, that choice is invalid"))
       Expect(writer.String()).To(ContainSubstring("Try Again"))
 
+    })
+
+    It("Displays Game Winner", func() {
+      console.DisplayWinner("Player 1")
+      Expect(writer.String()).To(ContainSubstring("Player 1"))
+    })
+
+    It("Displays Tie Game", func() {
+      console.DisplayWinner("tie")
+      Expect(writer.String()).To(ContainSubstring("Tie"))
     })
 
     It("Asks player for move", func() {

@@ -11,13 +11,17 @@ var _ = Describe("Game", func() {
   var userInterface UserInterface
   var factory Factory
   var game Game
+  var messages MessagesInterface
   var writer bytes.Buffer
   var reader bytes.Buffer
   var inOut InOutInterface
 
   BeforeEach(func(){
     inOut = InOutInterface(ConsoleIO{&writer, &reader})
-    console := ConsoleUI{inOut}
+    consoleMessages := new(ConsoleMessages)
+    consoleMessages.BuildMessages()
+    messages = MessagesInterface(consoleMessages)
+    console := ConsoleUI{inOut, messages}
     userInterface = UserInterface(console)
     factory = Factory(new(TTTFactory))
     game = Game(new(TTTGame))
