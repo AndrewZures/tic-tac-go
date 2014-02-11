@@ -61,4 +61,3 @@ func (f TTTFactory) Board(boardTemplate Board, startSymbol string) (Board) {
 
   return nil
 }
-

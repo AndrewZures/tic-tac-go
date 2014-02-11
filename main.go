@@ -6,11 +6,11 @@ import "os"
 func main() {
 
   game := new(ttt.TTTGame)
-  inOut := ttt.InOutInterface(ttt.ConsoleIO{os.Stdout, os.Stdin})
+  inOut := ttt.InOut(ttt.ConsoleIO{os.Stdout, os.Stdin})
   consoleMessage := new(ttt.ConsoleMessages)
-  messages := ttt.MessagesInterface(consoleMessage)
+  messages := ttt.Messages(consoleMessage)
   messages.BuildMessages()
-  boardFormatter := ttt.BoardFormatterInterface(new(ttt.ConsoleBoardFormatter))
+  boardFormatter := ttt.BoardFormatter(new(ttt.ConsoleBoardFormatter))
   consoleui := ttt.ConsoleUI{inOut, messages, boardFormatter}
   console := ttt.UserInterface(consoleui)
   factory := ttt.Factory(new(ttt.TTTFactory))

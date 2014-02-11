@@ -10,25 +10,25 @@ func (r *BasicRules) NewBasicRules(startSymbol string) {
 
 func (r BasicRules) Score(board Board) (string) {
   numOpenSpots := len(board.OpenSpots())
-  segments := r.BuildSegments(board)
-  segmentsStatus := r.ScoreSegments(segments)
+  segments := r.buildSegments(board)
+  segmentsStatus := r.scoreSegments(segments)
   gameStatus := r.gameStatus(segmentsStatus, numOpenSpots)
   return gameStatus
 }
 
-func (r BasicRules) BuildSegments(board Board) ([][][]string) {
-  segments := [][][]string{r.Rows(board),
-                           r.Columns(board),
-                           r.LeftDiagonal(board),
-                           r.RightDiagonal(board)}
+func (r BasicRules) buildSegments(board Board) ([][][]string) {
+  segments := [][][]string{r.rows(board),
+                           r.columns(board),
+                           r.leftDiagonal(board),
+                           r.rightDiagonal(board)}
 
   return segments
 }
 
-func (r BasicRules) ScoreSegments(segments [][][]string) (string) {
+func (r BasicRules) scoreSegments(segments [][][]string) (string) {
 
   for i := 0; i < len(segments); i++ {
-    segmentStatus := r.ScoreSegment(segments[i])
+    segmentStatus := r.scoreSegment(segments[i])
     if segmentStatus != "" {
       return segmentStatus
     }
@@ -37,7 +37,7 @@ func (r BasicRules) ScoreSegments(segments [][][]string) (string) {
   return ""
 }
 
-func (r BasicRules) ScoreSegment(segment [][]string) (string) {
+func (r BasicRules) scoreSegment(segment [][]string) (string) {
 
   for i := 0; i < len(segment); i++ {
     if r.AllSameSymbol(segment[i]) {
@@ -73,7 +73,7 @@ func (r *BasicRules) AllSameSymbol (data []string) (bool) {
   return true
 }
 
-func (r BasicRules) Rows(board Board) ([][]string) {
+func (r BasicRules) rows(board Board) ([][]string) {
   offset := board.Offset()
   rows := make([][]string, offset)
 
@@ -90,7 +90,7 @@ func (r BasicRules) row(board Board, startIndex int) ([]string) {
   return gameState[startIndex:startIndex+offset]
 }
 
-func (r BasicRules) Columns(board Board) ([][]string) {
+func (r BasicRules) columns(board Board) ([][]string) {
   offset := board.Offset()
   columns := make([][]string, offset)
 
@@ -112,7 +112,7 @@ func (r *BasicRules) column(board Board, startIndex int) ([]string) {
   return elements
 }
 
-func (r *BasicRules) LeftDiagonal(board Board) ([][]string) {
+func (r *BasicRules) leftDiagonal(board Board) ([][]string) {
   elements := make([]string, 0)
   gameState, offset := GetGameStateAndOffset(board)
   diagonal := make([][]string, offset)
@@ -125,7 +125,7 @@ func (r *BasicRules) LeftDiagonal(board Board) ([][]string) {
   return diagonal
 }
 
-func (r *BasicRules) RightDiagonal(board Board) ([][]string) {
+func (r *BasicRules) rightDiagonal(board Board) ([][]string) {
   elements := make([]string, 0)
   gameState, offset := GetGameStateAndOffset(board)
   diagonal := make([][]string, offset)
@@ -171,4 +171,3 @@ func (r BasicRules) PlayerTurn() (string) {
 func (r BasicRules) IsPlayerTurn (player Player) (bool) {
   return r.PlayerTurn() == player.Symbol()
 }
-

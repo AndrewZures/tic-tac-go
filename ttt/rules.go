@@ -5,6 +5,5 @@ type Rules interface {
   IsWinner(Board) bool
   IsPlayerTurn(Player) bool
   Score(Board) string
-  //RowWinner(Board) string
-  //ColumnWinner(Board) string
+  GameOver(Board) bool
 }

@@ -16,44 +16,46 @@ func (g TTTGame) Run(console UserInterface, factory Factory) {
 
 
 func (g TTTGame) RunGame(console UserInterface, factory Factory) (bool) {
-//  board, player1, player2 := g.SetupNewGame(console, factory)
-//
-//  currentPlayer := player1
-//
-//  for {
-//    console.DisplayBoard(board)
-//    currentMove := currentPlayer.MakeMove(board)
-//    validMove := board.RecordMove(currentMove, currentPlayer.Symbol())
-//
-//    if !validMove {
-//      console.PrintChoiceInvalid()
-//    } else {
-//
-//      if board.GameOver() {
-//        console.DisplayBoard(board)
-//        console.DisplayWinner(board.Winner())
-//        newGame := console.AskForNewGame()
-//        return newGame
-//      }
-//
-//      if currentPlayer == player1{
-//        currentPlayer = player2
-//      } else {
-//        currentPlayer = player1
-//      }
-//    }
-//
-//  }
+  board, player1, player2, rules := g.SetupNewGame(console, factory)
+
+  currentPlayer := player1
+
+  for {
+    console.DisplayBoard(board)
+    currentMove := currentPlayer.MakeMove(board)
+    validMove := board.RecordMove(currentMove, currentPlayer.Symbol())
+
+    if !validMove {
+      console.PrintChoiceInvalid()
+    } else {
+
+      if rules.GameOver(board) {
+        console.DisplayBoard(board)
+        console.DisplayWinner(rules.Winner(board))
+        newGame := console.AskForNewGame()
+        return newGame
+      }
+
+      if currentPlayer == player1{
+        currentPlayer = player2
+      } else {
+        currentPlayer = player1
+      }
+    }
+
+  }
   return true
 }
 
-func (g TTTGame) SetupNewGame(userInterface UserInterface, factory Factory) (Board, Player, Player) {
+func (g TTTGame) SetupNewGame(userInterface UserInterface, factory Factory) (Board, Player, Player, Rules) {
   playerTypes := factory.PlayerTypes(userInterface)
   player1Template := userInterface.SelectPlayerChoice(playerTypes, "Player 1")
   player2Template := userInterface.SelectPlayerChoice(playerTypes, "Player 2")
 
   player1 := factory.Player(player1Template, userInterface)
   player2 := factory.Player(player2Template, userInterface)
+
+  rules := Rules(new(BasicRules))
 
 
   player1.SetSymbol("x")
@@ -63,5 +65,5 @@ func (g TTTGame) SetupNewGame(userInterface UserInterface, factory Factory) (Boa
   boardTemplate := userInterface.SelectBoardChoice(boardTypes)
   board := factory.Board(boardTemplate, player1.Symbol())
 
-  return board, player1, player2
+  return board, player1, player2, rules
 }
