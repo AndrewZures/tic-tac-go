@@ -47,7 +47,7 @@ func (c ConsoleUI) ValidateMove(move int, board Board) (bool) {
 }
 
 func (c ConsoleUI) DisplayWinner(winner string) {
-  if winner == "tie"{
+  if winner == "tie" {
     c.ConsoleIO.Printf(c.Messages.GameTieResponse())
   } else {
     c.ConsoleIO.Printf(c.Messages.GameWinnerResponse(), winner)
@@ -140,16 +140,16 @@ func (c ConsoleUI) GetIntegerFromUser() (int) {
 
 func (c ConsoleUI) AskForNewGame() (bool) {
   c.displayNewGameQuery()
-  response := strings.ToLower(c.ConsoleIO.Read())
-  if response == c.Messages.YesResponse() {
-    return true
-  } else {
-    return false
-  }
+  return c.getNewGameDecision()
 }
 
 func (c ConsoleUI) displayNewGameQuery() {
   c.ConsoleIO.Println(c.Messages.NewGamePrompt())
+}
+
+func (c ConsoleUI) getNewGameDecision() (bool) {
+  response := strings.ToLower(c.ConsoleIO.Read())
+  return response == c.Messages.YesResponse()
 }
 
 func (c *ConsoleUI) shiftToZerosBasedIndex(onesBasedIndexChoice int) (int) {
