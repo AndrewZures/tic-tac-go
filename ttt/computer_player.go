@@ -23,11 +23,18 @@ func (h *ComputerPlayer) MakeMove(board Board) (int) {
   return h.startMiniMax(board)
 }
 
-func (h *ComputerPlayer) startMiniMax(board Board) (int) {
-  bestScore, minAlpha, maxBeta := math.Inf(-1), math.Inf(-1), math.Inf(1)
+func (h *ComputerPlayer) setupMiniMax(board Board) (float64, float64, float64, int, int) {
+  h.depthLimit = h.setDepthLimit(len(board.OpenSpots()))
+  bestScore, minAlpha := math.Inf(-1), math.Inf(-1)
+  maxBeta := math.Inf(1)
   bestMove := -1
   depth := 1
-  h.depthLimit = h.setDepthLimit(len(board.OpenSpots()))
+
+  return bestScore, minAlpha, maxBeta, bestMove, depth
+}
+
+func (h *ComputerPlayer) startMiniMax(board Board) (int) {
+  bestScore, minAlpha, maxBeta, bestMove, depth := h.setupMiniMax(board)
 
   for _, move := range board.OpenSpots() {
 
@@ -40,33 +47,6 @@ func (h *ComputerPlayer) startMiniMax(board Board) (int) {
   }
 
   return bestMove
-}
-
-func (h ComputerPlayer) setDepthLimit(numOpenSpots int) (int) {
-  switch {
-  case numOpenSpots > 18:
-    return 4
-  case numOpenSpots > 13:
-    return 5
-  case numOpenSpots > 9:
-    return 7
-  }
-
-  return 10
-}
-
-func (h *ComputerPlayer) miniMax(board Board, player string, depth int, alpha float64, beta float64) (float64) {
-
-  for _, move := range board.OpenSpots() {
-
-    score := h.placeAndScore(board, player, move, depth, alpha, beta)
-
-    if score > alpha {
-      alpha = score
-    }
-  }
-
-  return alpha
 }
 
 func (h ComputerPlayer) placeAndScore(board Board, player string, move, depth int, alpha, beta float64) (float64) {
@@ -97,6 +77,20 @@ func (h *ComputerPlayer) Score(board Board, symbol string, depth int, alpha, bet
   return score
 }
 
+func (h *ComputerPlayer) miniMax(board Board, player string, depth int, alpha float64, beta float64) (float64) {
+
+  for _, move := range board.OpenSpots() {
+
+    score := h.placeAndScore(board, player, move, depth, alpha, beta)
+
+    if score > alpha {
+      alpha = score
+    }
+  }
+
+  return alpha
+}
+
 func (h ComputerPlayer) winner(gameStatus, symbol string) (bool) {
   return gameStatus == symbol
 }
@@ -122,6 +116,19 @@ func opponent(symbol string) (string) {
   }
 
   return opponentSymbol
+}
+
+func (h ComputerPlayer) setDepthLimit(numOpenSpots int) (int) {
+  switch {
+  case numOpenSpots > 18:
+    return 4
+  case numOpenSpots > 13:
+    return 5
+  case numOpenSpots > 9:
+    return 7
+  }
+
+  return 10
 }
 
 func (h *ComputerPlayer) Symbol() (string) {
