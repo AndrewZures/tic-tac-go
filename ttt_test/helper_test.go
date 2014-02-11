@@ -25,7 +25,7 @@ func Generate3x3Board(gameState []string) (Board) {
 
 func GenerateEmpty4x4Board() (Board) {
   gameState := make([]string, 16, 16)
-  return Generate3x3Board(gameState)
+  return Generate4x4Board(gameState)
 }
 
 func Generate4x4Board(gameState []string) (Board) {
@@ -34,7 +34,7 @@ func Generate4x4Board(gameState []string) (Board) {
 
 func GenerateEmpty5x5Board() (Board) {
   gameState := make([]string, 25, 25)
-  return Generate3x3Board(gameState)
+  return Generate5x5Board(gameState)
 }
 
 func Generate5x5Board(gameState []string) (Board) {

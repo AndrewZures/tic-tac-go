@@ -43,7 +43,8 @@ func (c *ConsoleBoardFormatter) endOfRow(board Board, index int) (bool) {
 
 func (c *ConsoleBoardFormatter) BuildHorizontalDivider(board Board, messages Messages) (string) {
   divider := []byte("\n")
-  dividerLength := board.Offset() * messages.SpotWidth()
+  adjustment := board.Offset() - 3
+  dividerLength := board.Offset() * messages.SpotWidth() + adjustment
 
   for i := 0; i < dividerLength; i++ {
     divider = append(divider, []byte(messages.HorizontalDivider())...)
