@@ -39,32 +39,32 @@ func (f TTTFactory) Player(playerTemplate Player, userInterface UserInterface) (
     return nil
 }
 
+func (f TTTFactory) boardMaps() (map[string]map[string]int) {
+  boardMap := map[string]map[string]int{ "3x3 Board": {"size": 9, "offset": 3},
+                                         "4x4 Board": {"size": 16, "offset": 4},
+                                         "5x5 Board": {"size": 25, "offset": 5}}
+  return boardMap
+}
+
 func (f TTTFactory) BoardTypes() ([]Board) {
   boardList := make([]Board, 0)
 
-  board3x3 := new(BasicBoard)
-  board3x3.NewBoard(9,3,"3x3 Board")
-  boardList = append(boardList, Board(board3x3))
-
-  board4x4 := new(BasicBoard)
-  board4x4.NewBoard(16, 4,"4x4 Board")
-  boardList = append(boardList, Board(board4x4))
+  for description, structure := range f.boardMaps() {
+      boardList = append(boardList, f.generateBoard(description, structure))
+  }
 
   return boardList
 }
 
 func (f TTTFactory) Board(boardTemplate Board) (Board) {
-  var board Board
+  boardMaps := f.boardMaps()
+  description := boardTemplate.Description()
 
-  switch {
-  case boardTemplate.Description() == "3x3 Board":
-    board = new(BasicBoard)
-    board.NewBoard(9,3, "3x3 Board")
+  return f.generateBoard(description, boardMaps[description])
+}
 
-  case boardTemplate.Description() == "4x4 Board":
-    board = new(BasicBoard)
-    board.NewBoard(16,4, "4x4 Board")
-  }
-
+func (f TTTFactory) generateBoard(boardName string, boardMap map[string]int) (Board) {
+  board := new(BasicBoard)
+  board.NewBoard(boardMap["size"], boardMap["offset"], boardName)
   return board
 }
