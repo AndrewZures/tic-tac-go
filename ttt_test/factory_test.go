@@ -10,17 +10,19 @@ import (
 var _ = Describe("Factory", func() {
     var factory *TTTFactory
     var userInterface UserInterface
+    var rules Rules
 
     BeforeEach(func(){
       factory = new(TTTFactory)
       console := new(ConsoleUI)
+      rules = new(BasicRules)
       userInterface = UserInterface(console)
     })
 
     Context("Player Generation", func() {
 
       It("provides of a list of available player types", func() {
-        playerList := factory.PlayerTypes(userInterface)
+        playerList := factory.PlayerTypes(userInterface, rules)
         descriptions := getPlayerDescriptions(playerList)
 
         Expect(descriptions).To(ContainElement("Human"))
@@ -28,7 +30,7 @@ var _ = Describe("Factory", func() {
       })
 
       It("each player type in player list is a unique type", func() {
-        playerList := factory.PlayerTypes(userInterface)
+        playerList := factory.PlayerTypes(userInterface, rules)
         descriptions := getPlayerDescriptions(playerList)
         Expect(allElementsUnique(descriptions)).To(Equal(true))
       })
@@ -36,7 +38,7 @@ var _ = Describe("Factory", func() {
       It("provides human player when given a human player type (Player)", func() {
         humanTemplate := new(HumanPlayer)
         humanTemplate.NewHumanPlayer("X", "Human", userInterface)
-        player := factory.Player(humanTemplate, userInterface)
+        player := factory.Player(humanTemplate, userInterface, rules)
         comparison := player == humanTemplate
 
         Expect(comparison).To(Equal(false))
@@ -48,7 +50,7 @@ var _ = Describe("Factory", func() {
         rules := Rules(new(BasicRules))
         computerTemplate := new(ComputerPlayer)
         computerTemplate.NewComputerPlayer("O", "Computer", rules)
-        player := factory.Player(computerTemplate, userInterface)
+        player := factory.Player(computerTemplate, userInterface, rules)
         comparison := player == computerTemplate
 
         Expect(comparison).To(Equal(false))

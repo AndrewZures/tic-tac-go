@@ -11,10 +11,13 @@ var _ = Describe("Console UI", func() {
   var console ConsoleUI
   var factory Factory
   var messages Messages
+  var rules Rules
   var writer bytes.Buffer
   var reader bytes.Buffer
 
   BeforeEach(func(){
+    rules = new(BasicRules)
+
     inOut := InOut(ConsoleIO{&writer, &reader})
     consoleMessages := new(ConsoleMessages)
     consoleMessages.BuildMessages()
@@ -26,7 +29,7 @@ var _ = Describe("Console UI", func() {
   })
 
   It("implements UserInterface", func() {
-    playerTypes := factory.PlayerTypes(console)
+    playerTypes := factory.PlayerTypes(console, rules)
     interfacedConsole := UserInterface(console)
     SetMockInput(&reader, "1")
     selectedPlayer := interfacedConsole.SelectPlayerChoice(playerTypes, "player 1")
@@ -109,7 +112,7 @@ var _ = Describe("Console UI", func() {
     Context ("when displaying Player Type Information", func() {
 
       It("lists available player types", func() {
-        console.DisplayPlayerTypes(factory.PlayerTypes(console))
+        console.DisplayPlayerTypes(factory.PlayerTypes(console, rules))
         Expect(writer.String()).To(ContainSubstring("Human"))
         Expect(writer.String()).To(ContainSubstring("Computer"))
       })
@@ -140,7 +143,7 @@ var _ = Describe("Console UI", func() {
     var boardTypes []Board
 
     BeforeEach(func() {
-      playerTypes = factory.PlayerTypes(console)
+      playerTypes = factory.PlayerTypes(console, rules)
       boardTypes = factory.BoardTypes()
     })
 

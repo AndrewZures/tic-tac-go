@@ -48,14 +48,15 @@ func (g TTTGame) RunGame(console UserInterface, factory Factory) (bool) {
 }
 
 func (g TTTGame) SetupNewGame(userInterface UserInterface, factory Factory) (Board, Player, Player, Rules) {
-  playerTypes := factory.PlayerTypes(userInterface)
+  rules := Rules(new(BasicRules))
+  playerTypes := factory.PlayerTypes(userInterface, rules)
   player1Template := userInterface.SelectPlayerChoice(playerTypes, "Player 1")
   player2Template := userInterface.SelectPlayerChoice(playerTypes, "Player 2")
 
-  player1 := factory.Player(player1Template, userInterface)
-  player2 := factory.Player(player2Template, userInterface)
 
-  rules := Rules(new(BasicRules))
+  player1 := factory.Player(player1Template, userInterface, rules)
+  player2 := factory.Player(player2Template, userInterface, rules)
+
 
 
   player1.SetSymbol("x")

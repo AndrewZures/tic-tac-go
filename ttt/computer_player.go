@@ -1,6 +1,7 @@
 package ttt
 
-import "math"
+import ("math"
+        "math/rand")
 
 type ComputerPlayer struct {
   symbol string;
@@ -23,18 +24,18 @@ func (h *ComputerPlayer) MakeMove(board Board) (int) {
   return h.startMiniMax(board)
 }
 
-func (h *ComputerPlayer) setupMiniMax(board Board) (float64, float64, float64, int, int) {
+func (h *ComputerPlayer) setupMiniMax(board Board) (float64, float64, float64, []int, int) {
   h.depthLimit = h.setDepthLimit(len(board.OpenSpots()))
   bestScore, minAlpha := math.Inf(-1), math.Inf(-1)
   maxBeta := math.Inf(1)
-  bestMove := -1
+  bestMove := make([]int, 0)
   depth := 1
 
   return bestScore, minAlpha, maxBeta, bestMove, depth
 }
 
 func (h *ComputerPlayer) startMiniMax(board Board) (int) {
-  bestScore, minAlpha, maxBeta, bestMove, depth := h.setupMiniMax(board)
+  bestScore, minAlpha, maxBeta, bestMoves, depth := h.setupMiniMax(board)
 
   for _, move := range board.OpenSpots() {
 
@@ -42,11 +43,28 @@ func (h *ComputerPlayer) startMiniMax(board Board) (int) {
 
     if score > bestScore {
       bestScore = score
-      bestMove = move
+      bestMoves = h.setNewBestMove(move, bestMoves)
+    } else if score == bestScore {
+      bestMoves = h.addToBestMoves(move, bestMoves)
     }
+
   }
 
-  return bestMove
+  return h.randomizeBestMove(bestMoves)
+}
+
+func (h ComputerPlayer) setNewBestMove(move int, bestMoves []int) ([]int) {
+  bestMoves = []int{move}
+  return bestMoves
+}
+
+func (h ComputerPlayer) addToBestMoves(move int, bestMoves []int) ([] int) {
+  return append(bestMoves, move)
+}
+
+func (h ComputerPlayer) randomizeBestMove(bestMoves []int) (int) {
+  randomIndex := rand.Perm(len(bestMoves))[0]
+  return bestMoves[randomIndex]
 }
 
 func (h ComputerPlayer) placeAndScore(board Board, player string, move, depth int, alpha, beta float64) (float64) {
@@ -122,7 +140,7 @@ func (h ComputerPlayer) setDepthLimit(numOpenSpots int) (int) {
   switch {
   case numOpenSpots > 18:
     return 4
-  case numOpenSpots > 13:
+  case numOpenSpots > 11:
     return 5
   case numOpenSpots > 9:
     return 7

@@ -6,34 +6,24 @@ type TTTFactory struct {
 }
 
 
-func (f TTTFactory) PlayerTypes(userInterface UserInterface) ([]Player) {
+func (f TTTFactory) PlayerTypes(userInterface UserInterface, rules Rules) ([]Player) {
+
   playerList := make([]Player, 0)
-
-  human := new(HumanPlayer)
-  human.NewHumanPlayer("", "Human", userInterface)
-  playerList = append(playerList, Player(human))
-
-  computer := new(ComputerPlayer)
-  rules := Rules(new(BasicRules))
-  computer.NewComputerPlayer("", "Computer", rules)
-  playerList = append(playerList, Player(computer))
+  playerList = append(playerList, f.getHumanPlayer("", "Human", userInterface))
+  playerList = append(playerList, f.getComputerPlayer("", "Computer", rules))
 
   return playerList
 }
 
-func (f TTTFactory) Player(playerTemplate Player, userInterface UserInterface) (Player) {
+
+func (f TTTFactory) Player(playerTemplate Player, userInterface UserInterface, rules Rules) (Player) {
     switch {
 
       case playerTemplate.Description() == "Human":
-        human := new(HumanPlayer)
-        human.NewHumanPlayer(playerTemplate.Symbol(), "Human", userInterface)
-        return human
+        return f.getHumanPlayer(playerTemplate.Symbol(), "Human", userInterface)
 
       case playerTemplate.Description() == "Computer":
-        computer := new(ComputerPlayer)
-        rules := Rules(new(BasicRules))
-        computer.NewComputerPlayer(playerTemplate.Symbol(), "Computer", rules)
-        return computer
+        return f.getComputerPlayer(playerTemplate.Symbol(), playerTemplate.Description(), rules)
     }
 
     return nil
@@ -67,4 +57,16 @@ func (f TTTFactory) generateBoard(boardName string, boardMap map[string]int) (Bo
   board := new(BasicBoard)
   board.NewBoard(boardMap["size"], boardMap["offset"], boardName)
   return board
+}
+
+func (f TTTFactory) getHumanPlayer(symbol, description string, userInterface UserInterface) (Player) {
+  human := new(HumanPlayer)
+  human.NewHumanPlayer(symbol, description, userInterface)
+  return human
+}
+
+func (f TTTFactory) getComputerPlayer(symbol, description string, rules Rules) (Player) {
+        computer := new(ComputerPlayer)
+        computer.NewComputerPlayer(symbol, description, rules)
+        return computer
 }
