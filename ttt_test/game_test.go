@@ -37,7 +37,7 @@ var _ = Describe("Game", func() {
     Expect(player1.Description()).To(Equal("Human"))
     Expect(player2.Description()).To(Equal("Computer"))
     Expect(board.Description()).To(Equal("3x3 Board"))
-    Expect(board.Array()).To(Equal(emptyBoardArray))
+    Expect(board.BoardState()).To(Equal(emptyBoardArray))
   })
 
 })

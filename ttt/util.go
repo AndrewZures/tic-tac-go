@@ -1,8 +1,7 @@
 package ttt
 
 func GetGameStateAndOffset (board Board) ([]string, int) {
-  gameState := board.Array()
+  gameState := board.BoardState()
   offset := board.Offset()
   return gameState, offset
 }
-

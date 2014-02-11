@@ -34,10 +34,10 @@ var _ = Describe("Basic Board", func() {
         expectedResult := []string{"","","","o","","","","",""}
 
         Expect(board.RecordMove(3,"o")).To(Equal(true))
-        Expect(board.Array()).To(Equal(expectedResult))
+        Expect(board.BoardState()).To(Equal(expectedResult))
 
         Expect(board.RecordMove(3,"x")).To(Equal(false))
-        Expect(board.Array()).To(Equal(expectedResult))
+        Expect(board.BoardState()).To(Equal(expectedResult))
       })
     })
 
@@ -46,13 +46,13 @@ var _ = Describe("Basic Board", func() {
       It("records a player's move", func() {
         expectedResult := []string{"o","","","","","","","",""}
         board.RecordMove(0,"o")
-        Expect(board.Array()).To(Equal(expectedResult))
+        Expect(board.BoardState()).To(Equal(expectedResult))
       })
 
       It("records multiple moves", func() {
         expectedResult := []string{"x","","","x","","","x","","x"}
         board := Generate3x3Board("o", []string{"x","","","x","","","x","","x"})
-        Expect(board.Array()).To(Equal(expectedResult))
+        Expect(board.BoardState()).To(Equal(expectedResult))
       })
     })
 
@@ -67,14 +67,14 @@ var _ = Describe("Basic Board", func() {
 
     It("initalizes with empty board", func() {
       board := Generate3x3Board("x", []string{"","","","","","","","",""})
-      Expect(board.Array()).To(Equal(emptyBoardState))
-      Expect(len(board.Array())).To(Equal(9))
+      Expect(board.BoardState()).To(Equal(emptyBoardState))
+      Expect(len(board.BoardState())).To(Equal(9))
     })
 
     It("keeps game state after attempted reset", func() {
       board := Generate3x3Board("x", []string{"","x","","","x","","","",""})
       board.NewBoard(9,3,"x", "another board")
-      Expect(board.Array()).NotTo((Equal(emptyBoardState)))
+      Expect(board.BoardState()).NotTo((Equal(emptyBoardState)))
     })
 
     It("returns list of available moves after single move", func() {

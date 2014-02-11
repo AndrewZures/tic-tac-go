@@ -3,7 +3,7 @@ package ttt
 type Board interface {
 
   //board
-  Array() []string; //TODO can probably get rid of this
+  BoardState() []string;
   Description() string;
   SetArray([]string);
   Offset() int;

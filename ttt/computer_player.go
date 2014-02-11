@@ -88,7 +88,6 @@ func (h *ComputerPlayer) GetScore(board Board, symbol string, depth int, alpha f
     score = -h.miniMax(board, opponent(symbol), depth + 1, -beta, -alpha)
   }
 
-
   return score
 }
 

@@ -1,20 +1,19 @@
 package ttt
 
-type ConsoleBoardFormatter struct {
-}
+type ConsoleBoardFormatter struct { }
 
 func (c *ConsoleBoardFormatter) FormatBoard (board Board, messages Messages) (string) {
   var boardResult string
 
-  gameState := board.Array()
+  gameState := board.BoardState()
 
   for i := 0; i < len(gameState); i++ {
 
     boardResult += c.FormatSymbol(gameState[i], messages)
 
-    if c.LastIndex(board, i) {
+    if c.lastIndex(board, i) {
       boardResult += "\n"
-    } else if c.EndOfRow(board, i) {
+    } else if c.endOfRow(board, i) {
       boardResult += c.BuildHorizontalDivider(board, messages)
     } else {
       boardResult += messages.VerticalDivider()
@@ -34,15 +33,11 @@ func (c *ConsoleBoardFormatter) FormatSymbol(spotData string, messages Messages)
   return ""
 }
 
-func (c *ConsoleBoardFormatter) LastIndex(board Board, index int) (bool) {
-  return index == len(board.Array()) - 1
+func (c ConsoleBoardFormatter) lastIndex(board Board, index int) (bool) {
+  return index == len(board.BoardState()) - 1
 }
 
-func (c *ConsoleBoardFormatter) PrintSymbol(symbol string) (string) {
-  return symbol
-}
-
-func (c *ConsoleBoardFormatter) EndOfRow(board Board, index int) (bool) {
+func (c *ConsoleBoardFormatter) endOfRow(board Board, index int) (bool) {
   return (index+1) % board.Offset() == 0
 }
 
