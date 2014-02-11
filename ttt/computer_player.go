@@ -72,8 +72,8 @@ func (h *ComputerPlayer) Score(board Board, symbol string, depth int, alpha floa
 
   gameStatus := h.rules.Score(board)
 
-  if gameStatus == symbol{
-    score = 1.0 / float64(depth)
+  if h.winner(gameStatus, symbol) {
+    score = h.depthScore(depth)
   } else if gameStatus == "tie"{
     score = 0
   } else {
@@ -81,6 +81,14 @@ func (h *ComputerPlayer) Score(board Board, symbol string, depth int, alpha floa
   }
 
   return score
+}
+
+func (h ComputerPlayer) winner(gameStatus, symbol string) (bool) {
+  return gameStatus == symbol
+}
+
+func (h ComputerPlayer) depthScore (depth int) (float64) {
+    return 1.0 / float64(depth)
 }
 
 func opponent(symbol string) (string) {
