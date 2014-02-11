@@ -15,7 +15,7 @@ var _ = Describe("Console UI", func() {
   var reader bytes.Buffer
 
   BeforeEach(func(){
-    inOut := InOutInterface(ConsoleIO{&writer, &reader})
+    inOut := InOut(ConsoleIO{&writer, &reader})
     consoleMessages := new(ConsoleMessages)
     consoleMessages.BuildMessages()
     messages = Messages(consoleMessages)

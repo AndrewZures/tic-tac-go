@@ -10,10 +10,10 @@ import (
 var _ = Describe("Console UI", func() {
   var writer bytes.Buffer
   var reader bytes.Buffer
-  var inOut InOutInterface
+  var inOut InOut
 
   BeforeEach(func(){
-    inOut = InOutInterface(ConsoleIO{&writer, &reader})
+    inOut = InOut(ConsoleIO{&writer, &reader})
   })
 
   Context("when receiving input from user", func() {

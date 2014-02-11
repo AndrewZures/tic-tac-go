@@ -5,14 +5,14 @@ import ( "strconv"
       )
 
 type ConsoleUI struct {
-  InOut InOutInterface
+  ConsoleIO InOut
   Messages Messages
   BoardFormatter BoardFormatter
 }
 
 func (c ConsoleUI) DisplayBoard(board Board) {
   formattedBoard := c.BoardFormatter.FormatBoard(board, c.Messages)
-  c.InOut.Println(formattedBoard)
+  c.ConsoleIO.Println(formattedBoard)
 }
 
 func (c ConsoleUI) SelectMove(player Player, board Board) (int){
@@ -29,7 +29,7 @@ func (c ConsoleUI) SelectMove(player Player, board Board) (int){
 }
 
 func (c ConsoleUI) AskUserForMove(player Player) {
-  c.InOut.Printf(c.Messages.ChooseMovePrompt(), player.Description())
+  c.ConsoleIO.Printf(c.Messages.ChooseMovePrompt(), player.Description())
 }
 
 func (c ConsoleUI) ValidateMove(move int, board Board) (bool) {
@@ -47,9 +47,9 @@ func (c ConsoleUI) ValidateMove(move int, board Board) (bool) {
 
 func (c ConsoleUI) DisplayWinner(winner string) {
   if winner == "tie"{
-    c.InOut.Printf(c.Messages.GameTieResponse())
+    c.ConsoleIO.Printf(c.Messages.GameTieResponse())
   } else {
-    c.InOut.Printf(c.Messages.GameWinnerResponse(), winner)
+    c.ConsoleIO.Printf(c.Messages.GameWinnerResponse(), winner)
   }
 }
 
@@ -63,17 +63,17 @@ func (c ConsoleUI) SelectPlayerChoice(playerList []Player, description string) (
 func (c ConsoleUI) DisplayPlayerTypes(playerList []Player){
 
   for i := 0; i < len(playerList); i++ {
-    c.InOut.Printf(c.Messages.PlayerTypesResponse(), (i+1), playerList[i].Description())
+    c.ConsoleIO.Printf(c.Messages.PlayerTypesResponse(), (i+1), playerList[i].Description())
   }
 
 }
 
 func (c ConsoleUI) PrintPlayerTypeQuestion(playerDescription string) {
-  c.InOut.Printf(c.Messages.PlayerTypePrompt(), playerDescription)
+  c.ConsoleIO.Printf(c.Messages.PlayerTypePrompt(), playerDescription)
 }
 
 func (c ConsoleUI) PrintBoardTypeQuestion() {
-  c.InOut.Println(c.Messages.BoardTypePrompt())
+  c.ConsoleIO.Println(c.Messages.BoardTypePrompt())
 }
 
 
@@ -94,7 +94,7 @@ func (c *ConsoleUI) PlayerChoice(playerList []Player) (Player) {
 func (c ConsoleUI) DisplayBoardTypes(boardList []Board){
 
   for i := 0; i < len(boardList); i++ {
-    c.InOut.Printf(c.Messages.BoardTypesResponse(), (i+1), boardList[i].Description())
+    c.ConsoleIO.Printf(c.Messages.BoardTypesResponse(), (i+1), boardList[i].Description())
   }
 
 }
@@ -124,7 +124,7 @@ func (c ConsoleUI) GetIntegerFromUser() (int) {
   var copiedInput string
 
   for {
-    userInput = c.InOut.Read()
+    userInput = c.ConsoleIO.Read()
     copiedInput = strings.Repeat(userInput, 1)
     value, err := strconv.ParseInt(copiedInput,0,0)
 
@@ -139,7 +139,7 @@ func (c ConsoleUI) GetIntegerFromUser() (int) {
 
 func (c ConsoleUI) AskForNewGame() (bool) {
   c.displayNewGameQuery()
-  response := c.InOut.Read()
+  response := c.ConsoleIO.Read()
   if response == "y" {
     return true
   } else {
@@ -148,7 +148,7 @@ func (c ConsoleUI) AskForNewGame() (bool) {
 }
 
 func (c ConsoleUI) displayNewGameQuery() {
-  c.InOut.Println(c.Messages.NewGamePrompt())
+  c.ConsoleIO.Println(c.Messages.NewGamePrompt())
 }
 
 func (c *ConsoleUI) shiftToZerosBasedIndex(onesBasedIndexChoice int) (int) {
@@ -160,7 +160,7 @@ func (c *ConsoleUI) ChoiceValid(choice int, numChoices int) (bool) {
 }
 
 func (c ConsoleUI) PrintChoiceInvalid(){
-  c.InOut.Println(c.Messages.InvalidChoiceResponse())
+  c.ConsoleIO.Println(c.Messages.InvalidChoiceResponse())
 }
 
 

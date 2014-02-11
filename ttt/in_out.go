@@ -1,7 +1,7 @@
 package ttt
 
 
-type InOutInterface interface {
+type InOut interface {
   Read() string
   Println(string)
   Printf(string, ...interface{})

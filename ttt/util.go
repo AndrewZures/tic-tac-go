@@ -5,3 +5,4 @@ func GetGameStateAndOffset (board Board) ([]string, int) {
   offset := board.Offset()
   return gameState, offset
 }
+
