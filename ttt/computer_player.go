@@ -5,6 +5,7 @@ import "math"
 type ComputerPlayer struct {
   symbol string;
   typeTitle string;
+  depthLimit int
   rules Rules
 }
 
@@ -23,19 +24,14 @@ func (h *ComputerPlayer) MakeMove(board Board) (int) {
 }
 
 func (h *ComputerPlayer) startMiniMax(board Board) (int) {
-  var bestMove, depth int
-  var score, bestScore, minAlpha, maxBeta float64
-  bestScore = math.Inf(-1)
-  minAlpha = math.Inf(-1)
-  maxBeta = math.Inf(1)
-  bestMove = -1
-  depth = 1
+  bestScore, minAlpha, maxBeta := math.Inf(-1), math.Inf(-1), math.Inf(1)
+  bestMove := -1
+  depth := 1
+  h.depthLimit = h.setDepthLimit(len(board.OpenSpots()))
 
   for _, move := range board.OpenSpots() {
 
-    board.RecordMove(move, h.Symbol())
-    score = h.Score(board, h.Symbol(), depth, minAlpha, maxBeta)
-    board.RemoveMove(move)
+    score := h.placeAndScore(board, h.Symbol(), move, depth, minAlpha, maxBeta)
 
     if score > bestScore {
       bestScore = score
@@ -46,14 +42,24 @@ func (h *ComputerPlayer) startMiniMax(board Board) (int) {
   return bestMove
 }
 
-func (h *ComputerPlayer) miniMax(board Board, symbol string, depth int, alpha float64, beta float64) (float64) {
+func (h ComputerPlayer) setDepthLimit(numOpenSpots int) (int) {
+  switch {
+  case numOpenSpots > 18:
+    return 4
+  case numOpenSpots > 13:
+    return 5
+  case numOpenSpots > 9:
+    return 7
+  }
+
+  return 10
+}
+
+func (h *ComputerPlayer) miniMax(board Board, player string, depth int, alpha float64, beta float64) (float64) {
 
   for _, move := range board.OpenSpots() {
 
-    board.RecordMove(move, symbol)
-    score := h.Score(board, symbol, depth, alpha, beta)
-    board.RemoveMove(move)
-
+    score := h.placeAndScore(board, player, move, depth, alpha, beta)
 
     if score > alpha {
       alpha = score
@@ -63,10 +69,18 @@ func (h *ComputerPlayer) miniMax(board Board, symbol string, depth int, alpha fl
   return alpha
 }
 
-func (h *ComputerPlayer) Score(board Board, symbol string, depth int, alpha float64, beta float64) (float64){
+func (h ComputerPlayer) placeAndScore(board Board, player string, move, depth int, alpha, beta float64) (float64) {
+
+    board.RecordMove(move, player)
+    score := h.Score(board, player, depth, alpha, beta)
+    board.RemoveMove(move)
+    return score
+}
+
+func (h *ComputerPlayer) Score(board Board, symbol string, depth int, alpha, beta float64) (float64){
   var score float64
 
-  if alpha >= beta {
+  if h.depthLimitReached(depth) || h.pruneComplete(alpha, beta) {
     return 0
   }
 
@@ -89,6 +103,14 @@ func (h ComputerPlayer) winner(gameStatus, symbol string) (bool) {
 
 func (h ComputerPlayer) depthScore (depth int) (float64) {
     return 1.0 / float64(depth)
+}
+
+func (h ComputerPlayer) depthLimitReached(depth int) (bool) {
+  return depth > h.depthLimit
+}
+
+func (h ComputerPlayer) pruneComplete(alpha, beta float64) (bool) {
+  return alpha >= beta
 }
 
 func opponent(symbol string) (string) {
