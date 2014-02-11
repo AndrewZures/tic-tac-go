@@ -33,7 +33,7 @@ func (c ConsoleUI) AskUserForMove(player Player) {
 }
 
 func (c ConsoleUI) ValidateMove(move int, board Board) (bool) {
-  availableMoves := board.OpenSpots(board.Array())
+  availableMoves := board.OpenSpots()
   status := false
 
   for i := 0; i < len(availableMoves); i++ {

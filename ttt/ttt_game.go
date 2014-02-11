@@ -16,34 +16,35 @@ func (g TTTGame) Run(console UserInterface, factory Factory) {
 
 
 func (g TTTGame) RunGame(console UserInterface, factory Factory) (bool) {
-  board, player1, player2 := g.SetupNewGame(console, factory)
-
-  currentPlayer := player1
-
-  for {
-    console.DisplayBoard(board)
-    currentMove := currentPlayer.MakeMove(board)
-    validMove := board.RecordMove(currentMove, currentPlayer.Symbol())
-
-    if !validMove {
-      console.PrintChoiceInvalid()
-    } else {
-
-      if board.GameOver() {
-        console.DisplayBoard(board)
-        console.DisplayWinner(board.Winner())
-        newGame := console.AskForNewGame()
-        return newGame
-      }
-
-      if currentPlayer == player1{
-        currentPlayer = player2
-      } else {
-        currentPlayer = player1
-      }
-    }
-
-  }
+//  board, player1, player2 := g.SetupNewGame(console, factory)
+//
+//  currentPlayer := player1
+//
+//  for {
+//    console.DisplayBoard(board)
+//    currentMove := currentPlayer.MakeMove(board)
+//    validMove := board.RecordMove(currentMove, currentPlayer.Symbol())
+//
+//    if !validMove {
+//      console.PrintChoiceInvalid()
+//    } else {
+//
+//      if board.GameOver() {
+//        console.DisplayBoard(board)
+//        console.DisplayWinner(board.Winner())
+//        newGame := console.AskForNewGame()
+//        return newGame
+//      }
+//
+//      if currentPlayer == player1{
+//        currentPlayer = player2
+//      } else {
+//        currentPlayer = player1
+//      }
+//    }
+//
+//  }
+  return true
 }
 
 func (g TTTGame) SetupNewGame(userInterface UserInterface, factory Factory) (Board, Player, Player) {

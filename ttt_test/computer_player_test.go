@@ -14,7 +14,8 @@ var _ = Describe("Computer Player", func() {
 
     BeforeEach(func(){
       computer = new(ComputerPlayer)
-      computer.NewComputerPlayer("o", "Computer")
+      rules := Rules(new(BasicRules))
+      computer.NewComputerPlayer("o", "Computer", rules)
       board = Generate3x3Board("o", []string{"x","o","x","","o","","","","x"})
     })
 
@@ -37,7 +38,6 @@ var _ = Describe("Computer Player", func() {
 
         It("takes index 7 when it's a winner", func() {
           board := Generate3x3Board("o", []string{"x","o","x","","o","","","","x"})
-          Expect(board.PlayerTurn()).To(Equal("o"))
           Expect(computer.MakeMove(board)).To(Equal(7))
         })
 

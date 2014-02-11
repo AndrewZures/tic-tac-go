@@ -45,8 +45,9 @@ var _ = Describe("Factory", func() {
       })
 
       It("provides computerplayer when given a computer player type (Player)", func() {
+        rules := Rules(new(BasicRules))
         computerTemplate := new(ComputerPlayer)
-        computerTemplate.NewComputerPlayer("O", "Computer")
+        computerTemplate.NewComputerPlayer("O", "Computer", rules)
         player := factory.Player(computerTemplate, userInterface)
         comparison := player == computerTemplate
 

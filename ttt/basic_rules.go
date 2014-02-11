@@ -9,7 +9,7 @@ func (r *BasicRules) NewBasicRules(startSymbol string) {
 }
 
 func (r BasicRules) Score(board Board) (string) {
-  numOpenSpots := len(board.OpenSpots(board.Array()))
+  numOpenSpots := len(board.OpenSpots())
   segments := r.BuildSegments(board)
   segmentsStatus := r.ScoreSegments(segments)
   gameStatus := r.gameStatus(segmentsStatus, numOpenSpots)
@@ -151,7 +151,7 @@ func (r BasicRules) Winner(board Board) (string) {
 }
 
 func (r BasicRules) GameOver(board Board) (bool){
-  return board.Status() != "inprogress"
+  return r.Score(board) != "inprogress"
 }
 
 func (r BasicRules) toggleTurn() {

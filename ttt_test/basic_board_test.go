@@ -78,15 +78,15 @@ var _ = Describe("Basic Board", func() {
     })
 
     It("returns list of available moves after single move", func() {
-      gameState := []string{"","x","","","","","","",""}
+      board := Generate3x3Board("", []string{"","x","","","","","","",""})
       expectedResult := []int{0,2,3,4,5,6,7,8}
-      Expect(board.OpenSpots(gameState)).To(Equal(expectedResult))
+      Expect(board.OpenSpots()).To(Equal(expectedResult))
     })
 
     It("returns list of available moves after multiple moves", func() {
-      gameState := []string{"o","x","","o","","","","","x"}
+      board := Generate3x3Board("", []string{"o","x","","o","","","","","x"})
       expectedResult := []int{2,4,5,6,7}
-      Expect(board.OpenSpots(gameState)).To(Equal(expectedResult))
+      Expect(board.OpenSpots()).To(Equal(expectedResult))
     })
   })
 

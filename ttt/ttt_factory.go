@@ -5,7 +5,7 @@ type TTTFactory struct {
 }
 
 
-func (f *TTTFactory) PlayerTypes(userInterface UserInterface) ([]Player) {
+func (f TTTFactory) PlayerTypes(userInterface UserInterface) ([]Player) {
   playerList := make([]Player, 0)
 
   human := new(HumanPlayer)
@@ -13,13 +13,14 @@ func (f *TTTFactory) PlayerTypes(userInterface UserInterface) ([]Player) {
   playerList = append(playerList, Player(human))
 
   computer := new(ComputerPlayer)
-  computer.NewComputerPlayer("", "Computer")
+  rules := Rules(new(BasicRules))
+  computer.NewComputerPlayer("", "Computer", rules)
   playerList = append(playerList, Player(computer))
 
   return playerList
 }
 
-func (f *TTTFactory) Player(playerTemplate Player, userInterface UserInterface) (Player) {
+func (f TTTFactory) Player(playerTemplate Player, userInterface UserInterface) (Player) {
     switch {
 
       case playerTemplate.Description() == "Human":
@@ -29,7 +30,8 @@ func (f *TTTFactory) Player(playerTemplate Player, userInterface UserInterface) 
 
       case playerTemplate.Description() == "Computer":
         computer := new(ComputerPlayer)
-        computer.NewComputerPlayer(playerTemplate.Symbol(), "Computer")
+        rules := Rules(new(BasicRules))
+        computer.NewComputerPlayer(playerTemplate.Symbol(), "Computer", rules)
         return computer
     }
 
@@ -46,7 +48,7 @@ func (f TTTFactory) BoardTypes() ([]Board) {
   return boardList
 }
 
-func (f *TTTFactory) Board(boardTemplate Board, startSymbol string) (Board) {
+func (f TTTFactory) Board(boardTemplate Board, startSymbol string) (Board) {
   var board Board
 
   switch {
