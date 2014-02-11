@@ -21,7 +21,8 @@ func (c ConsoleUI) SelectMove(player Player, board Board) (int){
     c.AskUserForMove(player)
     move := c.GetIntegerFromUser()
     if c.ValidateMove(move, board) {
-      return move
+      zeroIndexMove := c.shiftToZerosBasedIndex(move)
+      return zeroIndexMove
     } else {
       c.PrintChoiceInvalid()
     }
@@ -36,8 +37,8 @@ func (c ConsoleUI) ValidateMove(move int, board Board) (bool) {
   availableMoves := board.OpenSpots()
   status := false
 
-  for i := 0; i < len(availableMoves); i++ {
-    if move == availableMoves[i] {
+  for _, availableMove := range availableMoves {
+    if move == availableMove {
       status = true
     }
   }
@@ -62,8 +63,8 @@ func (c ConsoleUI) SelectPlayerChoice(playerList []Player, description string) (
 
 func (c ConsoleUI) DisplayPlayerTypes(playerList []Player){
 
-  for i := 0; i < len(playerList); i++ {
-    c.ConsoleIO.Printf(c.Messages.PlayerTypesResponse(), (i+1), playerList[i].Description())
+  for index, playerType := range playerList {
+    c.ConsoleIO.Printf(c.Messages.PlayerTypesResponse(), (index+1), playerType.Description())
   }
 
 }
@@ -93,8 +94,8 @@ func (c *ConsoleUI) PlayerChoice(playerList []Player) (Player) {
 
 func (c ConsoleUI) DisplayBoardTypes(boardList []Board){
 
-  for i := 0; i < len(boardList); i++ {
-    c.ConsoleIO.Printf(c.Messages.BoardTypesResponse(), (i+1), boardList[i].Description())
+  for index, boardType := range boardList {
+    c.ConsoleIO.Printf(c.Messages.BoardTypesResponse(), (index+1), boardType.Description())
   }
 
 }
@@ -139,8 +140,8 @@ func (c ConsoleUI) GetIntegerFromUser() (int) {
 
 func (c ConsoleUI) AskForNewGame() (bool) {
   c.displayNewGameQuery()
-  response := c.ConsoleIO.Read()
-  if response == "y" {
+  response := strings.ToLower(c.ConsoleIO.Read())
+  if response == c.Messages.YesResponse() {
     return true
   } else {
     return false

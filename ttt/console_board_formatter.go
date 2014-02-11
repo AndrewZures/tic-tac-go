@@ -7,13 +7,13 @@ func (c *ConsoleBoardFormatter) FormatBoard (board Board, messages Messages) (st
 
   gameState := board.State()
 
-  for i := 0; i < len(gameState); i++ {
+  for index, gameSpace := range gameState {
 
-    boardResult += c.FormatSymbol(gameState[i], messages)
+    boardResult += c.FormatSymbol(gameSpace, messages)
 
-    if c.lastIndex(board, i) {
+    if c.lastIndex(board, index) {
       boardResult += "\n"
-    } else if c.endOfRow(board, i) {
+    } else if c.endOfRow(board, index) {
       boardResult += c.BuildHorizontalDivider(board, messages)
     } else {
       boardResult += messages.VerticalDivider()

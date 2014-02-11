@@ -24,15 +24,13 @@ var _ = Describe("Human Player", func() {
       board = Generate3x3Board(make([]string, 9,9))
     })
 
-    It("meets player interface requirements", func() {
-        SetMockInput(&reader, "1\n")
-        Expect(player.MakeMove(board)).To(Equal(1))
+    It("makes a move", func() {
+        SetMockInput(&reader, "1\n8")
+        Expect(player.MakeMove(board)).To(Equal(0))
+
+        Expect(player.MakeMove(board)).To(Equal(7))
     })
 
-    It("makes a move", func() {
-        SetMockInput(&reader, "1")
-        Expect(player.MakeMove(board)).To(Equal(1))
-    })
 
     It("has a symbol", func() {
         Expect(player.Symbol()).To(Equal("x"))

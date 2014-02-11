@@ -17,4 +17,5 @@ type Messages interface {
   PlayerXSymbol() string
   PlayerOSymbol() string
   SpotWidth() int
+  YesResponse() string
 }

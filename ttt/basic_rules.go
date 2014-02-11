@@ -27,8 +27,8 @@ func (r BasicRules) buildSegments(board Board) ([][][]string) {
 
 func (r BasicRules) scoreSegments(segments [][][]string) (string) {
 
-  for i := 0; i < len(segments); i++ {
-    segmentStatus := r.scoreSegment(segments[i])
+  for _, segment := range segments {
+    segmentStatus := r.scoreSegment(segment)
     if segmentStatus != "" {
       return segmentStatus
     }
@@ -39,9 +39,9 @@ func (r BasicRules) scoreSegments(segments [][][]string) (string) {
 
 func (r BasicRules) scoreSegment(segment [][]string) (string) {
 
-  for i := 0; i < len(segment); i++ {
-    if r.AllSameSymbol(segment[i]) {
-      return segment[i][0]
+  for _, subSegment := range segment {
+    if r.AllSameSymbol(subSegment) {
+      return subSegment[0]
     }
   }
   return ""

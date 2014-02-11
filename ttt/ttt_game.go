@@ -10,7 +10,6 @@ func (g TTTGame) Run(console UserInterface, factory Factory) {
   }
 }
 
-
 func (g TTTGame) RunGame(console UserInterface, factory Factory) (bool) {
   board, player1, player2, rules := g.SetupNewGame(console, factory)
 
@@ -32,17 +31,11 @@ func (g TTTGame) RunGame(console UserInterface, factory Factory) (bool) {
         return newGame
       }
 
-      if currentPlayer == player1{
-        currentPlayer = player2
-      } else {
-        currentPlayer = player1
-      }
+      currentPlayer = g.getOpponent(currentPlayer, player1, player2)
     }
 
   }
-  return true
 }
-
 
 func (g TTTGame) SetupNewGame(userInterface UserInterface, factory Factory) (Board, Player, Player, Rules) {
 
@@ -76,6 +69,15 @@ func (g TTTGame) getPlayers(factory Factory, userInterface UserInterface, rules 
 func (g TTTGame) getPlayerTemplates(factory Factory, userInterface UserInterface, rules Rules) (Player, Player) {
   playerTypes := factory.PlayerTypes(userInterface, rules)
   player1Template := userInterface.SelectPlayerChoice(playerTypes, "Player X")
-  player2Template := userInterface.SelectPlayerChoice(playerTypes, "Player 0")
+  player2Template := userInterface.SelectPlayerChoice(playerTypes, "Player O")
   return player1Template, player2Template
 }
+
+func (g TTTGame) getOpponent(currentPlayer, player1, player2 Player) (Player) {
+
+  if currentPlayer == player1{
+    return  player2
+  }
+  return  player1
+}
+
