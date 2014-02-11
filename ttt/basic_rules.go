@@ -8,59 +8,50 @@ func (r *BasicRules) NewBasicRules(startSymbol string) {
     r.playerTurn = startSymbol
 }
 
-func (r BasicRules) IsWinner(board Board) (bool) {
-  if r.Score(board) != "inprogress" {
-    return true
-  }
-  return false
-}
-
-func (r BasicRules) Winner(board Board) (string) {
-    return r.Score(board)
-}
-
-func (r BasicRules) GameOver(board Board) (bool){
-  return board.Status() != "inprogress"
-}
-
-func (r BasicRules) toggleTurn() {
-  if r.playerTurn == "x" {
-    r.playerTurn = "o"
-  } else if r.playerTurn == "o" {
-    r.playerTurn = "x"
-  } else {
-    r.playerTurn = "z"
-  }
-}
-
-func (r BasicRules) PlayerTurn() (string) {
-  return r.playerTurn
-}
-
-func (r BasicRules) IsPlayerTurn (player Player) (bool) {
-  return r.PlayerTurn() == player.Symbol()
-}
-
 func (r BasicRules) Score(board Board) (string) {
-  gameState := board.Array()
-  openSpots := board.OpenSpots(gameState)
+  numOpenSpots := len(board.OpenSpots(board.Array()))
+  segments := r.BuildSegments(board)
+  segmentsStatus := r.ScoreSegments(segments)
+  gameStatus := r.gameStatus(segmentsStatus, numOpenSpots)
+  return gameStatus
+}
 
-  rowStatus := r.Rows(board)
-  columnStatus := r.Columns(board)
-  firstDiagonal := r.LRDiagonalElements(board)
-  secondDiagonal := r.RLDiagonalElements(board)
+func (r BasicRules) BuildSegments(board Board) ([][][]string) {
+  segments := [][][]string{r.Rows(board),
+                           r.Columns(board),
+                           r.LRDiagonalElements(board),
+                           r.RLDiagonalElements(board)}
 
-  segments := [][][]string{rowStatus, columnStatus, firstDiagonal, secondDiagonal}
+  return segments
+}
+
+func (r BasicRules) ScoreSegments(segments [][][]string) (string) {
 
   for i := 0; i < len(segments); i++ {
-    segmentStatus := r.EvaluateSegment(segments[i])
+    segmentStatus := r.ScoreSegment(segments[i])
     if segmentStatus != "" {
       return segmentStatus
     }
   }
 
+  return ""
+}
 
-  if len(openSpots) == 0 {
+func (r BasicRules) ScoreSegment(segment [][]string) (string) {
+
+  for i := 0; i < len(segment); i++ {
+    if r.AllSameSymbol(segment[i]) {
+      return segment[i][0]
+    }
+  }
+  return ""
+}
+
+func (r BasicRules) gameStatus (segmentsStatus string, openSpots int) (string) {
+
+  if segmentsStatus != "" {
+    return segmentsStatus
+  } else if openSpots == 0 {
     return "tie"
   } else {
     return "inprogress"
@@ -68,15 +59,19 @@ func (r BasicRules) Score(board Board) (string) {
 
 }
 
-func (r BasicRules) EvaluateSegment(segment [][]string) (string) {
-  for i := 0; i < len(segment); i++ {
-    if r.AllSameSymbols(segment[i]) {
-      return segment[i][0]
-    }
+func (r *BasicRules) AllSameSymbol (data []string) (bool) {
+  if len(data) == 0 || data[0] == "" {
+    return false
   }
-  return ""
-}
 
+  for i := 1; i < len(data); i++ {
+      if data[0] != data[i] {
+          return false
+      }
+  }
+
+  return true
+}
 
 func (r BasicRules) Rows(board Board) ([][]string) {
   offset := board.Offset()
@@ -144,18 +139,37 @@ func (r *BasicRules) RLDiagonalElements(board Board) ([][]string) {
   return diagonal
 }
 
-func (r *BasicRules) AllSameSymbols (data []string) (bool) {
-  if len(data) == 0 || data[0] == "" {
-    return false
+func (r BasicRules) IsWinner(board Board) (bool) {
+  if r.Score(board) != "inprogress" {
+    return true
   }
+  return false
+}
 
-  for i := 1; i < len(data); i++ {
-      if data[0] != data[i] {
-          return false
-      }
+func (r BasicRules) Winner(board Board) (string) {
+    return r.Score(board)
+}
+
+func (r BasicRules) GameOver(board Board) (bool){
+  return board.Status() != "inprogress"
+}
+
+func (r BasicRules) toggleTurn() {
+  if r.playerTurn == "x" {
+    r.playerTurn = "o"
+  } else if r.playerTurn == "o" {
+    r.playerTurn = "x"
+  } else {
+    r.playerTurn = "z"
   }
+}
 
-  return true
+func (r BasicRules) PlayerTurn() (string) {
+  return r.playerTurn
+}
+
+func (r BasicRules) IsPlayerTurn (player Player) (bool) {
+  return r.PlayerTurn() == player.Symbol()
 }
 
 func GetGameStateAndOffset (board Board) ([]string, int) {
