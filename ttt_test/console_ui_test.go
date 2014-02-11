@@ -133,24 +133,6 @@ var _ = Describe("Console UI", func() {
         Expect(result).To(Equal(false))
       })
 
-    Context ("when displaying game board", func() {
-
-      It("prints a board", func() {
-        board := Generate3x3Board("x", []string{"","","","","","","","",""})
-        console.DisplayBoard(board)
-        Expect(writer.String()).To(ContainSubstring("  |   |  \n"))
-      })
-
-      It("prints current gamestate", func() {
-        board := Generate3x3Board("x", []string{"","x","o","o","o","x","","x",""})
-        console.DisplayBoard(board)
-        Expect(writer.String()).To(ContainSubstring(  "  | X | O\n"))
-        Expect(writer.String()).To(ContainSubstring("\n---------\n"))
-        Expect(writer.String()).To(ContainSubstring("\nO | O | X\n"))
-        Expect(writer.String()).To(ContainSubstring("\n  | X |  \n"))
-      })
-    })
-
   })
 
   Context("when communicating with rest of program", func() {

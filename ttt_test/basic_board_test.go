@@ -10,15 +10,45 @@ var _ = Describe("Basic Board", func() {
   var board Board
 
   BeforeEach(func(){
-    board = Board(new(BasicBoard))
-    board.NewBoard(9,3,"o", "3x3 Board")
+    board = GenerateEmpty3x3Board("x")
   })
 
-  It("can implement the Board interface", func() {
-    Expect(board.RecordMove(0, "o")).To(Equal(true))
+  Context("when keeping state", func() {
+    var emptyBoardState []string
+
+    BeforeEach(func(){
+      emptyBoardState = make([]string, 9, 9)
+    })
+
+    It("initalizes with empty board", func() {
+      board := Generate3x3Board("x", []string{"","","","","","","","",""})
+      Expect(board.State()).To(Equal(emptyBoardState))
+      Expect(len(board.State())).To(Equal(9))
+    })
+
+    It("keeps game state after attempted reset", func() {
+      board := Generate3x3Board("x", []string{"","x","","","x","","","",""})
+      board.NewBoard(9,3,"x", "another board")
+      Expect(board.State()).NotTo((Equal(emptyBoardState)))
+    })
   })
 
   Context("recording player moves", func() {
+
+    Context("adds state to internal board array", func() {
+
+      It("records a player's move", func() {
+        expectedResult := []string{"o","","","","","","","",""}
+        board.RecordMove(0,"o")
+        Expect(board.State()).To(Equal(expectedResult))
+      })
+
+      It("records multiple moves", func() {
+        expectedResult := []string{"x","","","x","","","x","","x"}
+        board := Generate3x3Board("o", []string{"x","","","x","","","x","","x"})
+        Expect(board.State()).To(Equal(expectedResult))
+      })
+    })
 
     Context("validates moves", func() {
 
@@ -39,42 +69,6 @@ var _ = Describe("Basic Board", func() {
         Expect(board.RecordMove(3,"x")).To(Equal(false))
         Expect(board.State()).To(Equal(expectedResult))
       })
-    })
-
-    Context("adds state to internal board array", func() {
-
-      It("records a player's move", func() {
-        expectedResult := []string{"o","","","","","","","",""}
-        board.RecordMove(0,"o")
-        Expect(board.State()).To(Equal(expectedResult))
-      })
-
-      It("records multiple moves", func() {
-        expectedResult := []string{"x","","","x","","","x","","x"}
-        board := Generate3x3Board("o", []string{"x","","","x","","","x","","x"})
-        Expect(board.State()).To(Equal(expectedResult))
-      })
-    })
-
-  })
-
-  Context("holding and accessing game state", func() {
-    var emptyBoardState []string
-
-    BeforeEach(func(){
-      emptyBoardState = make([]string, 9, 9)
-    })
-
-    It("initalizes with empty board", func() {
-      board := Generate3x3Board("x", []string{"","","","","","","","",""})
-      Expect(board.State()).To(Equal(emptyBoardState))
-      Expect(len(board.State())).To(Equal(9))
-    })
-
-    It("keeps game state after attempted reset", func() {
-      board := Generate3x3Board("x", []string{"","x","","","x","","","",""})
-      board.NewBoard(9,3,"x", "another board")
-      Expect(board.State()).NotTo((Equal(emptyBoardState)))
     })
 
     It("returns list of available moves after single move", func() {

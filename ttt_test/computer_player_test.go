@@ -9,28 +9,16 @@ import (
 
 var _ = Describe("Computer Player", func() {
     var computer *ComputerPlayer
-    var player Player
-    var board Board
 
     BeforeEach(func(){
-      computer = new(ComputerPlayer)
       rules := Rules(new(BasicRules))
+      computer = new(ComputerPlayer)
       computer.NewComputerPlayer("o", "Computer", rules)
-      board = Generate3x3Board("o", []string{"x","o","x","","o","","","","x"})
     })
-
-    Context("Basic Player Attributes", func() {
 
       It("has a symbol", func() {
         Expect(computer.Symbol()).To(Equal("o"))
       })
-
-      It("meets player interface requirements", func() {
-        player = Player(computer)
-        Expect(player.Symbol()).To(Equal("o"))
-      })
-
-    })
 
     Context("Minimax Implementation", func() {
 
@@ -53,7 +41,7 @@ var _ = Describe("Computer Player", func() {
 
         It("takes index 8 when it's a winner", func() {
           board := Generate3x3Board("o", []string{"o","x","x","x","o","","","",""})
-          Expect(player.MakeMove(board)).To(Equal(8))
+          Expect(computer.MakeMove(board)).To(Equal(8))
         })
       })
 
@@ -75,8 +63,6 @@ var _ = Describe("Computer Player", func() {
         })
 
       })
-
     })
-
   })
 

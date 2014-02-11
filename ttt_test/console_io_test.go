@@ -26,7 +26,6 @@ var _ = Describe("Console UI", func() {
     })
   })
 
-
   AfterEach(func(){
     writer.Reset()
     reader.Reset()

@@ -11,9 +11,7 @@ var _ = Describe("Console UI", func() {
   var boardFormatter BoardFormatter
 
   BeforeEach(func(){
-    consoleMessages := new(ConsoleMessages)
-    consoleMessages.BuildMessages()
-    messages = Messages(consoleMessages)
+    messages = buildConsoleMessages()
     boardFormatter = BoardFormatter(new(ConsoleBoardFormatter))
   })
 
@@ -36,5 +34,3 @@ var _ = Describe("Console UI", func() {
   })
 
 })
-
-

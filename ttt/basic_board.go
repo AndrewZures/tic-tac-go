@@ -59,7 +59,7 @@ func (b BasicBoard) State() ([]string) {
   return b.copyStringArray(b.array)
 }
 
-func (b *BasicBoard) SetArray(newArray []string ) {
+func (b *BasicBoard) SetState(newArray []string ) {
   b.array = newArray
 }
 
@@ -79,13 +79,3 @@ func (b BasicBoard) copyStringArray(stringToCopy []string) ([]string) {
 
   return newString
 }
-
-//func (b *BasicBoard) toggleTurn() {
-//  if b.playerTurn == "x" {
-//    b.playerTurn = "o"
-//  } else if b.playerTurn == "o" {
-//    b.playerTurn = "x"
-//  } else {
-//    b.playerTurn = "z"
-//  }
-//}

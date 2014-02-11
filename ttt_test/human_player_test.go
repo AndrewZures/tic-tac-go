@@ -8,23 +8,17 @@ import (
 )
 
 var _ = Describe("Human Player", func() {
-    var human *HumanPlayer
     var player Player
     var board Board
-    var messages Messages
     var writer bytes.Buffer
     var reader bytes.Buffer
-    var inOut InOut
 
     BeforeEach(func(){
-      human = new(HumanPlayer)
-      inOut = InOut(ConsoleIO{&writer, &reader})
-      consoleMessages := new(ConsoleMessages)
-      consoleMessages.BuildMessages()
-      messages = Messages(consoleMessages)
-      boardFormatter := BoardFormatter(new(ConsoleBoardFormatter))
-      console := ConsoleUI{inOut, messages, boardFormatter}
+      inOut := InOut(ConsoleIO{&writer, &reader})
+      console := buildConsoleUI(inOut)
       userInterface := UserInterface(console)
+
+      human := new(HumanPlayer)
       human.NewHumanPlayer("x", "human", userInterface)
       player = Player(human)
       board = Generate3x3Board("x", make([]string, 9,9))
@@ -46,3 +40,16 @@ var _ = Describe("Human Player", func() {
 
 })
 
+func buildConsoleUI(inOut InOut) ConsoleUI {
+  messages := buildConsoleMessages()
+  boardFormatter := BoardFormatter(new(ConsoleBoardFormatter))
+  console := ConsoleUI{inOut, messages, boardFormatter}
+  return console
+}
+
+func buildConsoleMessages() Messages {
+  consoleMessages := new(ConsoleMessages)
+  consoleMessages.BuildMessages()
+  messages := Messages(consoleMessages)
+  return messages
+}
