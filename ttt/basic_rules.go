@@ -45,20 +45,20 @@ func (r BasicRules) Score(board Board) (string) {
   gameState := board.Array()
   openSpots := board.OpenSpots(gameState)
 
-  rowStatus := r.RowWinner(board)
-  if  rowStatus != "" {
-    return rowStatus
+  rowStatus := r.Rows(board)
+  columnStatus := r.Columns(board)
+  firstDiagonal := r.LRDiagonalElements(board)
+  secondDiagonal := r.RLDiagonalElements(board)
+
+  segments := [][][]string{rowStatus, columnStatus, firstDiagonal, secondDiagonal}
+
+  for i := 0; i < len(segments); i++ {
+    segmentStatus := r.EvaluateSegment(segments[i])
+    if segmentStatus != "" {
+      return segmentStatus
+    }
   }
 
-  columnStatus := r.ColumnWinner(board)
-  if  columnStatus != "" {
-    return columnStatus
-  }
-
-  diagonalStatus := r.DiagonalWinner(board)
-  if  diagonalStatus != "" {
-    return diagonalStatus
-  }
 
   if len(openSpots) == 0 {
     return "tie"
@@ -68,37 +68,42 @@ func (r BasicRules) Score(board Board) (string) {
 
 }
 
-func (r BasicRules) RowWinner(board Board) (string) {
-  var row []string
-  gameState, offset := GetGameStateAndOffset(board)
-
-  for i := 0; i < len(gameState); i += offset {
-    row = r.rowElements(board, i)
-    if r.AllSameSymbols(row) == true {
-      return gameState[i]
+func (r BasicRules) EvaluateSegment(segment [][]string) (string) {
+  for i := 0; i < len(segment); i++ {
+    if r.AllSameSymbols(segment[i]) {
+      return segment[i][0]
     }
   }
-
   return ""
+}
+
+
+func (r BasicRules) Rows(board Board) ([][]string) {
+  offset := board.Offset()
+  rows := make([][]string, offset)
+
+  for i := 0; i < offset; i++ {
+    startIndex := i * offset
+    rows[i] = r.rowElements(board, startIndex)
+  }
+
+  return rows
 }
 
 func (r BasicRules) rowElements(board Board, startIndex int) ([]string) {
-  gameState := board.Array()
-  return gameState[startIndex:startIndex+board.Offset()]
+  gameState, offset := GetGameStateAndOffset(board)
+  return gameState[startIndex:startIndex+offset]
 }
 
-func (r BasicRules) ColumnWinner(board Board) (string) {
-  var column []string
-  gameState, offset := GetGameStateAndOffset(board)
+func (r BasicRules) Columns(board Board) ([][]string) {
+  offset := board.Offset()
+  columns := make([][]string, offset)
 
   for i := 0; i < offset; i++ {
-    column = r.columnElements(board, i)
-    if r.AllSameSymbols(column) == true {
-      return gameState[i]
-    }
+    columns[i] = r.columnElements(board, i)
   }
 
-  return ""
+  return columns
 }
 
 func (r *BasicRules) columnElements(board Board, startIndex int) ([]string) {
@@ -112,46 +117,35 @@ func (r *BasicRules) columnElements(board Board, startIndex int) ([]string) {
   return elements
 }
 
-func (r *BasicRules) DiagonalWinner(board Board) (string) {
-    gameState := board.Array()
-    offset := board.Offset()
-
-    if r.AllSameSymbols(r.LRDiagonalElements(board)){
-      return gameState[0]
-    }
-
-    if r.AllSameSymbols(r.RLDiagonalElements(board)){
-      return gameState[offset - 1]
-    }
-
-  return ""
-}
-
-func (r *BasicRules) LRDiagonalElements(board Board) ([]string) {
+func (r *BasicRules) LRDiagonalElements(board Board) ([][]string) {
   elements := make([]string, 0)
   gameState, offset := GetGameStateAndOffset(board)
+  diagonal := make([][]string, offset)
 
   for i := 0; i < len(gameState); i += offset+1 {
     elements = append(elements, gameState[i])
   }
+  diagonal[0] = elements
 
-  return elements
+  return diagonal
 }
 
-func (r *BasicRules) RLDiagonalElements(board Board) ([]string) {
+func (r *BasicRules) RLDiagonalElements(board Board) ([][]string) {
   elements := make([]string, 0)
   gameState, offset := GetGameStateAndOffset(board)
+  diagonal := make([][]string, offset)
   newOffset := offset - 1
 
   for i := newOffset; i < len(gameState)-1; i += newOffset {
     elements = append(elements,gameState[i])
   }
+  diagonal[0] = elements
 
-  return elements
+  return diagonal
 }
 
 func (r *BasicRules) AllSameSymbols (data []string) (bool) {
-  if data[0] == "" {
+  if len(data) == 0 || data[0] == "" {
     return false
   }
 

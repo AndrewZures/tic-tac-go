@@ -74,51 +74,53 @@ var _ = Describe("Basic Rules", func() {
 
       It("finds a row winner", func() {
         board := Generate3x3Board("", []string{"x","x","x","","","","","",""})
-        Expect(rules.RowWinner(board)).To(Equal("x"))
+        Expect(rules.Score(board)).To(Equal("x"))
 
         board = Generate3x3Board("",[]string{"","","","o","o","o","","",""})
-        Expect(rules.RowWinner(board)).To(Equal("o"))
+        Expect(rules.Score(board)).To(Equal("o"))
 
         board = Generate3x3Board("", []string{"","","","","","","x","x","x"})
-        Expect(rules.RowWinner(board)).To(Equal("x"))
+        Expect(rules.Score(board)).To(Equal("x"))
       })
 
-      It("does not generate false positives", func() {
+//      It("does not generate false positives", func() {
+//
+//        board := GenerateEmpty3x3Board("")
+//        Expect(rules.Score(board)).To(Equal(""))
+//
+//        board = Generate3x3Board("", []string{"x","","","x","","","x","",""})
+//        Expect(rules.Score(board)).To(Equal(""))
+//
+//        board = Generate3x3Board("", []string{"x","","","","x","","","","x"})
+//        Expect(rules.Score(board)).To(Equal(""))
+//      })
 
-        board := GenerateEmpty3x3Board("")
-        Expect(rules.RowWinner(board)).To(Equal(""))
-
-        board = Generate3x3Board("", []string{"x","","","x","","","x","",""})
-        Expect(rules.RowWinner(board)).To(Equal(""))
-
-        board = Generate3x3Board("", []string{"x","","","","x","","","","x"})
-        Expect(rules.RowWinner(board)).To(Equal(""))
-      })
+    })
 
     Context("when scoring a column", func() {
 
       It("finds a column winner", func() {
         board := Generate3x3Board("", []string{"x","","","x","","","x","",""})
-        Expect(rules.ColumnWinner(board)).To(Equal("x"))
+        Expect(rules.Score(board)).To(Equal("x"))
 
         board = Generate3x3Board("", []string{"","o","","","o","","","o",""})
-        Expect(rules.ColumnWinner(board)).To(Equal("o"))
+        Expect(rules.Score(board)).To(Equal("o"))
 
         board = Generate3x3Board("", []string{"","","x","","","x","","","x"})
-        Expect(rules.ColumnWinner(board)).To(Equal("x"))
+        Expect(rules.Score(board)).To(Equal("x"))
       })
 
-      It("does not generate false positives", func() {
-
-        board := Generate3x3Board("", []string{"","","","","","","","",""})
-        Expect(rules.ColumnWinner(board)).To(Equal(""))
-
-        board = Generate3x3Board("", []string{"","","","x","x","x","","",""})
-        Expect(rules.ColumnWinner(board)).To(Equal(""))
-
-        board = Generate3x3Board("", []string{"x","","","","x","","","","x"})
-        Expect(rules.ColumnWinner(board)).To(Equal(""))
-      })
+//      It("does not generate false positives", func() {
+//
+//        board := Generate3x3Board("", []string{"","","","","","","","",""})
+//        Expect(rules.Score(board)).To(Equal(""))
+//
+//        board = Generate3x3Board("", []string{"","","","o","x","x","","",""})
+//        Expect(rules.Score(board)).To(Equal(""))
+//
+//        board = Generate3x3Board("", []string{"","x","","","o","","","","x"})
+//        Expect(rules.Score(board)).To(Equal(""))
+//      })
 
     })
 
@@ -126,26 +128,25 @@ var _ = Describe("Basic Rules", func() {
 
       It("finds a diagonal winner", func() {
         board := Generate3x3Board("", []string{"x","","","","x","","","","x"})
-        Expect(rules.DiagonalWinner(board)).To(Equal("x"))
+        Expect(rules.Score(board)).To(Equal("x"))
 
         board = Generate3x3Board("", []string{"","","o","","o","","o","",""})
-        Expect(rules.DiagonalWinner(board)).To(Equal("o"))
+        Expect(rules.Score(board)).To(Equal("o"))
       })
 
-      It("does not generate false positives", func() {
-
-        board := GenerateEmpty3x3Board("")
-        Expect(rules.DiagonalWinner(board)).To(Equal(""))
-
-        board = Generate3x3Board("", []string{"","","","","","","x","x","x"})
-        Expect(rules.DiagonalWinner(board)).To(Equal(""))
-
-        board = Generate3x3Board("", []string{"","","o","","","o","","","o"})
-        Expect(rules.DiagonalWinner(board)).To(Equal(""))
-      })
+//      It("does not generate false positives", func() {
+//
+//        board := GenerateEmpty3x3Board("")
+//        Expect(rules.Score(board)).To(Equal(""))
+//
+//        board = Generate3x3Board("", []string{"x","","","","","","","x","x"})
+//        Expect(rules.Score(board)).To(Equal(""))
+//
+//        board = Generate3x3Board("", []string{"","","x","","","o","","","o"})
+//        Expect(rules.Score(board)).To(Equal(""))
+//      })
 
     })
-  })
 
 //      It("keeps track of player turn", func() {
 //        board := Generate3x3Board("o", []string{"","","","","","","","",""})
