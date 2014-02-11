@@ -63,7 +63,7 @@ func (g TTTGame) SetupNewGame(userInterface UserInterface, factory Factory) (Boa
 
   boardTypes := factory.BoardTypes()
   boardTemplate := userInterface.SelectBoardChoice(boardTypes)
-  board := factory.Board(boardTemplate, player1.Symbol())
+  board := factory.Board(boardTemplate)
 
   return board, player1, player2, rules
 }

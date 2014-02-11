@@ -1,5 +1,6 @@
 package ttt
 
+
 type TTTFactory struct {
   playerList []Player;
 }
@@ -45,10 +46,14 @@ func (f TTTFactory) BoardTypes() ([]Board) {
   board3x3.NewBoard(9,3,"3x3 Board")
   boardList = append(boardList, Board(board3x3))
 
+  board4x4 := new(BasicBoard)
+  board4x4.NewBoard(16, 4,"4x4 Board")
+  boardList = append(boardList, Board(board4x4))
+
   return boardList
 }
 
-func (f TTTFactory) Board(boardTemplate Board, startSymbol string) (Board) {
+func (f TTTFactory) Board(boardTemplate Board) (Board) {
   var board Board
 
   switch {
@@ -56,8 +61,10 @@ func (f TTTFactory) Board(boardTemplate Board, startSymbol string) (Board) {
     board = new(BasicBoard)
     board.NewBoard(9,3, "3x3 Board")
 
-    return board
+  case boardTemplate.Description() == "4x4 Board":
+    board = new(BasicBoard)
+    board.NewBoard(16,4, "4x4 Board")
   }
 
-  return nil
+  return board
 }

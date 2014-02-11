@@ -71,7 +71,7 @@ var _ = Describe("Factory", func() {
         player.NewHumanPlayer("X", "Human", userInterface)
         board3x3Template := Generate3x3Board([]string{"","","","","","","","",""})
 
-        newBoard := factory.Board(board3x3Template, player.Symbol())
+        newBoard := factory.Board(board3x3Template)
         Expect(newBoard.Description()).To(Equal("3x3 Board"))
       })
 

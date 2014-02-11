@@ -176,7 +176,7 @@ var _ = Describe("Console UI", func() {
     })
 
     It("returns board type template", func() {
-      SetMockInput(&reader, "2\n1\n")
+      SetMockInput(&reader, "5\n1\n")
       console.SelectBoardChoice(boardTypes)
       Expect(writer.String()).To(ContainSubstring("Whoops, that choice is invalid"))
     })

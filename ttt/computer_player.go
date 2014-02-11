@@ -1,6 +1,5 @@
 package ttt
 
-
 type ComputerPlayer struct {
   symbol string;
   typeTitle string;
@@ -19,7 +18,6 @@ func (h *ComputerPlayer) NewComputerPlayer(symbol string, typeTitle string, rule
 
 func (h *ComputerPlayer) MakeMove(board Board) (int) {
   return h.startMiniMax(board)
-
 }
 
 func (h *ComputerPlayer) startMiniMax(board Board) (int) {
@@ -49,9 +47,13 @@ func (h *ComputerPlayer) miniMax(board Board, symbol string, depth int, alpha fl
   var score float64
   openMoves := board.OpenSpots()
 
+
   for i := 0; i < len(openMoves); i++ {
 
-    score = h.executeMiniMax(board, symbol, openMoves[i], depth, alpha, beta)
+    board.RecordMove(openMoves[i], symbol)
+    score = h.GetScore(board, symbol, depth, alpha, beta)
+    board.RemoveMove(openMoves[i])
+
 
     if score > alpha {
       alpha = score
