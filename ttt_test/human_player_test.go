@@ -15,13 +15,13 @@ var _ = Describe("Human Player", func() {
 
     BeforeEach(func(){
       inOut := InOut(ConsoleIO{&writer, &reader})
-      console := buildConsoleUI(inOut)
+      console := BuildConsoleUI(inOut)
       userInterface := UserInterface(console)
 
       human := new(HumanPlayer)
       human.NewHumanPlayer("x", "human", userInterface)
       player = Player(human)
-      board = Generate3x3Board("x", make([]string, 9,9))
+      board = Generate3x3Board(make([]string, 9,9))
     })
 
     It("meets player interface requirements", func() {
@@ -40,16 +40,3 @@ var _ = Describe("Human Player", func() {
 
 })
 
-func buildConsoleUI(inOut InOut) ConsoleUI {
-  messages := buildConsoleMessages()
-  boardFormatter := BoardFormatter(new(ConsoleBoardFormatter))
-  console := ConsoleUI{inOut, messages, boardFormatter}
-  return console
-}
-
-func buildConsoleMessages() Messages {
-  consoleMessages := new(ConsoleMessages)
-  consoleMessages.BuildMessages()
-  messages := Messages(consoleMessages)
-  return messages
-}

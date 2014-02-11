@@ -10,7 +10,7 @@ var _ = Describe("Basic Board", func() {
   var board Board
 
   BeforeEach(func(){
-    board = GenerateEmpty3x3Board("x")
+    board = GenerateEmpty3x3Board()
   })
 
   Context("when keeping state", func() {
@@ -21,14 +21,14 @@ var _ = Describe("Basic Board", func() {
     })
 
     It("initalizes with empty board", func() {
-      board := Generate3x3Board("x", []string{"","","","","","","","",""})
+      board := Generate3x3Board([]string{"","","","","","","","",""})
       Expect(board.State()).To(Equal(emptyBoardState))
       Expect(len(board.State())).To(Equal(9))
     })
 
     It("keeps game state after attempted reset", func() {
-      board := Generate3x3Board("x", []string{"","x","","","x","","","",""})
-      board.NewBoard(9,3,"x", "another board")
+      board := Generate3x3Board([]string{"","x","","","x","","","",""})
+      board.NewBoard(9,3, "another board")
       Expect(board.State()).NotTo((Equal(emptyBoardState)))
     })
   })
@@ -45,7 +45,7 @@ var _ = Describe("Basic Board", func() {
 
       It("records multiple moves", func() {
         expectedResult := []string{"x","","","x","","","x","","x"}
-        board := Generate3x3Board("o", []string{"x","","","x","","","x","","x"})
+        board := Generate3x3Board([]string{"x","","","x","","","x","","x"})
         Expect(board.State()).To(Equal(expectedResult))
       })
     })
@@ -72,13 +72,13 @@ var _ = Describe("Basic Board", func() {
     })
 
     It("returns list of available moves after single move", func() {
-      board := Generate3x3Board("", []string{"","x","","","","","","",""})
+      board := Generate3x3Board([]string{"","x","","","","","","",""})
       expectedResult := []int{0,2,3,4,5,6,7,8}
       Expect(board.OpenSpots()).To(Equal(expectedResult))
     })
 
     It("returns list of available moves after multiple moves", func() {
-      board := Generate3x3Board("", []string{"o","x","","o","","","","","x"})
+      board := Generate3x3Board([]string{"o","x","","o","","","","","x"})
       expectedResult := []int{2,4,5,6,7}
       Expect(board.OpenSpots()).To(Equal(expectedResult))
     })

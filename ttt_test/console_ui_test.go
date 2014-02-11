@@ -125,7 +125,7 @@ var _ = Describe("Console UI", func() {
     })
 
     It ("validates chosen move against available moves", func() {
-        board := Generate3x3Board("x", []string{"x","o","x","o","","x","","o",""})
+        board := Generate3x3Board([]string{"x","o","x","o","","x","","o",""})
         result := console.ValidateMove(8, board)
         Expect(result).To(Equal(true))
 

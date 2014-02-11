@@ -7,20 +7,20 @@ import (
 )
 
 
-func GenerateBoard(boardSize int, offset int, startSymbol string, description string, gameState []string) (Board) {
+func GenerateBoard(boardSize int, offset int, description string, gameState []string) (Board) {
   newBoard := Board(new(BasicBoard))
-  newBoard.NewBoard(boardSize, offset, startSymbol, description)
+  newBoard.NewBoard(boardSize, offset, description)
   newBoard.SetState(gameState)
   return newBoard
 }
 
-func GenerateEmpty3x3Board(startSymbol string) (Board) {
+func GenerateEmpty3x3Board() (Board) {
   gameState := []string{"","","","","","","","",""}
-  return Generate3x3Board(startSymbol, gameState)
+  return Generate3x3Board(gameState)
 }
 
-func Generate3x3Board(startSymbol string, gameState []string) (Board) {
-  return GenerateBoard(9, 3, startSymbol, "3x3 Board", gameState)
+func Generate3x3Board(gameState []string) (Board) {
+  return GenerateBoard(9, 3,"3x3 Board", gameState)
 }
 
 func SetMockInput(reader *bytes.Buffer, input string){
@@ -28,7 +28,7 @@ func SetMockInput(reader *bytes.Buffer, input string){
 }
 
 func BuildConsoleUI(inOut InOut) ConsoleUI {
-  messages := buildConsoleMessages()
+  messages := BuildConsoleMessages()
   boardFormatter := BoardFormatter(new(ConsoleBoardFormatter))
   console := ConsoleUI{inOut, messages, boardFormatter}
   return console

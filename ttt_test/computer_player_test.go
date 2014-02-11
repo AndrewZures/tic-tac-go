@@ -4,7 +4,6 @@ import (
 	. "github.com/andrewzures/tictactoe/ttt"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-
 )
 
 var _ = Describe("Computer Player", func() {
@@ -25,22 +24,22 @@ var _ = Describe("Computer Player", func() {
       Context("takes win if available", func() {
 
         It("takes index 7 when it's a winner", func() {
-          board := Generate3x3Board("o", []string{"x","o","x","","o","","","","x"})
+          board := Generate3x3Board([]string{"x","o","x","","o","","","","x"})
           Expect(computer.MakeMove(board)).To(Equal(7))
         })
 
         It("takes index 5 when it's a winner", func() {
-          board := Generate3x3Board("o", []string{"x","","x","o","o","","","","x"})
+          board := Generate3x3Board([]string{"x","","x","o","o","","","","x"})
           Expect(computer.MakeMove(board)).To(Equal(5))
         })
 
         It("takes index 3 when it's a winner", func() {
-          board := Generate3x3Board("o", []string{"x","","x","","o","o","x","",""})
+          board := Generate3x3Board([]string{"x","","x","","o","o","x","",""})
           Expect(computer.MakeMove(board)).To(Equal(3))
         })
 
         It("takes index 8 when it's a winner", func() {
-          board := Generate3x3Board("o", []string{"o","x","x","x","o","","","",""})
+          board := Generate3x3Board([]string{"o","x","x","x","o","","","",""})
           Expect(computer.MakeMove(board)).To(Equal(8))
         })
       })
@@ -48,17 +47,17 @@ var _ = Describe("Computer Player", func() {
       Context("defends against immediate loss", func() {
 
         It("takes index 8 when it blocks opponent win", func() {
-          board := Generate3x3Board("o", []string{"x","o","x","x","x","o","o","",""})
+          board := Generate3x3Board([]string{"x","o","x","x","x","o","o","",""})
           Expect(computer.MakeMove(board)).To(Equal(8))
         })
 
         It("takes index 3 when it blocks opponent win", func() {
-          board := Generate3x3Board("o", []string{"x","","","","","o","x","",""})
+          board := Generate3x3Board([]string{"x","","","","","o","x","",""})
           Expect(computer.MakeMove(board)).To(Equal(3))
         })
 
         It("takes index 1 when it blocks opponent win", func() {
-          board := Generate3x3Board("o", []string{"x","","x","o","","","","",""})
+          board := Generate3x3Board([]string{"x","","x","o","","","","",""})
           Expect(computer.MakeMove(board)).To(Equal(1))
         })
 

@@ -6,7 +6,7 @@ type BasicBoard struct {
     description string;
 }
 
-func (b *BasicBoard) NewBoard(boardLength int,  offset int, startSymbol string, description string) (bool) {
+func (b *BasicBoard) NewBoard(boardLength int,  offset int,  description string) (bool) {
   if b.array == nil {
     b.array = make([]string, boardLength, boardLength)
     b.offset = offset
