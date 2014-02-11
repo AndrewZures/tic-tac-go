@@ -1,5 +1,5 @@
 package ttt
 
-type BoardFormatterInterface interface {
-  FormatBoard(Board, MessagesInterface) string
+type BoardFormatter interface {
+  FormatBoard(Board, Messages) string
 }

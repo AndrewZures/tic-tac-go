@@ -6,8 +6,8 @@ import ( "strconv"
 
 type ConsoleUI struct {
   InOut InOutInterface
-  Messages MessagesInterface
-  BoardFormatter BoardFormatterInterface
+  Messages Messages
+  BoardFormatter BoardFormatter
 }
 
 func (c ConsoleUI) DisplayBoard(board Board) {

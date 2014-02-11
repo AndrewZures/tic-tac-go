@@ -10,7 +10,7 @@ import (
 var _ = Describe("Console UI", func() {
   var console ConsoleUI
   var factory Factory
-  var messages MessagesInterface
+  var messages Messages
   var writer bytes.Buffer
   var reader bytes.Buffer
 
@@ -18,8 +18,8 @@ var _ = Describe("Console UI", func() {
     inOut := InOutInterface(ConsoleIO{&writer, &reader})
     consoleMessages := new(ConsoleMessages)
     consoleMessages.BuildMessages()
-    messages = MessagesInterface(consoleMessages)
-    boardFormatter := BoardFormatterInterface(new(ConsoleBoardFormatter))
+    messages = Messages(consoleMessages)
+    boardFormatter := BoardFormatter(new(ConsoleBoardFormatter))
 
     console = ConsoleUI{inOut, messages, boardFormatter}
     factory = Factory(new(TTTFactory))

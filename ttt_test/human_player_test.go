@@ -11,7 +11,7 @@ var _ = Describe("Human Player", func() {
     var human *HumanPlayer
     var player Player
     var board Board
-    var messages MessagesInterface
+    var messages Messages
     var writer bytes.Buffer
     var reader bytes.Buffer
     var inOut InOutInterface
@@ -21,8 +21,8 @@ var _ = Describe("Human Player", func() {
       inOut = InOutInterface(ConsoleIO{&writer, &reader})
       consoleMessages := new(ConsoleMessages)
       consoleMessages.BuildMessages()
-      messages = MessagesInterface(consoleMessages)
-      boardFormatter := BoardFormatterInterface(new(ConsoleBoardFormatter))
+      messages = Messages(consoleMessages)
+      boardFormatter := BoardFormatter(new(ConsoleBoardFormatter))
       console := ConsoleUI{inOut, messages, boardFormatter}
       userInterface := UserInterface(console)
       human.NewHumanPlayer("x", "human", userInterface)

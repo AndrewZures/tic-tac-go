@@ -13,11 +13,9 @@ var _ = Describe("Basic Rules", func() {
       rules = Rules(new(BasicRules))
     })
 
-
       It("keeps track of player turn", func() {
         Expect(1).To(Equal(1))
         })
-
 
       It("determines if winner exists", func() {
         board := Generate3x3Board("", []string{"x","x","x","","","","","",""})
@@ -35,7 +33,6 @@ var _ = Describe("Basic Rules", func() {
         board = Generate3x3Board("", []string{"x","o","x","","","","","",""})
         Expect(rules.Winner(board)).To(Equal("inprogress"))
       })
-
 
     Context("when scoring a board", func() {
 

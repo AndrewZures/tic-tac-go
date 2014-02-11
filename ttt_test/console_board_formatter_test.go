@@ -7,14 +7,14 @@ import (
 )
 
 var _ = Describe("Console UI", func() {
-  var messages MessagesInterface
-  var boardFormatter BoardFormatterInterface
+  var messages Messages
+  var boardFormatter BoardFormatter
 
   BeforeEach(func(){
     consoleMessages := new(ConsoleMessages)
     consoleMessages.BuildMessages()
-    messages = MessagesInterface(consoleMessages)
-    boardFormatter = BoardFormatterInterface(new(ConsoleBoardFormatter))
+    messages = Messages(consoleMessages)
+    boardFormatter = BoardFormatter(new(ConsoleBoardFormatter))
   })
 
   It("returns string representing board state", func() {

@@ -19,8 +19,8 @@ func (r BasicRules) Score(board Board) (string) {
 func (r BasicRules) BuildSegments(board Board) ([][][]string) {
   segments := [][][]string{r.Rows(board),
                            r.Columns(board),
-                           r.LRDiagonalElements(board),
-                           r.RLDiagonalElements(board)}
+                           r.LeftDiagonal(board),
+                           r.RightDiagonal(board)}
 
   return segments
 }
@@ -64,7 +64,7 @@ func (r *BasicRules) AllSameSymbol (data []string) (bool) {
     return false
   }
 
-  for i := 1; i < len(data); i++ {
+  for i := 0; i < len(data); i++ {
       if data[0] != data[i] {
           return false
       }
@@ -79,13 +79,13 @@ func (r BasicRules) Rows(board Board) ([][]string) {
 
   for i := 0; i < offset; i++ {
     startIndex := i * offset
-    rows[i] = r.rowElements(board, startIndex)
+    rows[i] = r.row(board, startIndex)
   }
 
   return rows
 }
 
-func (r BasicRules) rowElements(board Board, startIndex int) ([]string) {
+func (r BasicRules) row(board Board, startIndex int) ([]string) {
   gameState, offset := GetGameStateAndOffset(board)
   return gameState[startIndex:startIndex+offset]
 }
@@ -95,13 +95,13 @@ func (r BasicRules) Columns(board Board) ([][]string) {
   columns := make([][]string, offset)
 
   for i := 0; i < offset; i++ {
-    columns[i] = r.columnElements(board, i)
+    columns[i] = r.column(board, i)
   }
 
   return columns
 }
 
-func (r *BasicRules) columnElements(board Board, startIndex int) ([]string) {
+func (r *BasicRules) column(board Board, startIndex int) ([]string) {
   elements := make([]string, 0)
   gameState, offset := GetGameStateAndOffset(board)
 
@@ -112,7 +112,7 @@ func (r *BasicRules) columnElements(board Board, startIndex int) ([]string) {
   return elements
 }
 
-func (r *BasicRules) LRDiagonalElements(board Board) ([][]string) {
+func (r *BasicRules) LeftDiagonal(board Board) ([][]string) {
   elements := make([]string, 0)
   gameState, offset := GetGameStateAndOffset(board)
   diagonal := make([][]string, offset)
@@ -125,7 +125,7 @@ func (r *BasicRules) LRDiagonalElements(board Board) ([][]string) {
   return diagonal
 }
 
-func (r *BasicRules) RLDiagonalElements(board Board) ([][]string) {
+func (r *BasicRules) RightDiagonal(board Board) ([][]string) {
   elements := make([]string, 0)
   gameState, offset := GetGameStateAndOffset(board)
   diagonal := make([][]string, offset)
@@ -172,8 +172,3 @@ func (r BasicRules) IsPlayerTurn (player Player) (bool) {
   return r.PlayerTurn() == player.Symbol()
 }
 
-func GetGameStateAndOffset (board Board) ([]string, int) {
-  gameState := board.Array()
-  offset := board.Offset()
-  return gameState, offset
-}

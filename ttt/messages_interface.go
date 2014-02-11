@@ -1,6 +1,6 @@
 package ttt
 
-type MessagesInterface interface {
+type Messages interface {
   BuildMessages()
   ChooseMovePrompt() string
   GameTieResponse() string
