@@ -5,7 +5,7 @@ type ConsoleBoardFormatter struct { }
 func (c *ConsoleBoardFormatter) FormatBoard (board Board, messages Messages) (string) {
   var boardResult string
 
-  gameState := board.BoardState()
+  gameState := board.State()
 
   for i := 0; i < len(gameState); i++ {
 
@@ -34,7 +34,7 @@ func (c *ConsoleBoardFormatter) FormatSymbol(spotData string, messages Messages)
 }
 
 func (c ConsoleBoardFormatter) lastIndex(board Board, index int) (bool) {
-  return index == len(board.BoardState()) - 1
+  return index == len(board.State()) - 1
 }
 
 func (c *ConsoleBoardFormatter) endOfRow(board Board, index int) (bool) {

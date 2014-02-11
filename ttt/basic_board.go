@@ -43,7 +43,7 @@ func (b *BasicBoard) spotIsAvailable (move int) (bool) {
 }
 
 func (b BasicBoard) OpenSpots() ([]int) {
-  gameState := b.BoardState()
+  gameState := b.State()
   openSpots := make([]int, 0)
 
   for i := 0; i < len(gameState); i++ {
@@ -55,7 +55,7 @@ func (b BasicBoard) OpenSpots() ([]int) {
   return openSpots
 }
 
-func (b BasicBoard) BoardState() ([]string) {
+func (b BasicBoard) State() ([]string) {
   return b.copyStringArray(b.array)
 }
 

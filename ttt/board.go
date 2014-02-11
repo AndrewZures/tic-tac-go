@@ -2,8 +2,7 @@ package ttt
 
 type Board interface {
 
-  //board
-  BoardState() []string;
+  State() []string;
   Description() string;
   SetArray([]string);
   Offset() int;
