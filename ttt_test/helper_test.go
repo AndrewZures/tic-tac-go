@@ -32,6 +32,15 @@ func Generate4x4Board(gameState []string) (Board) {
   return GenerateBoard(16, 4,"4x4 Board", gameState)
 }
 
+func GenerateEmpty5x5Board() (Board) {
+  gameState := make([]string, 25, 25)
+  return Generate3x3Board(gameState)
+}
+
+func Generate5x5Board(gameState []string) (Board) {
+  return GenerateBoard(25, 5,"5x5 Board", gameState)
+}
+
 func SetMockInput(reader *bytes.Buffer, input string){
     fmt.Fprintf(reader, input)
 }
