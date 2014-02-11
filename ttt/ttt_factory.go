@@ -1,10 +1,8 @@
 package ttt
 
-
 type TTTFactory struct {
   playerList []Player;
 }
-
 
 func (f TTTFactory) PlayerTypes(userInterface UserInterface, rules Rules) ([]Player) {
 
@@ -14,7 +12,6 @@ func (f TTTFactory) PlayerTypes(userInterface UserInterface, rules Rules) ([]Pla
 
   return playerList
 }
-
 
 func (f TTTFactory) Player(playerTemplate Player, userInterface UserInterface, rules Rules) (Player) {
     switch {
@@ -29,12 +26,18 @@ func (f TTTFactory) Player(playerTemplate Player, userInterface UserInterface, r
     return nil
 }
 
-func (f TTTFactory) boardMaps() (map[string]map[string]int) {
-  boardMap := map[string]map[string]int{ "3x3 Board": {"size": 9, "offset": 3},
-                                         "4x4 Board": {"size": 16, "offset": 4},
-                                         "5x5 Board": {"size": 25, "offset": 5}}
-  return boardMap
+func (f TTTFactory) getHumanPlayer(symbol, description string, userInterface UserInterface) (Player) {
+  human := new(HumanPlayer)
+  human.NewHumanPlayer(symbol, description, userInterface)
+  return human
 }
+
+func (f TTTFactory) getComputerPlayer(symbol, description string, rules Rules) (Player) {
+        computer := new(ComputerPlayer)
+        computer.NewComputerPlayer(symbol, description, rules)
+        return computer
+}
+
 
 func (f TTTFactory) BoardTypes() ([]Board) {
   boardList := make([]Board, 0)
@@ -53,20 +56,16 @@ func (f TTTFactory) Board(boardTemplate Board) (Board) {
   return f.generateBoard(description, boardMaps[description])
 }
 
+func (f TTTFactory) boardMaps() (map[string]map[string]int) {
+  boardMap := map[string]map[string]int{ "3x3 Board": {"size": 9, "offset": 3},
+                                         "4x4 Board": {"size": 16, "offset": 4},
+                                         "5x5 Board": {"size": 25, "offset": 5}}
+  return boardMap
+}
+
 func (f TTTFactory) generateBoard(boardName string, boardMap map[string]int) (Board) {
   board := new(BasicBoard)
   board.NewBoard(boardMap["size"], boardMap["offset"], boardName)
   return board
 }
 
-func (f TTTFactory) getHumanPlayer(symbol, description string, userInterface UserInterface) (Player) {
-  human := new(HumanPlayer)
-  human.NewHumanPlayer(symbol, description, userInterface)
-  return human
-}
-
-func (f TTTFactory) getComputerPlayer(symbol, description string, rules Rules) (Player) {
-        computer := new(ComputerPlayer)
-        computer.NewComputerPlayer(symbol, description, rules)
-        return computer
-}

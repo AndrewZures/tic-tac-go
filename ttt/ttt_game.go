@@ -1,10 +1,6 @@
 package ttt
 
-type TTTGame struct {
-  status string;
-  userInterface UserInterface
-  factory Factory
-}
+type TTTGame struct { }
 
 func (g TTTGame) Run(console UserInterface, factory Factory) {
   newGame := true
@@ -47,24 +43,39 @@ func (g TTTGame) RunGame(console UserInterface, factory Factory) (bool) {
   return true
 }
 
-func (g TTTGame) SetupNewGame(userInterface UserInterface, factory Factory) (Board, Player, Player, Rules) {
-  rules := Rules(new(BasicRules))
-  playerTypes := factory.PlayerTypes(userInterface, rules)
-  player1Template := userInterface.SelectPlayerChoice(playerTypes, "Player 1")
-  player2Template := userInterface.SelectPlayerChoice(playerTypes, "Player 2")
 
+func (g TTTGame) SetupNewGame(userInterface UserInterface, factory Factory) (Board, Player, Player, Rules) {
+
+  rules := Rules(new(BasicRules))
+
+  player1, player2 := g.getPlayers(factory, userInterface, rules)
+  board := g.getBoard(factory, userInterface)
+
+  return board, player1, player2, rules
+}
+
+func (g TTTGame) getBoard(factory Factory, userInterface UserInterface) (Board) {
+  boardTypes := factory.BoardTypes()
+  boardTemplate := userInterface.SelectBoardChoice(boardTypes)
+  return factory.Board(boardTemplate)
+}
+
+func (g TTTGame) getPlayers(factory Factory, userInterface UserInterface, rules Rules) (Player, Player) {
+
+  player1Template, player2Template := g.getPlayerTemplates(factory, userInterface, rules)
 
   player1 := factory.Player(player1Template, userInterface, rules)
   player2 := factory.Player(player2Template, userInterface, rules)
 
-
-
   player1.SetSymbol("x")
   player2.SetSymbol("o")
 
-  boardTypes := factory.BoardTypes()
-  boardTemplate := userInterface.SelectBoardChoice(boardTypes)
-  board := factory.Board(boardTemplate)
+  return player1, player2
+}
 
-  return board, player1, player2, rules
+func (g TTTGame) getPlayerTemplates(factory Factory, userInterface UserInterface, rules Rules) (Player, Player) {
+  playerTypes := factory.PlayerTypes(userInterface, rules)
+  player1Template := userInterface.SelectPlayerChoice(playerTypes, "Player 1")
+  player2Template := userInterface.SelectPlayerChoice(playerTypes, "Player 2")
+  return player1Template, player2Template
 }
