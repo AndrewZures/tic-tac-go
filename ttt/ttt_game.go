@@ -75,7 +75,7 @@ func (g TTTGame) getPlayers(factory Factory, userInterface UserInterface, rules 
 
 func (g TTTGame) getPlayerTemplates(factory Factory, userInterface UserInterface, rules Rules) (Player, Player) {
   playerTypes := factory.PlayerTypes(userInterface, rules)
-  player1Template := userInterface.SelectPlayerChoice(playerTypes, "Player 1")
-  player2Template := userInterface.SelectPlayerChoice(playerTypes, "Player 2")
+  player1Template := userInterface.SelectPlayerChoice(playerTypes, "Player X")
+  player2Template := userInterface.SelectPlayerChoice(playerTypes, "Player 0")
   return player1Template, player2Template
 }
