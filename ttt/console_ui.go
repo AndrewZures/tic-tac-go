@@ -163,3 +163,11 @@ func (c *ConsoleUI) ChoiceValid(choice int, numChoices int) (bool) {
 func (c ConsoleUI) PrintChoiceInvalid(){
   c.ConsoleIO.Println(c.Messages.InvalidChoiceResponse())
 }
+
+func (c ConsoleUI) DisplayExitMessage(){
+  c.ConsoleIO.Println(c.Messages.ExitMessage())
+}
+
+func (c ConsoleUI) DisplayIntroMessage(){
+  c.ConsoleIO.Println(c.Messages.IntroMessage())
+}

@@ -9,4 +9,6 @@ type UserInterface interface {
   AskForNewGame() bool
   DisplayWinner(string)
   SelectMove(Player, Board) (int)
+  DisplayIntroMessage()
+  DisplayExitMessage()
 }

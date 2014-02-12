@@ -5,9 +5,14 @@ type TTTGame struct { }
 func (g TTTGame) Run(console UserInterface, factory Factory) {
   newGame := true
 
+  console.DisplayIntroMessage()
+
   for newGame == true {
     newGame = g.RunGame(console, factory)
   }
+
+  console.DisplayExitMessage()
+
 }
 
 func (g TTTGame) RunGame(console UserInterface, factory Factory) (bool) {

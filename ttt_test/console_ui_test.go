@@ -28,6 +28,18 @@ var _ = Describe("Console UI", func() {
     factory = Factory(new(TTTFactory))
   })
 
+
+    It("prints intro message", func() {
+      console.DisplayIntroMessage()
+      Expect(writer.String()).To(ContainSubstring("Welcome to Tic Tac Go"))
+    })
+
+    It("prints exit message", func() {
+      console.DisplayExitMessage()
+      Expect(writer.String()).To(ContainSubstring("So Long!"))
+    })
+
+
   Context("when receiving input from user", func() {
 
     It("validates input from use is integer", func() {
