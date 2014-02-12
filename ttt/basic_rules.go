@@ -1,12 +1,6 @@
 package ttt
 
-type BasicRules struct {
-    playerTurn string;
-}
-
-func (r *BasicRules) NewBasicRules(startSymbol string) {
-    r.playerTurn = startSymbol
-}
+type BasicRules struct { }
 
 func (r BasicRules) Score(board Board) (string) {
   numOpenSpots := len(board.OpenSpots())
@@ -152,24 +146,6 @@ func (r BasicRules) Winner(board Board) (string) {
 
 func (r BasicRules) GameOver(board Board) (bool){
   return r.Score(board) != "inprogress"
-}
-
-func (r BasicRules) toggleTurn() {
-  if r.playerTurn == "x" {
-    r.playerTurn = "o"
-  } else if r.playerTurn == "o" {
-    r.playerTurn = "x"
-  } else {
-    r.playerTurn = "z"
-  }
-}
-
-func (r BasicRules) PlayerTurn() (string) {
-  return r.playerTurn
-}
-
-func (r BasicRules) IsPlayerTurn (player Player) (bool) {
-  return r.PlayerTurn() == player.Symbol()
 }
 
 func (r BasicRules) GetGameStateAndOffset (board Board) ([]string, int) {

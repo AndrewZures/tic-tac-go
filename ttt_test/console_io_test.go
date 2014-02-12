@@ -24,6 +24,16 @@ var _ = Describe("Console UI", func() {
       Expect(inOut.Read()).To(Equal("Console"))
       Expect(inOut.Read()).To(Equal("Input"))
     })
+
+    It("provides Println option", func() {
+      inOut.Println("Test String")
+      Expect(writer.String()).To(ContainSubstring("Test String"))
+    })
+
+    It("provides Printf option", func() {
+      inOut.Printf("Test String %v\n", 123)
+      Expect(writer.String()).To(ContainSubstring("Test String 123"))
+    })
   })
 
   AfterEach(func(){
