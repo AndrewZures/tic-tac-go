@@ -30,7 +30,6 @@ var _ = Describe("Console UI", func() {
       Expect(messages.ExitMessage()).To(Equal(expectedExitText))
     })
 
-
     It("has choose move response", func() {
       expectedMovePromptText := "%v, Choose a Move!\n"
       Expect(messages.ChooseMovePrompt()).To(Equal(expectedMovePromptText))

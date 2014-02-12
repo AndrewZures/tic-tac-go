@@ -143,7 +143,7 @@ func (h ComputerPlayer) setDepthLimit(numOpenSpots int) (int) {
   case numOpenSpots > 11:
     return 5
   case numOpenSpots > 9:
-    return 7
+    return 6
   }
 
   return 10
