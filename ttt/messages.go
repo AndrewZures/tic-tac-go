@@ -1,30 +1,30 @@
 package ttt
 
 type Messages interface {
-  BuildMessages()
+	BuildMessages()
 
-  IntroMessage() string
-  ExitMessage() string
+	IntroMessage() string
+	ExitMessage() string
 
-  ChooseMovePrompt() string
-  BoardTypePrompt() string
-  PlayerTypePrompt() string
-  NewGamePrompt() string
+	ChooseMovePrompt() string
+	BoardTypePrompt() string
+	PlayerTypePrompt() string
+	NewGamePrompt() string
 
-  GameTieResponse() string
-  GameWinnerResponse() string
-  InvalidChoiceResponse() string
-  BoardTypesResponse() string
-  PlayerTypesResponse() string
+	GameTieResponse() string
+	GameWinnerResponse() string
+	InvalidChoiceResponse() string
+	BoardTypesResponse() string
+	PlayerTypesResponse() string
 
-  HorizontalDivider() string
-  VerticalDivider() string
-  EmptySpot() string
-  PlayerXSymbol() string
-  PlayerOSymbol() string
-  SpotWidth() int
+	HorizontalDivider() string
+	VerticalDivider() string
+	EmptySpot() string
+	PlayerXSymbol() string
+	PlayerOSymbol() string
+	SpotWidth() int
 
-  YesOption() string
+	YesOption() string
 
-  WinnerSymbol(string) string
+	WinnerSymbol(string) string
 }
