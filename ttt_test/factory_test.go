@@ -46,7 +46,7 @@ var _ = Describe("Factory", func() {
         Expect(player.Symbol()).To(Equal("X"))
       })
 
-      It("provides computerplayer when given a computer player type (Player)", func() {
+      It("provides computer player when given a computer player type (Player)", func() {
         rules := Rules(new(BasicRules))
         computerTemplate := new(ComputerPlayer)
         computerTemplate.NewComputerPlayer("O", "Computer", rules)
@@ -65,6 +65,8 @@ var _ = Describe("Factory", func() {
       It("generates list of avaiable boards", func() {
         boardList := factory.BoardTypes()
         descriptions := getBoardDescriptions(boardList)
+        Expect(descriptions[0]).To(ContainSubstring("3x3 Board"))
+        Expect(descriptions[1]).To(ContainSubstring("4x4 Board"))
         Expect(allElementsUnique(descriptions)).To(Equal(true))
       })
 

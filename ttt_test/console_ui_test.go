@@ -28,14 +28,6 @@ var _ = Describe("Console UI", func() {
     factory = Factory(new(TTTFactory))
   })
 
-  It("implements UserInterface", func() {
-    playerTypes := factory.PlayerTypes(console, rules)
-    interfacedConsole := UserInterface(console)
-    SetMockInput(&reader, "1")
-    selectedPlayer := interfacedConsole.SelectPlayerChoice(playerTypes, "player 1")
-    Expect(selectedPlayer.Description()).To(Equal("Human"))
-  })
-
   Context("when receiving input from user", func() {
 
     It("validates input from use is integer", func() {
@@ -68,7 +60,6 @@ var _ = Describe("Console UI", func() {
       console.GetIntegerFromUser()
       Expect(writer.String()).To(ContainSubstring("Whoops, that choice is invalid"))
       Expect(writer.String()).To(ContainSubstring("Try Again"))
-
     })
 
     It("Displays Game Winner", func() {
@@ -123,6 +114,8 @@ var _ = Describe("Console UI", func() {
       It("lists available board types", func() {
         console.DisplayBoardTypes(factory.BoardTypes())
         Expect(writer.String()).To(ContainSubstring("3x3 Board"))
+        Expect(writer.String()).To(ContainSubstring("4x4 Board"))
+        Expect(writer.String()).To(ContainSubstring("5x5 Board"))
       })
 
     })
@@ -138,7 +131,7 @@ var _ = Describe("Console UI", func() {
 
   })
 
-  Context("when communicating with rest of program", func() {
+  Context("when communicating with program", func() {
     var playerTypes []Player
     var boardTypes []Board
 
@@ -178,7 +171,7 @@ var _ = Describe("Console UI", func() {
       Expect(writer.String()).To(ContainSubstring("3x3 Board"))
     })
 
-    It("returns board type template", func() {
+    It("re-queries user if choice not within range", func() {
       SetMockInput(&reader, "5\n1\n")
       console.SelectBoardChoice(boardTypes)
       Expect(writer.String()).To(ContainSubstring("Whoops, that choice is invalid"))
