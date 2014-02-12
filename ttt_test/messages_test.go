@@ -14,6 +14,12 @@ var _ = Describe("Console UI", func() {
     messages.BuildMessages()
   })
 
+    It("returns player symbol if available", func() {
+      Expect(messages.WinnerSymbol("x")).To(Equal("X"))
+      Expect(messages.WinnerSymbol("o")).To(Equal("O"))
+      Expect(messages.WinnerSymbol("z")).To(Equal("z"))
+    })
+
 
     It("has choose move response", func() {
       expectedMovePromptText := "%v, Choose a Move!\n"
@@ -92,13 +98,8 @@ var _ = Describe("Console UI", func() {
 
     It("has yes status", func() {
       expectedYesOption := "y"
-      Expect(messages.YesResponse()).To(Equal(expectedYesOption))
+      Expect(messages.YesOption()).To(Equal(expectedYesOption))
     })
-
-
-
-
-
 
 })
 

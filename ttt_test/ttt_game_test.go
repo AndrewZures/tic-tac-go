@@ -32,7 +32,7 @@ var _ = Describe("Game Test", func() {
     completeHumanGame := "1\n1\n1\n1\n2\n3\n4\n5\n6\n7\nn\n"
     SetMockInput(&reader, completeHumanGame)
     game.Run(console, factory)
-    Expect(writer.String()).To(ContainSubstring("Winner is x"))
+    Expect(writer.String()).To(ContainSubstring("Winner is X"))
   })
 
   It("has choose move response", func() {

@@ -15,12 +15,13 @@ type ConsoleMessages struct {
   invalidChoiceResponse string
   playerTypesResponse string
   boardTypesResponse string
-  yesResponse string
 
   verticalDivider string
   horizontalDivider string
   emptySpot string
   spotWidth int
+
+  yesOption string
 }
 
 func (c *ConsoleMessages) BuildMessages() {
@@ -40,11 +41,21 @@ func (c *ConsoleMessages) BuildMessages() {
   c.xSymbol = "X"
   c.oSymbol = "O"
   c.spotWidth = 3
-  c.yesResponse = "y"
+  c.yesOption = "y"
 }
 
-func (c ConsoleMessages) YesResponse() string {
-  return c.yesResponse
+func (c ConsoleMessages) WinnerSymbol(winner string) string {
+  if winner ==  "x" {
+    return c.xSymbol
+  } else if winner == "o" {
+    return c.oSymbol
+  }
+
+  return winner
+}
+
+func (c ConsoleMessages) YesOption() string {
+  return c.yesOption
 }
 
 func (c *ConsoleMessages) HorizontalDivider() string {

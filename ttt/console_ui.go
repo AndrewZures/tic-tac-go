@@ -50,7 +50,7 @@ func (c ConsoleUI) DisplayWinner(winner string) {
   if winner == "tie" {
     c.ConsoleIO.Printf(c.Messages.GameTieResponse())
   } else {
-    c.ConsoleIO.Printf(c.Messages.GameWinnerResponse(), winner)
+    c.ConsoleIO.Printf(c.Messages.GameWinnerResponse(), c.Messages.WinnerSymbol(winner))
   }
 }
 
@@ -149,7 +149,7 @@ func (c ConsoleUI) displayNewGameQuery() {
 
 func (c ConsoleUI) getNewGameDecision() (bool) {
   response := strings.ToLower(c.ConsoleIO.Read())
-  return response == c.Messages.YesResponse()
+  return response == c.Messages.YesOption()
 }
 
 func (c *ConsoleUI) shiftToZerosBasedIndex(onesBasedIndexChoice int) (int) {

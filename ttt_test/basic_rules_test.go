@@ -91,25 +91,4 @@ var _ = Describe("Basic Rules", func() {
       })
     })
 
-//      It("keeps track of player turn", func() {
-//        board := Generate3x3Board("o", []string{"","","","","","","","",""})
-//        Expect(board.PlayerTurn()).To(Equal("o"))
-//
-//        board.RecordMove(0, "x")
-//        Expect(board.PlayerTurn()).To(Equal("o"))
-//
-//        board.RecordMove(1, "o")
-//        Expect(board.PlayerTurn()).To(Equal("x"))
-//      })
-//
-//      It("records a player's move also", func() {
-//        board := Board(GenerateEmpty3x3Board("o"))
-//        moveResult := board.RecordMove(0, "o")
-//        Expect(moveResult).To(Equal(true))
-//
-//        Expect(board.PlayerTurn()).To(Equal("x"))
-//        Expect(board.RecordMove(1,"o")).To(Equal(false))
-//        Expect(board.RecordMove(1,"o")).To(Equal(false))
-//        Expect(board.RecordMove(1,"x")).To(Equal(true))
-//      })
 })
