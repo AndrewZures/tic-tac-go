@@ -48,6 +48,46 @@ var _ = Describe("Basic Board", func() {
         board := Generate3x3Board([]string{"x","","","x","","","x","","x"})
         Expect(board.State()).To(Equal(expectedResult))
       })
+
+      It("allows state to be set", func() {
+        expectedResult := []string{"","","","","","","","",""}
+        board := GenerateEmpty3x3Board()
+        Expect(board.State()).To(Equal(expectedResult))
+
+        expectedResult = []string{"x","","","x","","","x","","x"}
+        board.SetState([]string{"x","","","x","","","x","","x"})
+        Expect(board.State()).To(Equal(expectedResult))
+      })
+
+      It("provides copy and not original of state", func() {
+        expectedResult := []string{"x","","","x","","","x","","x"}
+        board := Generate3x3Board([]string{"x","","","x","","","x","","x"})
+        boardState := board.State()
+
+        //attempting to override given state
+        boardState = make([]string, 9)
+        Expect(board.State()).ToNot(Equal(boardState))
+
+        board.SetState([]string{"x","","","x","","","x","","x"})
+        Expect(board.State()).To(Equal(expectedResult))
+      })
+
+      It("keep track of board break (offset)", func() {
+        board := GenerateEmpty3x3Board()
+        Expect(board.Offset()).To(Equal(3))
+
+        board = GenerateEmpty4x4Board()
+        Expect(board.Offset()).To(Equal(4))
+      })
+
+      It("provides a description of itself", func() {
+        board := GenerateEmpty3x3Board()
+        Expect(board.Description()).To(Equal("3x3 Board"))
+
+        board = GenerateEmpty4x4Board()
+        Expect(board.Description()).To(Equal("4x4 Board"))
+      })
+
     })
 
     Context("validates moves", func() {
