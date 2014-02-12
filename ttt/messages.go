@@ -3,6 +3,9 @@ package ttt
 type Messages interface {
   BuildMessages()
 
+  IntroMessage() string
+  ExitMessage() string
+
   ChooseMovePrompt() string
   BoardTypePrompt() string
   PlayerTypePrompt() string

@@ -20,6 +20,16 @@ var _ = Describe("Console UI", func() {
       Expect(messages.WinnerSymbol("z")).To(Equal("z"))
     })
 
+    It("has intro message", func() {
+      expectedIntroText := "Welcome to Tic Tac Go!"
+      Expect(messages.IntroMessage()).To(Equal(expectedIntroText))
+    })
+
+    It("has exit message", func() {
+      expectedExitText := "So Long!"
+      Expect(messages.ExitMessage()).To(Equal(expectedExitText))
+    })
+
 
     It("has choose move response", func() {
       expectedMovePromptText := "%v, Choose a Move!\n"

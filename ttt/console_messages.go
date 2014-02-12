@@ -1,6 +1,8 @@
 package ttt
 
 type ConsoleMessages struct {
+  introMessage string
+  exitMessage string
 
   xSymbol string
   oSymbol string
@@ -8,11 +10,12 @@ type ConsoleMessages struct {
   chooseMovePrompt string
   newGamePrompt string
   boardTypePrompt string
-  playerTypePrompt string
+  playedTypePrompt string
 
   gameTieResponse string
   gameWinnerResponse string
   invalidChoiceResponse string
+  playerTypePrompt string
   playerTypesResponse string
   boardTypesResponse string
 
@@ -25,14 +28,18 @@ type ConsoleMessages struct {
 }
 
 func (c *ConsoleMessages) BuildMessages() {
+  c.introMessage = "Welcome to Tic Tac Go!"
+  c.exitMessage = "So Long!"
+
   c.chooseMovePrompt = "%v, Choose a Move!\n"
+  c.newGamePrompt = "Would you like to start a new game? Press (Y) for yes, any other key to exit"
+  c.boardTypePrompt = "Choose Board Type:"
+  c.playerTypePrompt = "Choose Type for: %v\n"
+
   c.gameTieResponse = "The Game Has Ended In A Tie\n"
   c.gameWinnerResponse = "The Winner is %v\n"
-  c.newGamePrompt = "Would you like to start a new game? Press (Y) for yes, any other key to exit"
   c.invalidChoiceResponse = "Whoops, that choice is invalid! Try Again"
-  c.boardTypePrompt = "Choose Board Type:"
   c.boardTypesResponse = "%v. %v\n"
-  c.playerTypePrompt = "Choose Type for: %v\n"
   c.playerTypesResponse = "%v. %v\n"
 
   c.verticalDivider = " | "
@@ -41,6 +48,7 @@ func (c *ConsoleMessages) BuildMessages() {
   c.xSymbol = "X"
   c.oSymbol = "O"
   c.spotWidth = 3
+
   c.yesOption = "y"
 }
 
@@ -52,6 +60,14 @@ func (c ConsoleMessages) WinnerSymbol(winner string) string {
   }
 
   return winner
+}
+
+func (c ConsoleMessages) IntroMessage() string {
+  return c.introMessage
+}
+
+func (c ConsoleMessages) ExitMessage() string {
+  return c.exitMessage
 }
 
 func (c ConsoleMessages) YesOption() string {
