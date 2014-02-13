@@ -13,7 +13,6 @@ func (g TTTGame) Run(console UserInterface, factory Factory) {
 	}
 
 	console.DisplayExitMessage()
-
 }
 
 func (g TTTGame) RunGame(console UserInterface, factory Factory) {

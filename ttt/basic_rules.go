@@ -50,7 +50,6 @@ func (r BasicRules) gameStatus(segmentsStatus string, openSpots int) string {
 	} else {
 		return "inprogress"
 	}
-
 }
 
 func (r BasicRules) AllSameSymbol(data []string) bool {
