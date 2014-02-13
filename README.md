@@ -28,6 +28,6 @@ before: run `.test_setup` which will download ginkgo and gomega test suite
     Simply choose board spot if using Human Player:
         1. 1-9 for 3x3 board
         2. 1-16 for 4x4 board
-        3  1-25 for 4x4 board
+        3  1-25 for 5x5 board
 
 
