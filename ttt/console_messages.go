@@ -31,7 +31,7 @@ func (c *ConsoleMessages) BuildMessages() {
 	c.introMessage = "Welcome to Tic Tac Go!"
 	c.exitMessage = "So Long!"
 
-	c.chooseMovePrompt = "%v, Choose a Move!\n"
+	c.chooseMovePrompt = "Player %v, Choose a Move!\n"
 	c.newGamePrompt = "Would you like to start a new game? Press (Y) for yes, any other key to exit"
 	c.boardTypePrompt = "Choose Board Type:"
 	c.playerTypePrompt = "Choose Type for: %v\n"
@@ -52,7 +52,7 @@ func (c *ConsoleMessages) BuildMessages() {
 	c.yesOption = "y"
 }
 
-func (c ConsoleMessages) WinnerSymbol(winner string) string {
+func (c ConsoleMessages) PlayerSymbol(winner string) string {
 	if winner == "x" {
 		return c.xSymbol
 	} else if winner == "o" {

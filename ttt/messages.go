@@ -26,5 +26,5 @@ type Messages interface {
 
 	YesOption() string
 
-	WinnerSymbol(string) string
+	PlayerSymbol(string) string
 }

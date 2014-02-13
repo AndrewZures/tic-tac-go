@@ -15,9 +15,8 @@ var _ = Describe("Console UI", func() {
 	})
 
 	It("returns player symbol if available", func() {
-		Expect(messages.WinnerSymbol("x")).To(Equal("X"))
-		Expect(messages.WinnerSymbol("o")).To(Equal("O"))
-		Expect(messages.WinnerSymbol("z")).To(Equal("z"))
+		Expect(messages.PlayerSymbol("x")).To(Equal("X"))
+		Expect(messages.PlayerSymbol("o")).To(Equal("O"))
 	})
 
 	It("has intro message", func() {
@@ -31,7 +30,7 @@ var _ = Describe("Console UI", func() {
 	})
 
 	It("has choose move response", func() {
-		expectedMovePromptText := "%v, Choose a Move!\n"
+		expectedMovePromptText := "Player %v, Choose a Move!\n"
 		Expect(messages.ChooseMovePrompt()).To(Equal(expectedMovePromptText))
 	})
 

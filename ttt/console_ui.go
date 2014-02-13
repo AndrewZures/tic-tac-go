@@ -91,7 +91,7 @@ func (c ConsoleUI) DisplayWinner(winner string) {
 	if winner == "tie" {
 		c.ConsoleIO.Printf(c.Messages.GameTieResponse())
 	} else {
-		c.ConsoleIO.Printf(c.Messages.GameWinnerResponse(), c.Messages.WinnerSymbol(winner))
+		c.ConsoleIO.Printf(c.Messages.GameWinnerResponse(), c.Messages.PlayerSymbol(winner))
 	}
 }
 
@@ -144,7 +144,8 @@ func (c ConsoleUI) DisplayIntroMessage() {
 }
 
 func (c ConsoleUI) displayQueryMoveText(player Player) {
-	c.ConsoleIO.Printf(c.Messages.ChooseMovePrompt(), player.Description())
+  displaySymbol := c.Messages.PlayerSymbol(player.Symbol())
+	c.ConsoleIO.Printf(c.Messages.ChooseMovePrompt(), displaySymbol)
 }
 
 func (c ConsoleUI) displayNewGameQuery() {
