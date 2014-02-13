@@ -18,7 +18,7 @@ func (b *BasicBoard) NewBoard(boardLength int, offset int, description string) b
 }
 
 func (b BasicBoard) ValidMove(move int) bool {
-  return b.validateMove(move)
+	return b.validateMove(move)
 }
 
 func (b *BasicBoard) RecordMove(move int, symbol string) bool {

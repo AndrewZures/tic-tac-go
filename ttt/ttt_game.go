@@ -9,7 +9,7 @@ func (g TTTGame) Run(console UserInterface, factory Factory) {
 
 	for newGame == true {
 		g.RunGame(console, factory)
-    newGame = console.QueryNewGame()
+		newGame = console.QueryNewGame()
 	}
 
 	console.DisplayExitMessage()
@@ -30,12 +30,12 @@ func (g TTTGame) RunGame(console UserInterface, factory Factory) {
 		if !validMove {
 			console.DisplayChoiceInvalid()
 		} else {
-      board.RecordMove(currentMove, currentPlayer.Symbol())
+			board.RecordMove(currentMove, currentPlayer.Symbol())
 
 			if rules.GameOver(board) {
 				console.DisplayBoard(board)
 				console.DisplayWinner(rules.Winner(board))
-        break
+				break
 			}
 
 			currentPlayer = g.getOpponent(currentPlayer, player1, player2)

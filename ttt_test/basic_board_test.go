@@ -105,7 +105,7 @@ var _ = Describe("Basic Board", func() {
 
 				Expect(board.RecordMove(3, "o")).To(Equal(true))
 				Expect(board.ValidMove(3)).To(Equal(false))
-      })
+			})
 
 			It("does not overwrite move", func() {
 				expectedResult := []string{"", "", "", "o", "", "", "", "", ""}
