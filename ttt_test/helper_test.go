@@ -6,6 +6,9 @@ import (
 	. "github.com/andrewzures/tictactoe/ttt"
 )
 
+//This File Includes test helper function  It does not include tests
+//This is because Ginkgo/Gomega only recognizes files ending in _test
+
 func GenerateBoard(boardSize int, offset int, description string, gameState []string) Board {
 	newBoard := Board(new(BasicBoard))
 	newBoard.NewBoard(boardSize, offset, description)

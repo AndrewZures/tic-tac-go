@@ -53,7 +53,7 @@ func (r BasicRules) gameStatus(segmentsStatus string, openSpots int) string {
 
 }
 
-func (r *BasicRules) AllSameSymbol(data []string) bool {
+func (r BasicRules) AllSameSymbol(data []string) bool {
 	if len(data) == 0 || data[0] == "" {
 		return false
 	}
@@ -95,39 +95,41 @@ func (r BasicRules) columns(board Board) [][]string {
 	return columns
 }
 
-func (r *BasicRules) column(board Board, startIndex int) []string {
-	elements := make([]string, 0)
+func (r BasicRules) column(board Board, startIndex int) []string {
+	column := make([]string, 0)
 	gameState, offset := r.GetGameStateAndOffset(board)
 
 	for i := startIndex; i < len(gameState); i += offset {
-		elements = append(elements, gameState[i])
+		column = append(column, gameState[i])
 	}
 
-	return elements
+	return column
 }
 
-func (r *BasicRules) leftDiagonal(board Board) [][]string {
-	elements := make([]string, 0)
+func (r BasicRules) leftDiagonal(board Board) [][]string {
 	gameState, offset := r.GetGameStateAndOffset(board)
 	diagonal := make([][]string, offset)
+	elements := make([]string, 0)
 
 	for i := 0; i < len(gameState); i += offset + 1 {
 		elements = append(elements, gameState[i])
 	}
+
 	diagonal[0] = elements
 
 	return diagonal
 }
 
-func (r *BasicRules) rightDiagonal(board Board) [][]string {
-	elements := make([]string, 0)
+func (r BasicRules) rightDiagonal(board Board) [][]string {
 	gameState, offset := r.GetGameStateAndOffset(board)
 	diagonal := make([][]string, offset)
+	elements := make([]string, 0)
 	newOffset := offset - 1
 
 	for i := newOffset; i < len(gameState)-1; i += newOffset {
 		elements = append(elements, gameState[i])
 	}
+
 	diagonal[0] = elements
 
 	return diagonal

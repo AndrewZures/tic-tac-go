@@ -15,7 +15,7 @@ var _ = Describe("Console UI", func() {
 		boardFormatter = BoardFormatter(new(ConsoleBoardFormatter))
 	})
 
-	It("returns string representing board state", func() {
+	It("returns properly formatted 3x3 board", func() {
 		consoleBoard := "  |   |  \n---------\n  |   |  \n---------\n  |   |  \n"
 		board := Generate3x3Board([]string{"", "", "", "", "", "", "", "", ""})
 		Expect(boardFormatter.FormatBoard(board, messages)).To(Equal(consoleBoard))

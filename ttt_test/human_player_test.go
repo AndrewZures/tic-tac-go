@@ -25,10 +25,10 @@ var _ = Describe("Human Player", func() {
 	})
 
 	It("makes a move", func() {
-		SetMockInput(&reader, "1\n8")
+		SetMockInput(&reader, "1\n9")
 		Expect(player.MakeMove(board)).To(Equal(0))
 
-		Expect(player.MakeMove(board)).To(Equal(7))
+		Expect(player.MakeMove(board)).To(Equal(8))
 	})
 
 	It("has a symbol", func() {

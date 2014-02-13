@@ -8,6 +8,7 @@ import (
 )
 
 var _ = Describe("Game Test", func() {
+	var userInterface UserInterface
 	var messages Messages
 	var writer bytes.Buffer
 	var reader bytes.Buffer
@@ -16,16 +17,31 @@ var _ = Describe("Game Test", func() {
 	var game Game
 
 	BeforeEach(func() {
+		boardFormatter := BoardFormatter(new(ConsoleBoardFormatter))
 		inOut := InOut(ConsoleIO{&writer, &reader})
+		userInterface = UserInterface(console)
+
 		consoleMessage := new(ConsoleMessages)
 		messages = Messages(consoleMessage)
 		messages.BuildMessages()
-		boardFormatter := BoardFormatter(new(ConsoleBoardFormatter))
 		consoleui := ConsoleUI{inOut, messages, boardFormatter}
 		console = UserInterface(consoleui)
+
 		factory = Factory(new(TTTFactory))
 
 		game = new(TTTGame)
+	})
+
+	It("sets up a game", func() {
+		SetMockInput(&reader, "1\n2\n1\n")
+		emptyBoardArray := []string{"", "", "", "", "", "", "", "", ""}
+
+		board, player1, player2, _ := game.SetupNewGame(console, factory)
+
+		Expect(player1.Description()).To(Equal("Human"))
+		Expect(player2.Description()).To(Equal("Computer"))
+		Expect(board.Description()).To(Equal("3x3 Board"))
+		Expect(board.State()).To(Equal(emptyBoardArray))
 	})
 
 	It("has choose move response", func() {
@@ -47,6 +63,11 @@ var _ = Describe("Game Test", func() {
 		SetMockInput(&reader, completeHumanGame)
 		game.Run(console, factory)
 		Expect(writer.String()).To(ContainSubstring("  |   |  \n---------\n  |   |  \n---------\n  |   |  \n"))
+	})
+
+	AfterEach(func() {
+		writer.Reset()
+		reader.Reset()
 	})
 
 })

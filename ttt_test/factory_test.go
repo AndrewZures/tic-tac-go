@@ -34,7 +34,7 @@ var _ = Describe("Factory", func() {
 			Expect(allElementsUnique(descriptions)).To(Equal(true))
 		})
 
-		It("provides human player when given a human player type (Player)", func() {
+		It("provides human player when given a human player template", func() {
 			humanTemplate := new(HumanPlayer)
 			humanTemplate.NewHumanPlayer("X", "Human", userInterface)
 			player := factory.Player(humanTemplate, userInterface, rules)
@@ -45,7 +45,7 @@ var _ = Describe("Factory", func() {
 			Expect(player.Symbol()).To(Equal("X"))
 		})
 
-		It("provides computer player when given a computer player type (Player)", func() {
+		It("provides computer player when given a computer player template", func() {
 			rules := Rules(new(BasicRules))
 			computerTemplate := new(ComputerPlayer)
 			computerTemplate.NewComputerPlayer("O", "Computer", rules)

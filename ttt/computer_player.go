@@ -12,10 +12,6 @@ type ComputerPlayer struct {
 	rules      Rules
 }
 
-func (h *ComputerPlayer) SetSymbol(symbol string) {
-	h.symbol = symbol
-}
-
 func (h *ComputerPlayer) NewComputerPlayer(symbol string, typeTitle string, rules Rules) {
 	h.symbol = symbol
 	h.typeTitle = typeTitle
@@ -24,16 +20,6 @@ func (h *ComputerPlayer) NewComputerPlayer(symbol string, typeTitle string, rule
 
 func (h *ComputerPlayer) MakeMove(board Board) int {
 	return h.startMiniMax(board)
-}
-
-func (h *ComputerPlayer) setupMiniMax(board Board) (float64, float64, float64, []int, int) {
-	h.depthLimit = h.setDepthLimit(len(board.OpenSpots()))
-	bestScore, minAlpha := math.Inf(-1), math.Inf(-1)
-	maxBeta := math.Inf(1)
-	bestMove := make([]int, 0)
-	depth := 1
-
-	return bestScore, minAlpha, maxBeta, bestMove, depth
 }
 
 func (h *ComputerPlayer) startMiniMax(board Board) int {
@@ -55,18 +41,14 @@ func (h *ComputerPlayer) startMiniMax(board Board) int {
 	return h.randomizeBestMove(bestMoves)
 }
 
-func (h ComputerPlayer) setNewBestMove(move int, bestMoves []int) []int {
-	bestMoves = []int{move}
-	return bestMoves
-}
+func (h *ComputerPlayer) setupMiniMax(board Board) (float64, float64, float64, []int, int) {
+	h.depthLimit = h.setDepthLimit(len(board.OpenSpots()))
+	bestScore, minAlpha := math.Inf(-1), math.Inf(-1)
+	maxBeta := math.Inf(1)
+	bestMove := make([]int, 0)
+	depth := 1
 
-func (h ComputerPlayer) addToBestMoves(move int, bestMoves []int) []int {
-	return append(bestMoves, move)
-}
-
-func (h ComputerPlayer) randomizeBestMove(bestMoves []int) int {
-	randomIndex := rand.Perm(len(bestMoves))[0]
-	return bestMoves[randomIndex]
+	return bestScore, minAlpha, maxBeta, bestMove, depth
 }
 
 func (h ComputerPlayer) placeAndScore(board Board, player string, move, depth int, alpha, beta float64) float64 {
@@ -151,10 +133,28 @@ func (h ComputerPlayer) setDepthLimit(numOpenSpots int) int {
 	return 10
 }
 
+func (h ComputerPlayer) setNewBestMove(move int, bestMoves []int) []int {
+	bestMoves = []int{move}
+	return bestMoves
+}
+
+func (h ComputerPlayer) addToBestMoves(move int, bestMoves []int) []int {
+	return append(bestMoves, move)
+}
+
+func (h ComputerPlayer) randomizeBestMove(bestMoves []int) int {
+	randomIndex := rand.Perm(len(bestMoves))[0]
+	return bestMoves[randomIndex]
+}
+
 func (h *ComputerPlayer) Symbol() string {
 	return h.symbol
 }
 
 func (h *ComputerPlayer) Description() string {
 	return h.typeTitle
+}
+
+func (h *ComputerPlayer) SetSymbol(symbol string) {
+	h.symbol = symbol
 }

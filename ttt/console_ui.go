@@ -18,41 +18,9 @@ func (c ConsoleUI) DisplayBoard(board Board) {
 
 func (c ConsoleUI) QueryMove(player Player, board Board) int {
 
-	for {
-		c.DisplayQueryMoveText(player)
-		move := c.GetIntegerFromUser()
-		if c.ValidateMove(move, board) {
-			zeroIndexMove := c.shiftToZerosBasedIndex(move)
-			return zeroIndexMove
-		} else {
-			c.DisplayChoiceInvalid()
-		}
-	}
-}
-
-func (c ConsoleUI) DisplayQueryMoveText(player Player) {
-	c.ConsoleIO.Printf(c.Messages.ChooseMovePrompt(), player.Description())
-}
-
-func (c ConsoleUI) ValidateMove(move int, board Board) bool {
-	availableMoves := board.OpenSpots()
-	status := false
-
-	for _, availableMove := range availableMoves {
-		if move == availableMove {
-			status = true
-		}
-	}
-
-	return status
-}
-
-func (c ConsoleUI) DisplayWinner(winner string) {
-	if winner == "tie" {
-		c.ConsoleIO.Printf(c.Messages.GameTieResponse())
-	} else {
-		c.ConsoleIO.Printf(c.Messages.GameWinnerResponse(), c.Messages.WinnerSymbol(winner))
-	}
+		c.displayQueryMoveText(player)
+    rawMove := c.GetIntegerFromUser()
+    return c.shiftToZerosBasedIndex(rawMove)
 }
 
 func (c ConsoleUI) QueryPlayerChoice(playerList []Player, description string) Player {
@@ -138,6 +106,7 @@ func (c ConsoleUI) GetIntegerFromUser() int {
 
 }
 
+
 func (c ConsoleUI) QueryNewGame() bool {
 	c.displayNewGameQuery()
 	return c.getNewGameDecision()
@@ -160,6 +129,14 @@ func (c *ConsoleUI) ChoiceValid(choice int, numChoices int) bool {
 	return choice > 0 && choice <= numChoices
 }
 
+func (c ConsoleUI) DisplayWinner(winner string) {
+	if winner == "tie" {
+		c.ConsoleIO.Printf(c.Messages.GameTieResponse())
+	} else {
+		c.ConsoleIO.Printf(c.Messages.GameWinnerResponse(), c.Messages.WinnerSymbol(winner))
+	}
+}
+
 func (c ConsoleUI) DisplayChoiceInvalid() {
 	c.ConsoleIO.Println(c.Messages.InvalidChoiceResponse())
 }
@@ -170,4 +147,8 @@ func (c ConsoleUI) DisplayExitMessage() {
 
 func (c ConsoleUI) DisplayIntroMessage() {
 	c.ConsoleIO.Println(c.Messages.IntroMessage())
+}
+
+func (c ConsoleUI) displayQueryMoveText(player Player) {
+	c.ConsoleIO.Printf(c.Messages.ChooseMovePrompt(), player.Description())
 }
