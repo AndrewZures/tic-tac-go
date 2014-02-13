@@ -17,8 +17,12 @@ func (b *BasicBoard) NewBoard(boardLength int, offset int, description string) b
 	}
 }
 
+func (b BasicBoard) ValidMove(move int) bool {
+  return b.validateMove(move)
+}
+
 func (b *BasicBoard) RecordMove(move int, symbol string) bool {
-	if b.validateMove(move, symbol) == true {
+	if b.validateMove(move) == true {
 		b.array[move] = symbol
 		return true
 	} else {
@@ -30,7 +34,7 @@ func (b *BasicBoard) RemoveMove(move int) {
 	b.array[move] = ""
 }
 
-func (b BasicBoard) validateMove(move int, symbol string) bool {
+func (b BasicBoard) validateMove(move int) bool {
 	return b.moveIsWithinBounds(move) && b.spotIsAvailable(move)
 }
 

@@ -101,6 +101,13 @@ var _ = Describe("Basic Board", func() {
 			})
 
 			It("determines if move choice has already been selected", func() {
+				Expect(board.ValidMove(3)).To(Equal(true))
+
+				Expect(board.RecordMove(3, "o")).To(Equal(true))
+				Expect(board.ValidMove(3)).To(Equal(false))
+      })
+
+			It("does not overwrite move", func() {
 				expectedResult := []string{"", "", "", "o", "", "", "", "", ""}
 
 				Expect(board.RecordMove(3, "o")).To(Equal(true))

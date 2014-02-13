@@ -6,6 +6,7 @@ type Board interface {
 	SetState([]string)
 	Description() string
 	Offset() int
+  ValidMove(int) bool
 	RecordMove(int, string) bool
 	RemoveMove(int)
 	OpenSpots() []int

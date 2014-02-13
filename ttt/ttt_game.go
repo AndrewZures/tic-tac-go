@@ -8,32 +8,34 @@ func (g TTTGame) Run(console UserInterface, factory Factory) {
 	console.DisplayIntroMessage()
 
 	for newGame == true {
-		newGame = g.RunGame(console, factory)
+		g.RunGame(console, factory)
+    newGame = console.QueryNewGame()
 	}
 
 	console.DisplayExitMessage()
 
 }
 
-func (g TTTGame) RunGame(console UserInterface, factory Factory) bool {
+func (g TTTGame) RunGame(console UserInterface, factory Factory) {
 	board, player1, player2, rules := g.SetupNewGame(console, factory)
 
 	currentPlayer := player1
 
 	for {
 		console.DisplayBoard(board)
+
 		currentMove := currentPlayer.MakeMove(board)
-		validMove := board.RecordMove(currentMove, currentPlayer.Symbol())
+		validMove := board.ValidMove(currentMove)
 
 		if !validMove {
 			console.DisplayChoiceInvalid()
 		} else {
+      board.RecordMove(currentMove, currentPlayer.Symbol())
 
 			if rules.GameOver(board) {
 				console.DisplayBoard(board)
 				console.DisplayWinner(rules.Winner(board))
-				newGame := console.QueryNewGame()
-				return newGame
+        break
 			}
 
 			currentPlayer = g.getOpponent(currentPlayer, player1, player2)
