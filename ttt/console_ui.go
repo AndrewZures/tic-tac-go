@@ -144,7 +144,7 @@ func (c ConsoleUI) DisplayIntroMessage() {
 }
 
 func (c ConsoleUI) displayQueryMoveText(player Player) {
-  displaySymbol := c.Messages.PlayerSymbol(player.Symbol())
+	displaySymbol := c.Messages.PlayerSymbol(player.Symbol())
 	c.ConsoleIO.Printf(c.Messages.ChooseMovePrompt(), displaySymbol)
 }
 

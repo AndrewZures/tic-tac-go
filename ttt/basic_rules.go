@@ -35,21 +35,14 @@ func (r BasicRules) scoreSegment(segment [][]string) string {
 
 	for _, subSegment := range segment {
 		if r.AllSameSymbol(subSegment) {
-			return subSegment[0]
+			return r.segmentWinner(subSegment)
 		}
 	}
 	return ""
 }
 
-func (r BasicRules) gameStatus(segmentsStatus string, openSpots int) string {
-
-	if segmentsStatus != "" {
-		return segmentsStatus
-	} else if openSpots == 0 {
-		return "tie"
-	} else {
-		return "inprogress"
-	}
+func (r BasicRules) segmentWinner(subSegment []string) string {
+	return subSegment[0]
 }
 
 func (r BasicRules) AllSameSymbol(data []string) bool {
@@ -64,6 +57,17 @@ func (r BasicRules) AllSameSymbol(data []string) bool {
 	}
 
 	return true
+}
+
+func (r BasicRules) gameStatus(segmentsStatus string, openSpots int) string {
+
+	if segmentsStatus != "" {
+		return segmentsStatus
+	} else if openSpots == 0 {
+		return "tie"
+	} else {
+		return "inprogress"
+	}
 }
 
 func (r BasicRules) rows(board Board) [][]string {
@@ -135,10 +139,7 @@ func (r BasicRules) rightDiagonal(board Board) [][]string {
 }
 
 func (r BasicRules) IsWinner(board Board) bool {
-	if r.Score(board) != "inprogress" {
-		return true
-	}
-	return false
+	return r.Score(board) != "inprogress"
 }
 
 func (r BasicRules) Winner(board Board) string {
