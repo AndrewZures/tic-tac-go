@@ -1,14 +1,15 @@
 package ttt
 
 type UserInterface interface {
-	DisplayBoard(Board)
-	SelectBoardChoice([]Board) Board
+	QueryBoardChoice([]Board) Board
+	QueryPlayerChoice([]Player, string) Player
+	QueryMove(Player, Board) int
+	QueryNewGame() bool
+
 	DisplayPlayerTypes([]Player)
-	SelectPlayerChoice([]Player, string) Player
-	PrintChoiceInvalid()
-	AskForNewGame() bool
+	DisplayBoard(Board)
 	DisplayWinner(string)
-	SelectMove(Player, Board) int
+	DisplayChoiceInvalid()
 	DisplayIntroMessage()
 	DisplayExitMessage()
 }

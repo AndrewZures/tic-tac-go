@@ -26,13 +26,13 @@ func (g TTTGame) RunGame(console UserInterface, factory Factory) bool {
 		validMove := board.RecordMove(currentMove, currentPlayer.Symbol())
 
 		if !validMove {
-			console.PrintChoiceInvalid()
+			console.DisplayChoiceInvalid()
 		} else {
 
 			if rules.GameOver(board) {
 				console.DisplayBoard(board)
 				console.DisplayWinner(rules.Winner(board))
-				newGame := console.AskForNewGame()
+				newGame := console.QueryNewGame()
 				return newGame
 			}
 
@@ -54,7 +54,7 @@ func (g TTTGame) SetupNewGame(userInterface UserInterface, factory Factory) (Boa
 
 func (g TTTGame) getBoard(factory Factory, userInterface UserInterface) Board {
 	boardTypes := factory.BoardTypes()
-	boardTemplate := userInterface.SelectBoardChoice(boardTypes)
+	boardTemplate := userInterface.QueryBoardChoice(boardTypes)
 	return factory.Board(boardTemplate)
 }
 
@@ -73,8 +73,8 @@ func (g TTTGame) getPlayers(factory Factory, userInterface UserInterface, rules 
 
 func (g TTTGame) getPlayerTemplates(factory Factory, userInterface UserInterface, rules Rules) (Player, Player) {
 	playerTypes := factory.PlayerTypes(userInterface, rules)
-	player1Template := userInterface.SelectPlayerChoice(playerTypes, "Player X")
-	player2Template := userInterface.SelectPlayerChoice(playerTypes, "Player O")
+	player1Template := userInterface.QueryPlayerChoice(playerTypes, "Player X")
+	player2Template := userInterface.QueryPlayerChoice(playerTypes, "Player O")
 	return player1Template, player2Template
 }
 

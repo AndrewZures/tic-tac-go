@@ -62,7 +62,7 @@ var _ = Describe("Console UI", func() {
   Context("when displaying information to user", func() {
 
     It("indicates invalid choice to user", func() {
-      console.PrintChoiceInvalid()
+      console.DisplayChoiceInvalid()
       Expect(writer.String()).To(ContainSubstring("Whoops, that choice is invalid"))
       Expect(writer.String()).To(ContainSubstring("Try Again"))
     })
@@ -87,7 +87,7 @@ var _ = Describe("Console UI", func() {
     It("Asks player for move", func() {
       player := new(HumanPlayer)
       player.NewHumanPlayer("X", "Player 1", console)
-      console.AskUserForMove(player)
+      console.DisplayQueryMoveText(player)
       Expect(writer.String()).To(ContainSubstring("Choose a Move"))
 
     })
@@ -104,11 +104,11 @@ var _ = Describe("Console UI", func() {
 
     It("Asks user for new game", func() {
       SetMockInput(&reader, "y\nn\n")
-      result := console.AskForNewGame()
+      result := console.QueryNewGame()
       Expect(writer.String()).To(ContainSubstring("Would you like to start a new game"))
       Expect(result).To(Equal(true))
 
-      result = console.AskForNewGame()
+      result = console.QueryNewGame()
       Expect(result).To(Equal(false))
     })
 
@@ -154,38 +154,38 @@ var _ = Describe("Console UI", func() {
 
     It("returns selected player choice", func() {
       SetMockInput(&reader, "1")
-      selectedPlayer := console.SelectPlayerChoice(playerTypes, "player 1")
+      selectedPlayer := console.QueryPlayerChoice(playerTypes, "player 1")
       Expect(selectedPlayer.Description()).To(Equal("Human"))
 
       SetMockInput(&reader, "2")
-      selectedPlayer = console.SelectPlayerChoice(playerTypes, "player 1")
+      selectedPlayer = console.QueryPlayerChoice(playerTypes, "player 1")
       Expect(selectedPlayer.Description()).To(Equal("Computer"))
     })
 
     It("only returns valid player choice", func() {
       SetMockInput(&reader, "-1\n100\na\n2\n1\n")
-      selectedPlayer := console.SelectPlayerChoice(playerTypes, "player 1")
+      selectedPlayer := console.QueryPlayerChoice(playerTypes, "player 1")
       Expect(selectedPlayer.Description()).To(Equal("Computer"))
     })
 
     It("returns multiptle players", func() {
       SetMockInput(&reader, "a\n1\n2\n2\n")
-      selectedPlayer := console.SelectPlayerChoice(playerTypes, "player 1")
+      selectedPlayer := console.QueryPlayerChoice(playerTypes, "player 1")
       Expect(selectedPlayer.Description()).To(Equal("Human"))
 
-      anotherPlayer := console.SelectPlayerChoice(playerTypes, "player 2")
+      anotherPlayer := console.QueryPlayerChoice(playerTypes, "player 2")
       Expect(anotherPlayer.Description()).To(Equal("Computer"))
     })
 
     It("returns board type template", func() {
       SetMockInput(&reader, "1\n")
-      console.SelectBoardChoice(boardTypes)
+      console.QueryBoardChoice(boardTypes)
       Expect(writer.String()).To(ContainSubstring("3x3 Board"))
     })
 
     It("re-queries user if choice not within range", func() {
       SetMockInput(&reader, "5\n1\n")
-      console.SelectBoardChoice(boardTypes)
+      console.QueryBoardChoice(boardTypes)
       Expect(writer.String()).To(ContainSubstring("Whoops, that choice is invalid"))
     })
 

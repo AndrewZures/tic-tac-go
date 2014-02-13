@@ -16,21 +16,21 @@ func (c ConsoleUI) DisplayBoard(board Board) {
 	c.ConsoleIO.Println(formattedBoard)
 }
 
-func (c ConsoleUI) SelectMove(player Player, board Board) int {
+func (c ConsoleUI) QueryMove(player Player, board Board) int {
 
 	for {
-		c.AskUserForMove(player)
+		c.DisplayQueryMoveText(player)
 		move := c.GetIntegerFromUser()
 		if c.ValidateMove(move, board) {
 			zeroIndexMove := c.shiftToZerosBasedIndex(move)
 			return zeroIndexMove
 		} else {
-			c.PrintChoiceInvalid()
+			c.DisplayChoiceInvalid()
 		}
 	}
 }
 
-func (c ConsoleUI) AskUserForMove(player Player) {
+func (c ConsoleUI) DisplayQueryMoveText(player Player) {
 	c.ConsoleIO.Printf(c.Messages.ChooseMovePrompt(), player.Description())
 }
 
@@ -55,7 +55,7 @@ func (c ConsoleUI) DisplayWinner(winner string) {
 	}
 }
 
-func (c ConsoleUI) SelectPlayerChoice(playerList []Player, description string) Player {
+func (c ConsoleUI) QueryPlayerChoice(playerList []Player, description string) Player {
 	c.PrintPlayerTypeQuestion(description)
 	c.DisplayPlayerTypes(playerList)
 	playerChoice := c.PlayerChoice(playerList)
@@ -87,7 +87,7 @@ func (c *ConsoleUI) PlayerChoice(playerList []Player) Player {
 			userChoice = c.shiftToZerosBasedIndex(userChoice)
 			return playerList[userChoice]
 		} else {
-			c.PrintChoiceInvalid()
+			c.DisplayChoiceInvalid()
 		}
 	}
 }
@@ -100,7 +100,7 @@ func (c ConsoleUI) DisplayBoardTypes(boardList []Board) {
 
 }
 
-func (c ConsoleUI) SelectBoardChoice(boardList []Board) Board {
+func (c ConsoleUI) QueryBoardChoice(boardList []Board) Board {
 	c.PrintBoardTypeQuestion()
 	c.DisplayBoardTypes(boardList)
 	boardChoice := c.BoardChoice(boardList)
@@ -115,7 +115,7 @@ func (c ConsoleUI) BoardChoice(boardList []Board) Board {
 			userChoice = c.shiftToZerosBasedIndex(userChoice)
 			return boardList[userChoice]
 		} else {
-			c.PrintChoiceInvalid()
+			c.DisplayChoiceInvalid()
 		}
 	}
 }
@@ -132,13 +132,13 @@ func (c ConsoleUI) GetIntegerFromUser() int {
 		if err == nil {
 			return int(value)
 		} else {
-			c.PrintChoiceInvalid()
+			c.DisplayChoiceInvalid()
 		}
 	}
 
 }
 
-func (c ConsoleUI) AskForNewGame() bool {
+func (c ConsoleUI) QueryNewGame() bool {
 	c.displayNewGameQuery()
 	return c.getNewGameDecision()
 }
@@ -160,7 +160,7 @@ func (c *ConsoleUI) ChoiceValid(choice int, numChoices int) bool {
 	return choice > 0 && choice <= numChoices
 }
 
-func (c ConsoleUI) PrintChoiceInvalid() {
+func (c ConsoleUI) DisplayChoiceInvalid() {
 	c.ConsoleIO.Println(c.Messages.InvalidChoiceResponse())
 }
 

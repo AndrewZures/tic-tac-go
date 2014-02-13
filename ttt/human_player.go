@@ -17,7 +17,7 @@ func (h *HumanPlayer) SetSymbol(thisSymbol string) {
 }
 
 func (h *HumanPlayer) MakeMove(board Board) int {
-	return h.userInterface.SelectMove(h, board)
+	return h.userInterface.QueryMove(h, board)
 }
 
 func (h *HumanPlayer) Symbol() string {

@@ -30,15 +30,15 @@ func (b *BasicBoard) RemoveMove(move int) {
 	b.array[move] = ""
 }
 
-func (b *BasicBoard) validateMove(move int, symbol string) bool {
+func (b BasicBoard) validateMove(move int, symbol string) bool {
 	return b.moveIsWithinBounds(move) && b.spotIsAvailable(move)
 }
 
-func (b *BasicBoard) moveIsWithinBounds(move int) bool {
+func (b BasicBoard) moveIsWithinBounds(move int) bool {
 	return move < len(b.array) && move > -1
 }
 
-func (b *BasicBoard) spotIsAvailable(move int) bool {
+func (b BasicBoard) spotIsAvailable(move int) bool {
 	return b.array[move] == ""
 }
 
