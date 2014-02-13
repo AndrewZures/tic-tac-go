@@ -4,7 +4,10 @@ Tic Tac Toe in Go
 ###To Run:
 
 1.  Install [Go](http://golang.org/doc/install)
-A Good tutorial on how to set up your environment can be found [here](http://skife.org/golang/2013/03/24/go_dev_env .html).
+
+     a.  A Good tutorial on how to set up your environment can be found [here](http://skife.org/golang/2013/03/24/go_dev_env.html).
+
+     b.  Also, you may try to use the `go_setup` script, although it may not work on all systems
 
 2.  clone this repository in your go source folder.  Alternatively "get get github.com/AndrewZures/tictactoe" should work
 
