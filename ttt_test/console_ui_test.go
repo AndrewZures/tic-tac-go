@@ -38,23 +38,23 @@ var _ = Describe("Console UI", func() {
 		It("displays tie game", func() {
 			console.DisplayWinner("tie")
 			Expect(writer.String()).To(ContainSubstring("Tie"))
-    })
+		})
 
-    It("displays introduction message", func() {
-      console.DisplayIntroMessage()
-      Expect(writer.String()).To(ContainSubstring("Welcome to Tic Tac Go"))
-    })
+		It("displays introduction message", func() {
+			console.DisplayIntroMessage()
+			Expect(writer.String()).To(ContainSubstring("Welcome to Tic Tac Go"))
+		})
 
-    It("displays exit message", func() {
-      console.DisplayExitMessage()
-      Expect(writer.String()).To(ContainSubstring("So Long!"))
-    })
+		It("displays exit message", func() {
+			console.DisplayExitMessage()
+			Expect(writer.String()).To(ContainSubstring("So Long!"))
+		})
 
-    It("queries player for move", func() {
+		It("queries player for move", func() {
 			SetMockInput(&reader, "1\n")
 			player := new(HumanPlayer)
 			player.NewHumanPlayer("X", "Player 1", console)
-      board := GenerateEmpty3x3Board()
+			board := GenerateEmpty3x3Board()
 			console.QueryMove(player, board)
 			Expect(writer.String()).To(ContainSubstring("Choose a Move"))
 		})
@@ -90,22 +90,22 @@ var _ = Describe("Console UI", func() {
 
 			result = console.QueryNewGame()
 			Expect(result).To(Equal(false))
-    })
+		})
 
-    It("lists available player types", func() {
-      console.DisplayPlayerTypes(factory.PlayerTypes(console, rules))
-      Expect(writer.String()).To(ContainSubstring("Human"))
-      Expect(writer.String()).To(ContainSubstring("Computer"))
-    })
+		It("lists available player types", func() {
+			console.DisplayPlayerTypes(factory.PlayerTypes(console, rules))
+			Expect(writer.String()).To(ContainSubstring("Human"))
+			Expect(writer.String()).To(ContainSubstring("Computer"))
+		})
 
-    It("lists available board types", func() {
-      console.DisplayBoardTypes(factory.BoardTypes())
-      Expect(writer.String()).To(ContainSubstring("3x3 Board"))
-      Expect(writer.String()).To(ContainSubstring("4x4 Board"))
-      Expect(writer.String()).To(ContainSubstring("5x5 Board"))
-    })
+		It("lists available board types", func() {
+			console.DisplayBoardTypes(factory.BoardTypes())
+			Expect(writer.String()).To(ContainSubstring("3x3 Board"))
+			Expect(writer.String()).To(ContainSubstring("4x4 Board"))
+			Expect(writer.String()).To(ContainSubstring("5x5 Board"))
+		})
 
-  })
+	})
 
 	Context("when receiving input from user", func() {
 

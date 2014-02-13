@@ -18,9 +18,9 @@ func (c ConsoleUI) DisplayBoard(board Board) {
 
 func (c ConsoleUI) QueryMove(player Player, board Board) int {
 
-		c.displayQueryMoveText(player)
-    rawMove := c.GetIntegerFromUser()
-    return c.shiftToZerosBasedIndex(rawMove)
+	c.displayQueryMoveText(player)
+	rawMove := c.GetIntegerFromUser()
+	return c.shiftToZerosBasedIndex(rawMove)
 }
 
 func (c ConsoleUI) QueryPlayerChoice(playerList []Player, description string) Player {
@@ -105,7 +105,6 @@ func (c ConsoleUI) GetIntegerFromUser() int {
 	}
 
 }
-
 
 func (c ConsoleUI) QueryNewGame() bool {
 	c.displayNewGameQuery()
