@@ -3,10 +3,12 @@ Tic Tac Toe in Go
 
 ###To Run:
 
-Install [Go](http://golang.org/doc/install)
-A Good tutorial on how to set up your environment can be found [here](http://skife.org/golang/2013/03/24/go_dev_env.html)
-clone this repository in your go source folder.  Alternatively "get get github.com/AndrewZures/tictactoe" should work
-cd to tictactoe/
+1.  Install [Go](http://golang.org/doc/install)
+A Good tutorial on how to set up your environment can be found [here](http://skife.org/golang/2013/03/24/go_dev_env .html).
+
+2.  clone this repository in your go source folder.  Alternatively "get get github.com/AndrewZures/tictactoe" should work
+
+3. cd to tictactoe/
 
 #####options
         1. go run main.go
