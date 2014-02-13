@@ -9,9 +9,9 @@ Tic Tac Toe in Go
 
      b.  Also, you may try to use the `go_setup` script, although it may not work on all systems
 
-2.  run "go get github.com/AndrewZures/tictactoe"
-
-3. cd to tictactoe/
+2.  move to your golang GOPATH location
+3.  run "go get github.com/AndrewZures/tictactoe"
+4.  move down to src/github.com/AndrewZures/tictactoe.  You are now ready to run/test the code
 
 #####options
         1. ./tictactoe
