@@ -9,7 +9,7 @@ Tic Tac Toe in Go
 
      b.  Also, you may try to use the `go_setup` script, although it may not work on all systems
 
-2.  clone this repository in your go source folder.  Alternatively "get get github.com/AndrewZures/tictactoe" should work
+2.  run "go get github.com/AndrewZures/tictactoe"
 
 3. cd to tictactoe/
 
