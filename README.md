@@ -14,9 +14,8 @@ Tic Tac Toe in Go
 3. cd to tictactoe/
 
 #####options
-        1. go run main.go
-        2. ./tictactoe
-        3. go build; ./tictactoe
+        1. ./tictactoe
+        2. go build; ./tictactoe
 
 ###To Test
 
