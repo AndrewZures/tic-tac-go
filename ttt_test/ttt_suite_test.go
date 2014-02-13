@@ -11,4 +11,3 @@ func TestTtt(t *testing.T) {
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "Ttt Suite")
 }
-
