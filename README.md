@@ -23,7 +23,7 @@ Tic Tac Toe in Go
 before: run `.test_setup` which will download ginkgo and gomega test suite
 
 #####options
-        1. cd `ttt_test`, run `go test`:
+        1. cd into ttt_test/, run 'go test'
 
 ###Game Rules:
     Simply choose board spot if using Human Player:
