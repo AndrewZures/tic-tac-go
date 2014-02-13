@@ -11,39 +11,11 @@ type ConsoleUI struct {
 	BoardFormatter BoardFormatter
 }
 
-func (c ConsoleUI) DisplayBoard(board Board) {
-	formattedBoard := c.BoardFormatter.FormatBoard(board, c.Messages)
-	c.ConsoleIO.Println(formattedBoard)
-}
-
-func (c ConsoleUI) QueryMove(player Player, board Board) int {
-
-	c.displayQueryMoveText(player)
-	rawMove := c.GetIntegerFromUser()
-	return c.shiftToZerosBasedIndex(rawMove)
-}
-
 func (c ConsoleUI) QueryPlayerChoice(playerList []Player, description string) Player {
 	c.PrintPlayerTypeQuestion(description)
 	c.DisplayPlayerTypes(playerList)
 	playerChoice := c.PlayerChoice(playerList)
 	return playerChoice
-}
-
-func (c ConsoleUI) DisplayPlayerTypes(playerList []Player) {
-
-	for index, playerType := range playerList {
-		c.ConsoleIO.Printf(c.Messages.PlayerTypesResponse(), (index + 1), playerType.Description())
-	}
-
-}
-
-func (c ConsoleUI) PrintPlayerTypeQuestion(playerDescription string) {
-	c.ConsoleIO.Printf(c.Messages.PlayerTypePrompt(), playerDescription)
-}
-
-func (c ConsoleUI) PrintBoardTypeQuestion() {
-	c.ConsoleIO.Println(c.Messages.BoardTypePrompt())
 }
 
 func (c *ConsoleUI) PlayerChoice(playerList []Player) Player {
@@ -60,12 +32,16 @@ func (c *ConsoleUI) PlayerChoice(playerList []Player) Player {
 	}
 }
 
-func (c ConsoleUI) DisplayBoardTypes(boardList []Board) {
+func (c ConsoleUI) DisplayPlayerTypes(playerList []Player) {
 
-	for index, boardType := range boardList {
-		c.ConsoleIO.Printf(c.Messages.BoardTypesResponse(), (index + 1), boardType.Description())
+	for index, playerType := range playerList {
+		c.ConsoleIO.Printf(c.Messages.PlayerTypesResponse(), (index + 1), playerType.Description())
 	}
 
+}
+
+func (c ConsoleUI) PrintPlayerTypeQuestion(playerDescription string) {
+	c.ConsoleIO.Printf(c.Messages.PlayerTypePrompt(), playerDescription)
 }
 
 func (c ConsoleUI) QueryBoardChoice(boardList []Board) Board {
@@ -88,6 +64,46 @@ func (c ConsoleUI) BoardChoice(boardList []Board) Board {
 	}
 }
 
+func (c ConsoleUI) DisplayBoardTypes(boardList []Board) {
+
+	for index, boardType := range boardList {
+		c.ConsoleIO.Printf(c.Messages.BoardTypesResponse(), (index + 1), boardType.Description())
+	}
+
+}
+
+func (c ConsoleUI) DisplayBoard(board Board) {
+	formattedBoard := c.BoardFormatter.FormatBoard(board, c.Messages)
+	c.ConsoleIO.Println(formattedBoard)
+}
+
+func (c ConsoleUI) PrintBoardTypeQuestion() {
+	c.ConsoleIO.Println(c.Messages.BoardTypePrompt())
+}
+
+func (c ConsoleUI) QueryMove(player Player, board Board) int {
+	c.displayQueryMoveText(player)
+	rawMove := c.GetIntegerFromUser()
+	return c.shiftToZerosBasedIndex(rawMove)
+}
+
+func (c ConsoleUI) DisplayWinner(winner string) {
+	if winner == "tie" {
+		c.ConsoleIO.Printf(c.Messages.GameTieResponse())
+	} else {
+		c.ConsoleIO.Printf(c.Messages.GameWinnerResponse(), c.Messages.WinnerSymbol(winner))
+	}
+}
+
+func (c ConsoleUI) QueryNewGame() bool {
+	c.displayNewGameQuery()
+	return c.getNewGameDecision()
+}
+
+func (c *ConsoleUI) ChoiceValid(choice int, numChoices int) bool {
+	return choice > 0 && choice <= numChoices
+}
+
 func (c ConsoleUI) GetIntegerFromUser() int {
 	var userInput string
 	var copiedInput string
@@ -106,15 +122,6 @@ func (c ConsoleUI) GetIntegerFromUser() int {
 
 }
 
-func (c ConsoleUI) QueryNewGame() bool {
-	c.displayNewGameQuery()
-	return c.getNewGameDecision()
-}
-
-func (c ConsoleUI) displayNewGameQuery() {
-	c.ConsoleIO.Println(c.Messages.NewGamePrompt())
-}
-
 func (c ConsoleUI) getNewGameDecision() bool {
 	response := strings.ToLower(c.ConsoleIO.Read())
 	return response == c.Messages.YesOption()
@@ -122,18 +129,6 @@ func (c ConsoleUI) getNewGameDecision() bool {
 
 func (c *ConsoleUI) shiftToZerosBasedIndex(onesBasedIndexChoice int) int {
 	return onesBasedIndexChoice - 1
-}
-
-func (c *ConsoleUI) ChoiceValid(choice int, numChoices int) bool {
-	return choice > 0 && choice <= numChoices
-}
-
-func (c ConsoleUI) DisplayWinner(winner string) {
-	if winner == "tie" {
-		c.ConsoleIO.Printf(c.Messages.GameTieResponse())
-	} else {
-		c.ConsoleIO.Printf(c.Messages.GameWinnerResponse(), c.Messages.WinnerSymbol(winner))
-	}
 }
 
 func (c ConsoleUI) DisplayChoiceInvalid() {
@@ -150,4 +145,8 @@ func (c ConsoleUI) DisplayIntroMessage() {
 
 func (c ConsoleUI) displayQueryMoveText(player Player) {
 	c.ConsoleIO.Printf(c.Messages.ChooseMovePrompt(), player.Description())
+}
+
+func (c ConsoleUI) displayNewGameQuery() {
+	c.ConsoleIO.Println(c.Messages.NewGamePrompt())
 }
