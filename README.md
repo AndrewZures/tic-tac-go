@@ -1,17 +1,19 @@
-seinabo
-=======
 
-#Tic Tac Toe in Go
+Tic Tac Toe in Go
+=======
 
 ###To Run:
 
-Install Go
+Install [Go](http://golang.org/doc/install)
+
 cd to `tictactoe` directory
 
 1. go run main.go
-2. go build, ./tictactoe
+2. ./tictactoe
 
 ###To Test
+
+before: run `.setup` which will download ginkgo and gomega test suite
 
 1. cd `ttt_test`, run `ginkgo`
 2. ./test_runner
