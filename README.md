@@ -4,12 +4,13 @@ Tic Tac Toe in Go
 ###To Run:
 
 Install [Go](http://golang.org/doc/install)
-
-cd to `tictactoe` directory
+clone this repository in your go source folder
+cd to seinabo
 
 #####options
         1. go run main.go
-        2. go build; ./tictactoe
+        2. ./tictactoe
+        3. go build; ./seinabo
 
 ###To Test
 
