@@ -1,4 +1,3 @@
-
 Tic Tac Toe in Go
 =======
 
@@ -13,7 +12,7 @@ cd to `tictactoe` directory
 
 ###To Test
 
-before: run `.setup` which will download ginkgo and gomega test suite
+before: run `.test_setup` which will download ginkgo and gomega test suite
 
 1. cd `ttt_test`, run `ginkgo`
 2. ./test_runner
