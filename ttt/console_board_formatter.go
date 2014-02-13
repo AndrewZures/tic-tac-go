@@ -2,7 +2,7 @@ package ttt
 
 type ConsoleBoardFormatter struct{}
 
-func (c *ConsoleBoardFormatter) FormatBoard(board Board, messages Messages) string {
+func (c ConsoleBoardFormatter) FormatBoard(board Board, messages Messages) string {
 	var boardResult string
 
 	gameState := board.State()
@@ -23,7 +23,7 @@ func (c *ConsoleBoardFormatter) FormatBoard(board Board, messages Messages) stri
 	return boardResult
 }
 
-func (c *ConsoleBoardFormatter) FormatSymbol(spotData string, messages Messages) string {
+func (c ConsoleBoardFormatter) FormatSymbol(spotData string, messages Messages) string {
 	switch spotData {
 	case "":
 		return messages.EmptySpot()
@@ -40,11 +40,11 @@ func (c ConsoleBoardFormatter) lastIndex(board Board, index int) bool {
 	return index == len(board.State())-1
 }
 
-func (c *ConsoleBoardFormatter) endOfRow(board Board, index int) bool {
+func (c ConsoleBoardFormatter) endOfRow(board Board, index int) bool {
 	return (index+1)%board.Offset() == 0
 }
 
-func (c *ConsoleBoardFormatter) BuildHorizontalDivider(board Board, messages Messages) string {
+func (c ConsoleBoardFormatter) BuildHorizontalDivider(board Board, messages Messages) string {
 	divider := []byte("\n")
 	adjustment := board.Offset() - 3
 	dividerLength := board.Offset()*messages.SpotWidth() + adjustment

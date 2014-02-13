@@ -74,70 +74,70 @@ func (c ConsoleMessages) YesOption() string {
 	return c.yesOption
 }
 
-func (c *ConsoleMessages) HorizontalDivider() string {
+func (c ConsoleMessages) HorizontalDivider() string {
 	return c.horizontalDivider
 }
 
-func (c *ConsoleMessages) VerticalDivider() string {
+func (c ConsoleMessages) VerticalDivider() string {
 	return c.verticalDivider
 }
 
-func (c *ConsoleMessages) EmptySpot() string {
+func (c ConsoleMessages) EmptySpot() string {
 	return c.emptySpot
 }
 
-func (c *ConsoleMessages) ChooseMovePrompt() string {
+func (c ConsoleMessages) ChooseMovePrompt() string {
 	return c.chooseMovePrompt
 }
 
-func (c *ConsoleMessages) GameTieResponse() string {
+func (c ConsoleMessages) GameTieResponse() string {
 	return c.gameTieResponse
 }
 
-func (c *ConsoleMessages) GameWinnerResponse() string {
+func (c ConsoleMessages) GameWinnerResponse() string {
 	return c.gameWinnerResponse
 }
 
-func (c *ConsoleMessages) NewGamePrompt() string {
+func (c ConsoleMessages) NewGamePrompt() string {
 	return c.newGamePrompt
 }
 
-func (c *ConsoleMessages) InvalidChoiceResponse() string {
+func (c ConsoleMessages) InvalidChoiceResponse() string {
 	return c.invalidChoiceResponse
 }
 
-func (c *ConsoleMessages) BoardTypePrompt() string {
+func (c ConsoleMessages) BoardTypePrompt() string {
 	return c.boardTypePrompt
 }
 
-func (c *ConsoleMessages) BoardTypesResponse() string {
+func (c ConsoleMessages) BoardTypesResponse() string {
 	return c.boardTypesResponse
 }
 
-func (c *ConsoleMessages) PlayerTypePrompt() string {
+func (c ConsoleMessages) PlayerTypePrompt() string {
 	return c.playerTypePrompt
 }
 
-func (c *ConsoleMessages) PlayerTypesResponse() string {
+func (c ConsoleMessages) PlayerTypesResponse() string {
 	return c.playerTypesResponse
 }
 
-func (c *ConsoleMessages) SpotWidth() int {
+func (c ConsoleMessages) SpotWidth() int {
 	return c.spotWidth
 }
 
-func (c *ConsoleMessages) SetPlayerXSymbol(newSymbol string) {
+func (c ConsoleMessages) SetPlayerXSymbol(newSymbol string) {
 	c.xSymbol = newSymbol
 }
 
-func (c *ConsoleMessages) SetPlayerOSymbol(newSymbol string) {
+func (c ConsoleMessages) SetPlayerOSymbol(newSymbol string) {
 	c.oSymbol = newSymbol
 }
 
-func (c *ConsoleMessages) PlayerXSymbol() string {
+func (c ConsoleMessages) PlayerXSymbol() string {
 	return c.xSymbol
 }
 
-func (c *ConsoleMessages) PlayerOSymbol() string {
+func (c ConsoleMessages) PlayerOSymbol() string {
 	return c.oSymbol
 }

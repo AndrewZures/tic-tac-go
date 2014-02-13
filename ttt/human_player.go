@@ -20,7 +20,7 @@ func (h *HumanPlayer) MakeMove(board Board) int {
 	return h.userInterface.QueryMove(h, board)
 }
 
-func (h *HumanPlayer) Symbol() string {
+func (h HumanPlayer) Symbol() string {
 	return h.symbol
 }
 

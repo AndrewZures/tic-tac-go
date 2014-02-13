@@ -22,7 +22,7 @@ func (h *ComputerPlayer) MakeMove(board Board) int {
 	return h.startMiniMax(board)
 }
 
-func (h *ComputerPlayer) startMiniMax(board Board) int {
+func (h ComputerPlayer) startMiniMax(board Board) int {
 	bestScore, minAlpha, maxBeta, bestMoves, depth := h.setupMiniMax(board)
 
 	for _, move := range board.OpenSpots() {
@@ -59,7 +59,7 @@ func (h ComputerPlayer) placeAndScore(board Board, player string, move, depth in
 	return score
 }
 
-func (h *ComputerPlayer) Score(board Board, symbol string, depth int, alpha, beta float64) float64 {
+func (h ComputerPlayer) Score(board Board, symbol string, depth int, alpha, beta float64) float64 {
 	var score float64
 
 	if h.depthLimitReached(depth) || h.pruneComplete(alpha, beta) {
@@ -79,7 +79,7 @@ func (h *ComputerPlayer) Score(board Board, symbol string, depth int, alpha, bet
 	return score
 }
 
-func (h *ComputerPlayer) miniMax(board Board, player string, depth int, alpha float64, beta float64) float64 {
+func (h ComputerPlayer) miniMax(board Board, player string, depth int, alpha float64, beta float64) float64 {
 
 	for _, move := range board.OpenSpots() {
 
@@ -147,11 +147,11 @@ func (h ComputerPlayer) randomizeBestMove(bestMoves []int) int {
 	return bestMoves[randomIndex]
 }
 
-func (h *ComputerPlayer) Symbol() string {
+func (h ComputerPlayer) Symbol() string {
 	return h.symbol
 }
 
-func (h *ComputerPlayer) Description() string {
+func (h ComputerPlayer) Description() string {
 	return h.typeTitle
 }
 
